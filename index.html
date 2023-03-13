@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>STAMPchain.io</title>
+	<style>
+		body {
+			background-color: black;
+			color: green;
+			font-family: Courier New;
+			text-transform: uppercase;
+		}
+		.item {
+			display: inline-block;
+			vertical-align: top;
+			text-align: center;
+			margin: 20px;
+		}
+		pre {
+			white-space: pre-wrap;
+			word-wrap: break-word;
+			background-color: #f8f822;
+			padding: 5px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			font-family: Courier New;
+			font-size: 21px;
+			line-height: 1.5;
+			margin: 10px 0;
+		}
+		img {
+			max-width: 100%;
+			height: auto;
+			display: block;
+			margin: 2px auto;
+			image-rendering: pixelated;
+			image-rendering: -moz-crisp-edges;
+			image-rendering: crisp-edges;
+		}
+		button {
+			background-color: #dc6e16;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 5px;
+			font-size: 18px;
+			cursor: pointer;
+			margin-top: 10px;
+		}
+		button:hover {
+			background-color: #ff9000;
+		}
+	</style>
+</head>
+<body>
+	<h1 style="text-align:center;">STAMPchain.io</h1>
+	<div id="data-container" style="text-align:center;"></div>
+	<script>
+		fetch('https://stampchain.io/stamp.json')
+			.then(response => response.json())
+			.then(data => {
+				const dataContainer = document.getElementById('data-container');
+				data.reverse().forEach((item, index) => {
+					const itemContainer = document.createElement('div');
+					itemContainer.classList.add('item');
+					if (item.stamp_url) {
+						const img = document.createElement('img');
+						img.src = item.stamp_url;
+						img.width = 210;
+						img.height = 210;
+						img.style.objectFit = 'contain';
+						img.style.imageRendering = 'pixelated';
+						img.style.imageRendering = '-moz-crisp-edges';
+						img.style.imageRendering = 'crisp-edges';
+						img.style.backgroundColor = '#dc6e16';
+						itemContainer.appendChild(img);
+					}
+					const stampInfo = document.createElement('pre');
+					stampInfo.innerText = `Stamp: ${item.stamp}\nTx Index: ${item.tx_index}`;
+					itemContainer.appendChild(stampInfo);
+					const viewMoreBtn = document.createElement('button');
+					viewMoreBtn.innerText = 'View More';
+					viewMoreBtn.addEventListener('click', () => window.open(`https://xchain.io/asset/${item.asset}`, '_blank'));
+					itemContainer.appendChild(viewMoreBtn);
+					dataContainer.appendChild(itemContainer);
+					if ((index + 1) % 4 === 0) {
+						dataContainer.appendChild(document.createElement('br'));
+					}
+				});
+			})
+			.catch(error => console.error(error));
+	</script>
+</body>
+</html>
+
