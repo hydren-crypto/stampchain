@@ -55,7 +55,7 @@
 	<h1 style="text-align:center;">STAMPchain.io</h1>
 	<div id="data-container" style="text-align:center;"></div>
 	<script>
-		fetch('https://stampchain.io/stamp.json')
+		fetch('stamp.json')
 			.then(response => response.json())
 			.then(data => {
 				const dataContainer = document.getElementById('data-container');
