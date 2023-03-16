@@ -104,9 +104,9 @@ h2 {color:white;text-align:center;font-family:serif;text-transform: none;font-si
 					viewMoreBtn.addEventListener('click', () => window.open(`https://xchain.io/asset/${item.asset}`, '_blank'));
 					itemContainer.appendChild(viewMoreBtn);
 					dataContainer.appendChild(itemContainer);
-					if ((index + 1) % 4 === 0) {
-						dataContainer.appendChild(document.createElement('br'));
-					}
+					//if ((index + 1) % 4 === 0) {
+					//dataContainer.appendChild(document.createElement('br'));
+					//}
 				});
 			})
 			.catch(error => console.error(error));
