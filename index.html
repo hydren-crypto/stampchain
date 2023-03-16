@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+	
+<meta charset="UTF-8">
+
 	<title>STAMPchain.io</title>
 	<style>
-				body {
+						body {
 			background-color: #181818;
 			color: #111111;
 			font-family: Courier New;
@@ -20,14 +23,14 @@
 			word-wrap: break-word;
 			background-color: #ffffff;
 			padding: 5px;
-			border-radius: 5px;
+			border-radius: 0px 0px 12px 12px;
 		
 			font-family: Courier New;
 			font-size: 11px;
 			line-height: 1.5;
-			margin: 10px 0;
+			margin: 1px 0;
 		}
-		img {border-radius: 5px;
+		img {border-radius: 12px 12px 0px 0px;
 			max-width: 100%;
 			height: 210px;
       overflow:hidden;
@@ -36,13 +39,16 @@
 			image-rendering: pixelated;
 			image-rendering: -moz-crisp-edges;
 			image-rendering: crisp-edges;
+      background-image: url("https://i.imgur.com/8hNkWAl.png");
+      background-size: 3px;
+      
 		}
 		button {
 			background-color: #666666;
 			color: white;
 		
 			padding: 10px 20px;
-			border-radius: 5px;
+			border-radius: 12px ;
 			font-size: 12px;
 			cursor: pointer;
 			margin-top: 10px;
@@ -80,7 +86,7 @@ h2 {color:white;text-align:center;font-family:serif;text-transform: none;font-si
 						img.style.imageRendering = 'pixelated';
 						img.style.imageRendering = '-moz-crisp-edges';
 						img.style.imageRendering = 'crisp-edges';
-						img.style.backgroundColor = '#dc6e16';
+						img.style.backgroundColor = '#000000';
 						itemContainer.appendChild(img);
 					}
 					const stampInfo = document.createElement('pre');
