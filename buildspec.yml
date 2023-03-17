@@ -1,0 +1,11 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "Building the website..."
+  post_build:
+    commands:
+      - echo "Syncing files to S3..."
+      - aws s3 sync . s3://YOUR_BUCKET_NAME --delete --exclude "buildspec.yml" --exclude ".git/*"
+
