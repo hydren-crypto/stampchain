@@ -8,4 +8,5 @@ phases:
     commands:
       - echo "Syncing files to S3..."
       - aws s3 sync . s3://stampchain.io --delete --exclude "buildspec.yml" --exclude ".git/*"
-
+      - echo "Invalidating CloudFront distribution..."
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
