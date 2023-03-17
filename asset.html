@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Asset Details</title>
+    <style>
+        /* Add CSS styles for the webpage */
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">Asset Details</h1>
+    <div id="asset-container" style="text-align:center;"></div>
+    <script>
+        async function fetchAssetDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const stampNumber = urlParams.get('stampNumber');
+            
+            try {
+                const assetResponse = await fetch(`https://cors-anywhere.herokuapp.com/http://hydren.io/stamps/stamp${stampNumber}.json`);
+                const assetData = await assetResponse.json();
+                displayAssetDetails(assetData);
+
+                const dispenserResponse = await fetch(`https://cors-anywhere.herokuapp.com/https://xchain.io/api/dispenser/${assetData.asset}`);
+                const dispenserData = await dispenserResponse.json();
+                displayDispenserDetails(dispenserData);
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        function displayAssetDetails(data) {
+            const assetContainer = document.getElementById('asset-container');
+            
+            // Display asset image
+            const img = document.createElement('img');
+            img.src = data.stamp_url;
+            img.width = 210;
+            img.height = 210;
+            img.style.objectFit = 'contain';
+            img.style.imageRendering = 'pixelated';
+            img.style.imageRendering = '-moz-crisp-edges';
+            img.style.imageRendering = 'crisp-edges';
+            img.style.backgroundColor = '#dc6e16';
+            assetContainer.appendChild(img);
+
+            // Display asset details
+            const assetDetails = document.createElement('pre');
+            assetDetails.innerText = `Stamp: ${data.stamp}\nTx Index: ${data.tx_index}`;
+            assetContainer.appendChild(assetDetails);
+        }
+
+        function displayDispenserDetails(dispenserData) {
+            if (dispenserData.length > 0) {
+                const assetContainer = document.getElementById('asset-container');
+                const dispenserDetails = document.createElement('pre');
+                dispenserDetails.innerText = 'Dispensers:\n';
+                dispenserData.forEach((dispenser, index) => {
+                    dispenserDetails.innerText += `\nDispenser ${index + 1}:\nAsset: ${dispenser.asset}\nAmount: ${dispenser.amount}\nDispenser Address: ${dispenser.dispenser}\n`;
+                });
+                assetContainer.appendChild(dispenserDetails);
+            }
+        }
+
+        fetchAssetDetails();
+    </script>
+</body>
+</html>
