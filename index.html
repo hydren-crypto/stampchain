@@ -101,7 +101,8 @@ h2 {color:white;text-align:center;font-family:serif;text-transform: none;font-si
 					itemContainer.appendChild(stampInfo);
 					const viewMoreBtn = document.createElement('button');
 					viewMoreBtn.innerText = 'View More';
-					viewMoreBtn.addEventListener('click', () => window.open(`https://xchain.io/asset/${item.asset}`, '_blank'));
+                                        viewMoreBtn.addEventListener('click', () => window.open(`asset.html?stampNumber=${item.stamp}`, '_blank'));
+					//viewMoreBtn.addEventListener('click', () => window.open(`https://xchain.io/asset/${item.asset}`, '_blank'));
 					itemContainer.appendChild(viewMoreBtn);
 					dataContainer.appendChild(itemContainer);
 					//if ((index + 1) % 4 === 0) {
