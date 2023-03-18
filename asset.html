@@ -17,7 +17,7 @@ async function fetchAssetDetails() {
     try {
         const assetResponse = await fetch('stamp.json');
         const allAssetData = await assetResponse.json();
-        const assetData = allAssetData.find(asset => asset.stamp === stampNumber);
+        const assetData = allAssetData.find(asset => asset.stamp === parseInt(stampNumber));
 
         if (assetData) {
             displayAssetDetails(assetData);
