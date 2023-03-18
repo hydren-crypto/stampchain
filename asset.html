@@ -15,11 +15,11 @@
             const stampNumber = urlParams.get('stampNumber');
             
             try {
-                const assetResponse = await fetch(`https://cors-anywhere.herokuapp.com/http://hydren.io/stamps/stamp${stampNumber}.json`);
+                const assetResponse = await fetch(`http://hydren.io/stamps/stamp${stampNumber}.json`);
                 const assetData = await assetResponse.json();
                 displayAssetDetails(assetData);
 
-                const dispenserResponse = await fetch(`https://cors-anywhere.herokuapp.com/https://xchain.io/api/dispenser/${assetData.asset}`);
+                const dispenserResponse = await fetch(`https://xchain.io/api/dispenser/${assetData.asset}`);
                 const dispenserData = await dispenserResponse.json();
                 displayDispenserDetails(dispenserData);
 
