@@ -1,80 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
 <meta property="og:title" content="STAMPchain.io" />
 <meta property="og:description" content="Unprunable Blockchain Art, Because Sats Don’t Exist." />
 <meta property="og:image" content="https://i.imgur.com/ZvtY5Te.jpg" />
 <meta name="title" content="STAMPchain.io"/>
 <meta name="description" content="Unprunable Blockchain Art, Because Sats Don&#8217;t Exist." />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-	
 <meta charset="UTF-8">
-
-	<title>STAMPchain.io</title>
-	<style>
-						body {
-			background-color: #181818;
-			color: #111111;
-			font-family: Courier New;
-			text-transform: uppercase;
-		}
-		.item {
-			display: inline-block;
-			vertical-align: top;
-			text-align: center;
-			margin-right: 20px;
-		}
-		pre {
-			white-space: pre-wrap;
-			word-wrap: break-word;
-			background-color: #ffffff;
-			padding: 5px;
-			border-radius: 0px 0px 12px 12px;
-		
-			font-family: Courier New;
-			font-size: 11px;
-			line-height: 1.5;
-			margin: 1px 0;
-		}
-		img {border-radius: 12px 12px 0px 0px;
-			max-width: 100%;
-			height: 210px;
-      overflow:hidden;
-			display: block;
-			margin: 2px auto;
-			image-rendering: pixelated;
-			image-rendering: -moz-crisp-edges;
-			image-rendering: crisp-edges;
-      background-image: url("https://i.imgur.com/8hNkWAl.png");
-      background-size: 3px;
-      
-		}
-		button {
-			background-color: #666666;
-			color: white;
-		
-			padding: 10px 20px;
-			border-radius: 12px ;
-			font-size: 12px;
-			cursor: pointer;
-			margin-top: 10px;
-      margin-bottom:30px;
-		}
-		button:hover {
-			background-color: #999999;
-		}
-
-h1 {color:#111111;font-family:helvetica,arial;text-shadow: -1px -1px 0 yellow, 1px -1px 0 yellow, -1px 1px 0 yellow, 1px 1px 0 yellow;text-align:center;margin-bottom:0px;}
-
-h2 {color:white;text-align:center;font-family:serif;text-transform: none;font-size:18px;}
-
-#data-container {text-align:center;}
-	</style>
+<title>STAMPchain.io</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 	<h1>STAMPchain.io</h1>
-	  <h2><em>Unprunable Blockchain Art, because Sats don’t exist.</em></h2>
+	<h2><em>Unprunable Blockchain Art, Because Sats Don’t Exist.</em></h2>
 	<div id="data-container" style="text-align:center;"></div>
 	<script>
 		fetch('stamp.json')
@@ -101,8 +40,8 @@ h2 {color:white;text-align:center;font-family:serif;text-transform: none;font-si
 					itemContainer.appendChild(stampInfo);
 					const viewMoreBtn = document.createElement('button');
 					viewMoreBtn.innerText = 'View More';
-                                        viewMoreBtn.addEventListener('click', () => window.open(`asset.html?stampNumber=${item.stamp}`, '_blank'));
-					//viewMoreBtn.addEventListener('click', () => window.open(`https://xchain.io/asset/${item.asset}`, '_blank'));
+                    //viewMoreBtn.addEventListener('click', () => window.open(`asset.html?stampNumber=${item.stamp}`, '_blank'));
+					viewMoreBtn.addEventListener('click', () => window.open(`https://xchain.io/asset/${item.asset}`, '_blank'));
 					itemContainer.appendChild(viewMoreBtn);
 					dataContainer.appendChild(itemContainer);
 					//if ((index + 1) % 4 === 0) {
@@ -112,15 +51,7 @@ h2 {color:white;text-align:center;font-family:serif;text-transform: none;font-si
 			})
 			.catch(error => console.error(error));
 	</script>
-	
-	
-<p style="color:white;text-align:center;text-transform:none;">&copy 2023 STAMPS Protocol</p>
-	
-	
-	
-	
-	
-	
+	<p style="color:white;text-align:center;text-transform:none;">&copy 2023 STAMPS Protocol</p>
 </body>
 </html>
 
