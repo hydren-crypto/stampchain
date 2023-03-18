@@ -51,6 +51,9 @@ async function fetchAssetDetails() {
             // Display asset details
             const assetDetails = document.createElement('pre');
             assetDetails.innerText = `Stamp: ${data.stamp}\nTx Index: ${data.tx_index}`;
+            assetDetails.innerText = `Stamp: ${data.stamp}\nTx Index: ${data.asset}`;
+            assetDetails.innerText = `Stamp: ${data.stamp}\nTx Hash: ${data.tx_hash}`;
+            
             assetContainer.appendChild(assetDetails);
         }
 
