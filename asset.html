@@ -3,11 +3,46 @@
 <head>
     <title>Asset Details</title>
     <style>
-        /* Add CSS styles for the webpage */
+
+      body {
+  background-color:black;color:white;
+}
+
+h1 {color:#111111;font-family:helvetica,arial;text-shadow: -1px -1px 0 yellow, 1px -1px 0 yellow, -1px 1px 0 yellow, 1px 1px 0 yellow;text-align:center;margin-bottom:0px;}
+
+h2 {color:white;text-align:center;font-family:serif;text-transform: none;font-size:18px;}
+
+h3 {font-family:monospace;padding-top:10px;font-size:12px;color:#666666;}
+
+pre {font-family:monospace;color:#666666;}
+
+#asset-container {text-align:center;width:100%;}
+
+#asset-container img {border-radius: 12px;
+      overflow:hidden;
+			image-rendering: pixelated;
+			image-rendering: -moz-crisp-edges;
+			image-rendering: crisp-edges;
+      background-image: url("https://i.imgur.com/8hNkWAl.png");
+      background-size: 3px;}
+
+#asset-container pre {font-size:10px;}
+
+h1 a {text-decoration:none;color:black;}  
+        
+        
+        
     </style>
 </head>
 <body>
-    <h1 style="text-align:center;">Asset Details</h1>
+  <h1><a href="https://stampchain.io/">STAMPchain.io</a></h1>
+    
+    
+      <h2><em>Unprunable Bitcoin Art, Because Sats Don’t Exist.</em></h2>
+    
+        <h3 style="text-align:center;">Asset Details</h3>
+    
+    
     <div id="asset-container" style="text-align:center;"></div>
     <script>
 async function fetchAssetDetails() {
@@ -39,13 +74,13 @@ async function fetchAssetDetails() {
             // Display asset image
             const img = document.createElement('img');
             img.src = data.stamp_url;
-            img.width = 210;
-            img.height = 210;
+            img.width = 420;
+            img.height = 420;
             img.style.objectFit = 'contain';
             img.style.imageRendering = 'pixelated';
             img.style.imageRendering = '-moz-crisp-edges';
             img.style.imageRendering = 'crisp-edges';
-            img.style.backgroundColor = '#dc6e16';
+            img.style.backgroundColor = '#000000';
             assetContainer.appendChild(img);
 
             // Display asset details
@@ -71,5 +106,12 @@ async function fetchAssetDetails() {
 
         fetchAssetDetails();
     </script>
+    
+    
+    <p style="color:white;text-align:center;text-transform:none;font-family:mono-space;margin-top:50px;">&copy 2023 STAMPS Protocol</p>
+    
+    
+    
+    
 </body>
 </html>
