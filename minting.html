@@ -24,6 +24,8 @@
       background-size: 3px;padding:6px 12px;}
 
 #menu a {color:white;text-decoration:none;}
+    
+    #menu strong {color:yellow;}
 
 #menu a:hover {text-decoration:underline;color:yellow;}
 
@@ -84,7 +86,11 @@ h1 {color:#111111;font-family:helvetica,arial;text-shadow: -1px -1px 0 yellow, 1
 
 h2 {color:white;text-align:center;font-family:serif;text-transform: none;font-size:18px;}
 	  
-	  h3 {font-family:monospace;padding-top:10px;font-size:14px;color:#666666;}
+	  h3 {font-family:monospace;padding-top:10px;font-size:14px;color:#666666;text-align:center;}
+    
+ol {color:white;border:1px dashed #666666;padding-top:20px;padding-bottom:20px;background-color:#333333;}
+
+    ol li {line-height:40px;}
 
 #data-container {text-align:center;}
   </style>
@@ -95,7 +101,7 @@ h2 {color:white;text-align:center;font-family:serif;text-transform: none;font-si
 <body>
   
   <div id="menu">
-    <a href="https://stampchain.io/about.html">About</a> | <a href="https://stampchain.io/minting.html">Minting</a> | <a href="https://t.me/BitcoinStamps" target="_blank">Join us!</a>
+    <a href="https://stampchain.io/about.html">About</a> | <strong>Minting</strong> | <a href="https://t.me/BitcoinStamps" target="_blank">Join us!</a>
   </div>
   
 	<h1>STAMPchain.io</h1>
@@ -103,7 +109,20 @@ h2 {color:white;text-align:center;font-family:serif;text-transform: none;font-si
 	
 	<h3>Minting</h3>
 	
-	
+<ol>
+<li>Login to Counterwallet. This is important as Freewallet imposes an artificial limit on the length of the description string.</li>
+
+<li>Create a numeric asset (not named). The reason for this is largely philosophical as we are trying to position our project as "Bitcoin-only" and numeric assets do not require xcp to create.</li>
+
+<li>Convert your art into base64. Here is a tool: https://codebeautify.org/gif-to-base64-converter</li>
+
+<li>Prepend STAMP: before the base64 string. Eg: STAMP:ZyXqwer....</li>
+
+<li>Put the long string into the Description field.</li>
+
+<li>Check the mempool. Probably need to do 15-20 sats/byte for a 24 hour confirmation. Higher if you want it confirmed faster.</li>
+
+  <li>Your STAMP will appear in the directory chronologically.</li></ol>
 	
 	
 
