@@ -80,20 +80,20 @@ h1 a {text-decoration:none;color:black;text-transform: uppercase;}
     
     <div id="asset-container" style="text-align:center;"></div>
     <script>
+    
         async function fetchAssetDetails() {
             const urlParams = new URLSearchParams(window.location.search);
             const stampNumber = urlParams.get('stampNumber');
-            
+
             try {
-                const assetResponse = await fetch('stamp.json');
+                const assetResponse = await fetch('https://stampchain.io/stamp.json');
                 const allAssetData = await assetResponse.json();
                 const assetData = allAssetData.find(asset => asset.stamp === parseInt(stampNumber));
 
                 if (assetData) {
                     displayAssetDetails(assetData);
 
-                    const proxyUrl = 'https://your-proxy-server.example.com/';
-                    const counterpartyUrl = 'http://api.counterparty.io:4000/api/';
+                    const proxyUrl = 'https://k6e0ufzq8h.execute-api.us-east-1.amazonaws.com/beta/counterpartyproxy';
 
                     const requestOptions = {
                         method: 'POST',
@@ -103,23 +103,29 @@ h1 a {text-decoration:none;color:black;text-transform: uppercase;}
                             'Authorization': 'Basic ' + btoa('rpc:rpc'),
                         },
                         body: JSON.stringify({
-                            jsonrpc: '2.0',
-                            id: 0,
-                            method: 'get_asset_info',
-                            params: {
-                                assets: [assetData.asset],
+                            rpcUser: 'rpc',
+                            rpcPassword: 'rpc', // Replace 'rpc' with the actual password if different.
+                            request: {
+                                jsonrpc: '2.0',
+                                id: 0,
+                                method: 'get_asset_info',
+                                params: {
+                                    assets: [assetData.asset],
+                                },
                             },
                         }),
                     };
 
-                    const counterpartyResponse = await fetch(proxyUrl + counterpartyUrl, requestOptions);
+                    const counterpartyResponse = await fetch(proxyUrl, requestOptions);
                     const counterpartyData = await counterpartyResponse.json();
-                    
+
                     if (counterpartyData.result && counterpartyData.result.length > 0) {
-                        displayCounterpartyAssetDetails(counterpartyData.result[0]);
+                        const assetData = counterpartyData.result[0];
+                        displayCounterpartyAssetDetails(assetData, assetData.tx_hash); // Pass the tx_hash value
                     } else {
                         console.error('Asset not found on Counterparty');
                     }
+
                 } else {
                     console.error('Asset not found');
                 }
@@ -127,6 +133,7 @@ h1 a {text-decoration:none;color:black;text-transform: uppercase;}
                 console.error(error);
             }
         }
+
 
 
         function displayAssetDetails(data) {
@@ -148,23 +155,61 @@ h1 a {text-decoration:none;color:black;text-transform: uppercase;}
             const assetDetails = document.createElement('div');
             assetDetails.style.textAlign = 'center';
 
-            const stampDetail = document.createElement('p');
+            const stampDetail = document.createElement('pre');
             stampDetail.innerText = `Stamp: ${data.stamp}`;
             assetDetails.appendChild(stampDetail);
 
-            const txIndexDetail = document.createElement('p');
+            const txIndexDetail = document.createElement('pre');
             txIndexDetail.innerText = `Tx Index: ${data.tx_index}`;
             assetDetails.appendChild(txIndexDetail);
 
-            const assetDetail = document.createElement('p');
+            const assetDetail = document.createElement('pre');
             assetDetail.innerText = `Asset: ${data.asset}`;
             assetDetails.appendChild(assetDetail);
 
-            const txHashDetail = document.createElement('p');
+            const txHashDetail = document.createElement('pre');
             txHashDetail.innerText = `Tx Hash: ${data.tx_hash}`;
             assetDetails.appendChild(txHashDetail);
 
             assetContainer.appendChild(assetDetails);
+        }
+
+        function displayCounterpartyAssetDetails(assetData, txHash) {
+            const assetContainer = document.getElementById('asset-container');
+
+            const assetDetailsContainer = document.createElement('div');
+            assetDetailsContainer.style.textAlign = 'center';
+
+            const assetDetailsTitle = document.createElement('h3');
+            assetDetailsTitle.innerText = 'Counterparty Asset Details';
+            assetDetailsContainer.appendChild(assetDetailsTitle);
+
+            const assetDetails = document.createElement('pre');
+            assetDetails.innerText = `Asset: ${assetData.asset}\nAsset Long Name: ${assetData.asset_longname}\nIssuer: ${assetData.issuer}\nTotal Issued: ${assetData.supply}\nDivisible: ${assetData.divisible}\nLocked: ${assetData.locked}`;
+            assetDetailsContainer.appendChild(assetDetails);
+
+            const mediaLink = document.createElement('pre');
+            const mediaLinkAnchor = document.createElement('a');
+            mediaLinkAnchor.href = `https://stampchain.io/stamps/${txHash}.png`;
+            mediaLinkAnchor.innerText = 'Link to media';
+            mediaLink.appendChild(mediaLinkAnchor);
+            assetDetailsContainer.appendChild(mediaLink);
+
+            const txnDataLink = document.createElement('pre');
+            const txnDataLinkAnchor = document.createElement('a');
+            txnDataLinkAnchor.href = `https://jpja.github.io/Electrum-Counterparty/decode_tx.html?tx=${txHash}`;
+            txnDataLinkAnchor.innerText = 'Link to txn data';
+            txnDataLink.appendChild(txnDataLinkAnchor);
+            assetDetailsContainer.appendChild(txnDataLink);
+
+            const xchainExplorerLink = document.createElement('pre');
+            const xchainExplorerLinkAnchor = document.createElement('a');
+            xchainExplorerLinkAnchor.href = `https://xchain.io/asset/${assetData.asset}`;
+            xchainExplorerLinkAnchor.innerText = 'Link to xchain explorer';
+            xchainExplorerLink.appendChild(xchainExplorerLinkAnchor);
+            assetDetailsContainer.appendChild(xchainExplorerLink);
+
+            assetContainer.appendChild(assetDetailsContainer);
         }
 
 
@@ -187,7 +232,7 @@ h1 a {text-decoration:none;color:black;text-transform: uppercase;}
 <!-- fake fields below -->
 	
 	
-      <pre>Asset: A11721653948588048000</pre>
+      <!-- <pre>Asset: A11721653948588048000</pre>
       <pre>Owner/Issuer: 1FhZhhNBq4yNLENjrgvWSQE6eS8g4bbct1</pre>
       <pre>Total Supply: 1</pre>
       <pre>Divisible: False</pre>
@@ -195,7 +240,7 @@ h1 a {text-decoration:none;color:black;text-transform: uppercase;}
       <pre>Block # 781,401</pre>
       <pre><a href="https://stampchain.io/stamps/612c354547ac7b2293ed505a25fcc4ddbcd82c7fbc16a71636de3b628ed03014.png">Link to media</a></pre>
       <pre><a href="https://jpja.github.io/Electrum-Counterparty/decode_tx.html?tx=47054da12382223bfa928e9c3e0c8c99b42fe3e88985fb6043d8d84f17b893c9">Link to txn data</a></pre>
-      <pre><a href="https://xchain.io/asset/A11721653948588048000">Link to xchain explorer</a></pre>
+      <pre><a href="https://xchain.io/asset/A11721653948588048000">Link to xchain explorer</a></pre> -->
 	
 	
 	
