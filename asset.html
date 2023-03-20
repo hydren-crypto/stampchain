@@ -104,7 +104,7 @@ h1 a {text-decoration:none;color:black;text-transform: uppercase;}
                         },
                         body: JSON.stringify({
                             rpcUser: 'rpc',
-                            rpcPassword: 'rpc', // Replace 'rpc' with the actual password if different.
+                            rpcPassword: 'rpc',
                             request: {
                                 jsonrpc: '2.0',
                                 id: 0,
@@ -120,8 +120,8 @@ h1 a {text-decoration:none;color:black;text-transform: uppercase;}
                     const counterpartyData = await counterpartyResponse.json();
 
                     if (counterpartyData.result && counterpartyData.result.length > 0) {
-                        const assetData = counterpartyData.result[0];
-                        displayCounterpartyAssetDetails(assetData, assetData.tx_hash); // Pass the tx_hash value
+                        const counterpartyassetData = counterpartyData.result[0];
+                        displayCounterpartyAssetDetails(counterpartyassetData, assetData.tx_hash, assetData.stamp_url);
                     } else {
                         console.error('Asset not found on Counterparty');
                     }
@@ -174,38 +174,39 @@ h1 a {text-decoration:none;color:black;text-transform: uppercase;}
             assetContainer.appendChild(assetDetails);
         }
 
-        function displayCounterpartyAssetDetails(assetData, txHash) {
+        function displayCounterpartyAssetDetails(assetData, txHash, stamp_url) {
             const assetContainer = document.getElementById('asset-container');
 
             const assetDetailsContainer = document.createElement('div');
             assetDetailsContainer.style.textAlign = 'center';
 
-            const assetDetailsTitle = document.createElement('h3');
-            assetDetailsTitle.innerText = 'Counterparty Asset Details';
-            assetDetailsContainer.appendChild(assetDetailsTitle);
+            // const assetDetailsTitle = document.createElement('h3');
+            // assetDetailsTitle.innerText = 'Asset Details';
+            // assetDetailsContainer.appendChild(assetDetailsTitle);
 
             const assetDetails = document.createElement('pre');
-            assetDetails.innerText = `Asset: ${assetData.asset}\nAsset Long Name: ${assetData.asset_longname}\nIssuer: ${assetData.issuer}\nTotal Issued: ${assetData.supply}\nDivisible: ${assetData.divisible}\nLocked: ${assetData.locked}`;
+            assetDetails.innerText = `Issuer: ${assetData.issuer}\nTotal Issued: ${assetData.supply}\nDivisible: ${assetData.divisible}\nLocked: ${assetData.locked}`;
             assetDetailsContainer.appendChild(assetDetails);
 
             const mediaLink = document.createElement('pre');
             const mediaLinkAnchor = document.createElement('a');
-            mediaLinkAnchor.href = `https://stampchain.io/stamps/${txHash}.png`;
-            mediaLinkAnchor.innerText = 'Link to media';
+            mediaLinkAnchor.href = `${stamp_url}`;
+            mediaLinkAnchor.innerText = 'Binary Media';
+
             mediaLink.appendChild(mediaLinkAnchor);
             assetDetailsContainer.appendChild(mediaLink);
 
             const txnDataLink = document.createElement('pre');
             const txnDataLinkAnchor = document.createElement('a');
             txnDataLinkAnchor.href = `https://jpja.github.io/Electrum-Counterparty/decode_tx.html?tx=${txHash}`;
-            txnDataLinkAnchor.innerText = 'Link to txn data';
+            txnDataLinkAnchor.innerText = 'Txn Data Decoder';
             txnDataLink.appendChild(txnDataLinkAnchor);
             assetDetailsContainer.appendChild(txnDataLink);
 
             const xchainExplorerLink = document.createElement('pre');
             const xchainExplorerLinkAnchor = document.createElement('a');
             xchainExplorerLinkAnchor.href = `https://xchain.io/asset/${assetData.asset}`;
-            xchainExplorerLinkAnchor.innerText = 'Link to xchain explorer';
+            xchainExplorerLinkAnchor.innerText = 'Xchain.io Asset Information';
             xchainExplorerLink.appendChild(xchainExplorerLinkAnchor);
             assetDetailsContainer.appendChild(xchainExplorerLink);
 
@@ -228,29 +229,9 @@ h1 a {text-decoration:none;color:black;text-transform: uppercase;}
         fetchAssetDetails();
     </script>
 	
-	
-<!-- fake fields below -->
-	
-	
-      <!-- <pre>Asset: A11721653948588048000</pre>
-      <pre>Owner/Issuer: 1FhZhhNBq4yNLENjrgvWSQE6eS8g4bbct1</pre>
-      <pre>Total Supply: 1</pre>
-      <pre>Divisible: False</pre>
-      <pre>Locked: True</pre>
-      <pre>Block # 781,401</pre>
-      <pre><a href="https://stampchain.io/stamps/612c354547ac7b2293ed505a25fcc4ddbcd82c7fbc16a71636de3b628ed03014.png">Link to media</a></pre>
-      <pre><a href="https://jpja.github.io/Electrum-Counterparty/decode_tx.html?tx=47054da12382223bfa928e9c3e0c8c99b42fe3e88985fb6043d8d84f17b893c9">Link to txn data</a></pre>
-      <pre><a href="https://xchain.io/asset/A11721653948588048000">Link to xchain explorer</a></pre> -->
-	
-	
-	
-	
-    
+
     
     <p style="color:white;text-align:center;text-transform:none;font-family:monospace;margin-top:50px;">&copy 2023 STAMPS Protocol</p>
-    
-    
-    
     
 </body>
 </html>
