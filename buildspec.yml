@@ -1,6 +1,14 @@
 version: 0.2
 
 phases:
+  pre_build:
+    commands:
+      - echo "Current directory:"
+      - pwd
+      - echo "Directory listing:"
+      - ls -la
+      - echo "Parent directory listing:"
+      - ls -la ..
   build:
     commands:
       - echo "Building the website..."
