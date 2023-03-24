@@ -213,7 +213,7 @@ h1 a {
             // assetDetailsContainer.appendChild(assetDetailsTitle);
 
             const assetDetails = document.createElement('pre');
-            assetDetails.innerText = `Issuer: ${assetData.issuer}\nTotal Issued: ${assetData.supply}\nDivisible: ${assetData.divisible}\nLocked: ${assetData.locked}`;
+            assetDetails.innerText = `Issuer: ${assetData.issuer}\nOwner: ${assetData.owner}\nTotal Issued: ${assetData.supply}\nDivisible: ${assetData.divisible}\nLocked: ${assetData.locked}`;
             assetDetailsContainer.appendChild(assetDetails);
 
             const mediaLink = document.createElement('pre');
