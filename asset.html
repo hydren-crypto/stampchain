@@ -96,7 +96,7 @@ h1 a {
 <body>
 	
 <div id="menu">
-<a href="https://github.com/mikeinspace/stamps" target="_blank">About</a> | <a href="https://stampchain.io/minting.html">Minting</a> | <a href="https://t.me/BitcoinStamps" target="_blank">Join us!</a>
+<a href="https://github.com/mikeinspace/stamps" target="_blank">About</a> | <a href="/minting.html">Minting</a> | <a href="https://t.me/BitcoinStamps" target="_blank">Join us!</a>
 </div>
 
 <h1><a href="https://stampchain.io/">BITCOIN STAMPS</a></h1>
@@ -187,10 +187,6 @@ h1 a {
             stampDetail.innerText = `Stamp: ${data.stamp}`;
             assetDetails.appendChild(stampDetail);
 
-            const txIndexDetail = document.createElement('pre');
-            txIndexDetail.innerText = `Tx Index: ${data.tx_index}`;
-            assetDetails.appendChild(txIndexDetail);
-
             const assetDetail = document.createElement('pre');
             assetDetail.innerText = `Asset: ${data.asset}`;
             assetDetails.appendChild(assetDetail);
@@ -213,7 +209,7 @@ h1 a {
             // assetDetailsContainer.appendChild(assetDetailsTitle);
 
             const assetDetails = document.createElement('pre');
-            assetDetails.innerText = `Issuer: ${assetData.issuer}\nOwner: ${assetData.owner}\nTotal Issued: ${assetData.supply}\nDivisible: ${assetData.divisible}\nLocked: ${assetData.locked}`;
+            assetDetails.innerText = `Creator/Artist: ${assetData.owner}\nTotal Issued: ${assetData.supply}\nDivisible: ${assetData.divisible}\nLocked: ${assetData.locked}`;
             assetDetailsContainer.appendChild(assetDetails);
 
             const mediaLink = document.createElement('pre');
