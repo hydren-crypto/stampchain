@@ -110,7 +110,7 @@ h2 {
 	  <h2><em>Unprunable Bitcoin Art, Because Sats Don’t Exist.</em></h2>
 	<div id="data-container" style="text-align:center;"></div>
 	<script>
-		fetch('stamp.json')
+		fetch('https://stampchain.io/stamp.json')
 			.then(response => response.json())
 			.then(data => {
 				const dataContainer = document.getElementById('data-container');
