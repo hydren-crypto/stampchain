@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BITCOIN STAMPS - MINTING</title>
+    <link rel="icon" type="image/x-icon" href="/images/icon.jpg">
+    <link rel="apple-touch-icon" href="/images/icon.jpg">
+        
+    <meta property="og:title" content="BITCOIN STAMPS" />
+    <meta property="og:description" content="Unprunable Bitcoin Art" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Stamp Minting Utility</h1>
+        <form id="upload-form">
+            <div class="form-group">
+                <label for="image-file">Image File:</label>
+                <input type="file" id="image-file" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label for="bitcoin-address">Artist / Creator Bitcoin Address:</label>
+                <input type="text" id="bitcoin-address" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <p id="please-wait" hidden>Please wait...</p>
+        <div id="output"></div>
+        <p id="confirmation-message" hidden>You will receive no further confirmation on this page. Please monitor the artist / creator wallet for the incoming stamp. Non-image files are not supported on the STAMP protocol.</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <script src="app.js" defer></script>
+</body>
+</html>
