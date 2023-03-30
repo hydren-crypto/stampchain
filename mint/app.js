@@ -52,27 +52,28 @@ function convertImageToBase64(imageFile) {
 }
 
 async function sendDataToLambda(base64String, bitcoinAddress) {
-    if (base64String.length > 6000) {
-        alert("The base64 string is too long (over 6000 characters). Please upload a smaller image.");
+    if (base64String.length > 7000) {
+        alert("The base64 string is too long (over 7000 characters). Please upload a smaller image.");
         document.getElementById("please-wait").hidden = true;
         return;
     }
-    const apiEndpoint = "https://tdjm1bh9g3.execute-api.us-east-1.amazonaws.com/default";
+    // const apiEndpoint = "https://kbwl5ukvwrwtzuacdlz3bkzc4a0ezjgz.lambda-url.us-east-1.on.aws/"
+    const apiEndpoint = "https://yxzz5lsstucttpyholm7dppkhq0pdose.lambda-url.us-east-1.on.aws/"
 
     console.log("Sending data to Lambda");
 
     try {
-        console.log("Sending data to Lambda:", { apiEndpoint, base64String, bitcoinAddress });
-
+        console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress });
+   
         const response = await fetch(apiEndpoint, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                image: base64String,
+                file_content: base64String,
                 address: bitcoinAddress
-            })
+            })            
         });
 
         console.log("Received response from Lambda:", response);
@@ -80,8 +81,8 @@ async function sendDataToLambda(base64String, bitcoinAddress) {
         if (response.ok) {
             const responseData = await response.json();
             console.log("Parsed response data:", responseData);
-
-            const responseBody = JSON.parse(responseData.body);
+            
+            const responseBody = responseData;
             console.log("Parsed response body:", responseBody);
 
             document.getElementById("please-wait").hidden = true;
