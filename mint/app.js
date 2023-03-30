@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("upload-form").addEventListener("submit", async (e) => {
+    const uploadForm = document.getElementById("upload-form");
+    const imageFileInput = document.getElementById("image-file");
+    const submitButton = uploadForm.querySelector("button[type='submit']");
+
+    uploadForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         console.log("Form submitted");
 
+        // Show the "please wait" message
         document.getElementById("please-wait").hidden = false;
 
-        const imageFile = document.getElementById("image-file").files[0];
+        const imageFile = imageFileInput.files[0];
         const bitcoinAddress = document.getElementById("bitcoin-address").value;
 
         if (!imageFile) {
@@ -17,8 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const base64String = await convertImageToBase64(imageFile);
 
         sendDataToLambda(base64String, bitcoinAddress);
+
+        // Disable the submit button after sending data
+        submitButton.disabled = true;
+    });
+
+    // Re-enable the submit button when the user changes the image input
+    imageFileInput.addEventListener("change", () => {
+        submitButton.disabled = false;
     });
 });
+
 
 function convertImageToBase64(imageFile) {
     return new Promise((resolve, reject) => {
@@ -39,7 +53,7 @@ function convertImageToBase64(imageFile) {
 
 async function sendDataToLambda(base64String, bitcoinAddress) {
     if (base64String.length > 6000) {
-        alert("The base64 string is too long (over 7000 characters). Please upload a smaller image.");
+        alert("The base64 string is too long (over 6000 characters). Please upload a smaller image.");
         document.getElementById("please-wait").hidden = true;
         return;
     }
@@ -112,7 +126,7 @@ function displayOutput(data) {
 
         const qrCodeImage = document.createElement("img");
         const btcUri = `bitcoin:${item.send_to_address}?amount=${formattedFee}`;
-        QRCode.toDataURL(btcUri, { width: 128, height: 128 }, function (error, url) {
+        QRCode.toDataURL(btcUri, { width: 256, height: 256 }, function (error, url) {
             if (error) console.error(error);
             qrCodeImage.src = url;
         });
