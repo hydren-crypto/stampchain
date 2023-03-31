@@ -1,5 +1,6 @@
 // const mainnet = bitcoin.networks.bitcoin;
 
+
 document.addEventListener("DOMContentLoaded", () => {
     const uploadForm = document.getElementById("upload-form");
     const imageFileInput = document.getElementById("image-file");
