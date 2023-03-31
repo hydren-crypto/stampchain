@@ -1,16 +1,49 @@
+#menu {position:absolute;
+       right:0px;top:0px;color:white;text-transform:none;
+       font-size:12px;background-image: url("https://stampchain.io/images/transparent-bg.png");
+       font-size:12px;background-image: url("https://stampchain.io/images/transparent-bg.png");
+       background-size: 3px;padding:6px 12px;}
+
+#menu a {color:white;text-decoration:none;}
+
+#menu a:hover {text-decoration:underline;color:yellow;}
+
+#menu strong {color:yellow;}
+		
 body {
 	background-color: #181818;
 	color: #111111;
 	font-family: Courier New;
 	text-transform: uppercase;
-}
+	}
+	
+#container {position:absolute;left:50%;width:420px;margin-left:-210px;}
+
+#container p {color:white;font-size:10px;}
+
+#container p a {color:white;}
+
+#container p a:hover {color:yellow;}
+
+#BigLaunchButton {text-align:center;margin-top:50px;margin-bottom:50px;}
+  
+  #BigLaunchButton a {text-transform:uppercase;color:white;text-decoration:none;font-weight:bold;font-size:20px;background-color:#666666; padding:10px 16px;border:4px solid white;border-radius:10px;}	
+	
+  #BigLaunchButton a:hover {color:yellow;}
+  
+  #marquee {width:420px;height:420px;border-radius: 12px 12px 12px 12px;image-rendering: pixelated;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: crisp-edges;}
+
+
 .item {
 	display: inline-block;
 	vertical-align: top;
 	text-align: center;
 	margin-right: 20px;
-}
-pre {
+	}
+
+.item pre {
 	white-space: pre-wrap;
 	word-wrap: break-word;
 	background-color: #ffffff;
@@ -20,20 +53,23 @@ pre {
 	font-size: 11px;
 	line-height: 1.5;
 	margin: 1px 0;
-}
-img {
+		}
+
+#data-container img {
 	border-radius: 12px 12px 0px 0px;
 	max-width: 100%;
 	height: 210px;
-	overflow:hidden;
+        overflow:hidden;
 	display: block;
 	margin: 2px auto;
 	image-rendering: pixelated;
 	image-rendering: -moz-crisp-edges;
 	image-rendering: crisp-edges;
-	background-image: url("https://i.imgur.com/8hNkWAl.png");
-	background-size: 3px;
-}
+        background-image: url("https://stampchain.io/images/transparent-bg.png");
+        background-image: url("https://stampchain.io/images/transparent-bg.png");
+        background-size: 3px;
+      }
+
 button {
 	background-color: #666666;
 	color: white;
@@ -42,25 +78,35 @@ button {
 	font-size: 12px;
 	cursor: pointer;
 	margin-top: 10px;
-	margin-bottom:30px;
-}
-button:hover {
-	background-color: #999999;
-}
+       margin-bottom:30px;
+		}
+	
+button:hover {background-color: #999999;}
+
 h1 {
-	color:#111111;
+	margin-top:40px;color:#111111;
 	font-family:helvetica,arial;
 	text-shadow: -1px -1px 0 yellow, 1px -1px 0 yellow, -1px 1px 0 yellow, 1px 1px 0 yellow;
-	text-align:center;
-	margin-bottom:0px;
-}
+	text-align:center;margin-bottom:0px;
+	}
+	
+h1 a {text-decoration:none;color:#181818;}
+
+#copyright {color:white;text-align:center;text-transform:none;font-size:16px !important;margin-top:50px;}
+
 h2 {
-	color:white;
-	text-align:center;
-	font-family:serif;
-	text-transform: none;
-	font-size:18px;
-}
+	color:white;text-align:center;font-family:serif;
+	text-transform: none;font-size:18px;
+	}
+	
+h3 {color:white;text-align:center;}
+
 #data-container {
 	text-align:center;
-}
+	}
+	
+#asset-container {text-align:center;}
+
+#asset-container img {border-radius: 12px 12px 12px 12px;}
+	
+#asset-container pre {color:white;text-align:center;}
