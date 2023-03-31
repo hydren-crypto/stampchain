@@ -1,6 +1,6 @@
 #menu {position:absolute;
        right:0px;top:0px;color:white;text-transform:none;
-       font-size:12px;background-image: url("https://stampchain.io/images/transparent-bg.png");
+       font-size:12px;background-image: url("/images/transparent-bg.png");
        background-size: 3px;padding:6px 12px;}
 
 #menu a {color:white;text-decoration:none;}
@@ -67,8 +67,7 @@ body {
 	image-rendering: pixelated;
 	image-rendering: -moz-crisp-edges;
 	image-rendering: crisp-edges;
-        background-image: url("https://stampchain.io/images/transparent-bg.png");
-        background-image: url("https://stampchain.io/images/transparent-bg.png");
+        background-image: url("/images/transparent-bg.png");
         background-size: 3px;
       }
 
@@ -110,7 +109,7 @@ h3 {color:white;text-align:center;}
 #asset-container {text-align:center;}
 
 #asset-container img {border-radius: 12px 12px 12px 12px;
-	background-image: url("https://stampchain.io/images/transparent-bg.png");
+	background-image: url("/images/transparent-bg.png");
         background-size: 3px;}
 	
 #asset-container pre {color:white;text-align:center;}
