@@ -55,6 +55,9 @@ body {
 	margin: 1px 0;
 		}
 
+#data-container {text-align:center;}	
+
+
 #data-container img {
 	border-radius: 12px 12px 0px 0px;
 	max-width: 100%;
