@@ -33,7 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
+function isValidBase58Address(address, network) {
+    try {
+      const decoded = bitcoin.address.toOutputScript(address, network);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+  
 function convertImageToBase64(imageFile) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -50,13 +58,19 @@ function convertImageToBase64(imageFile) {
         reader.readAsDataURL(imageFile);
     });
 }
-
+  
 async function sendDataToLambda(base64String, bitcoinAddress) {
     if (base64String.length > 7000) {
         alert("The base64 string is too long (over 7000 characters). Please upload a smaller image.");
         document.getElementById("please-wait").hidden = true;
         return;
     }
+    if (!isValidBase58Address(bitcoinAddress, mainnet)) {
+        alert("Please enter a valid Base58 Bitcoin address (Segwit is not supported).");
+        document.getElementById("please-wait").hidden = true;
+        return;
+      }
+    
     // const apiEndpoint = "https://kbwl5ukvwrwtzuacdlz3bkzc4a0ezjgz.lambda-url.us-east-1.on.aws/"
     const apiEndpoint = "https://yxzz5lsstucttpyholm7dppkhq0pdose.lambda-url.us-east-1.on.aws/"
 
