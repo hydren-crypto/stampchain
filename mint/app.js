@@ -73,8 +73,8 @@ async function sendDataToLambda(base64String, bitcoinAddress) {
     //     return;
     //   }
     
-    // const apiEndpoint = "https://kbwl5ukvwrwtzuacdlz3bkzc4a0ezjgz.lambda-url.us-east-1.on.aws/"
-    const apiEndpoint = "https://yxzz5lsstucttpyholm7dppkhq0pdose.lambda-url.us-east-1.on.aws/"
+    const apiEndpoint = "https://kbwl5ukvwrwtzuacdlz3bkzc4a0ezjgz.lambda-url.us-east-1.on.aws/"
+    //const apiEndpoint = "https://yxzz5lsstucttpyholm7dppkhq0pdose.lambda-url.us-east-1.on.aws/"
 
     console.log("Sending data to Lambda");
 
