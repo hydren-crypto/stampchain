@@ -11,6 +11,7 @@ function indexPage() {
                 img.src = item.stamp_url;
                 img.width = 210;
                 img.height = 210;
+                img.onerror = 'this.onerror=null;this.src=\'https://i.imgur.com/iF2IoN6.png\';';
                 img.style.objectFit = 'contain';
                 img.style.imageRendering = 'pixelated';
                 img.style.imageRendering = '-moz-crisp-edges';
@@ -100,12 +101,15 @@ function assetPage() {
     img.src = data.stamp_url;
     img.width = 420;
     img.height = 420;
+    img.onerror = 'this.onerror=null;this.src=\'https://i.imgur.com/iF2IoN6.png\';';
     img.style.objectFit = 'contain';
     img.style.imageRendering = 'pixelated';
     img.style.imageRendering = '-moz-crisp-edges';
     img.style.imageRendering = 'crisp-edges';
     img.style.backgroundColor = '#000000';
     assetContainer.appendChild(img);
+      
+
 
     // Display asset details
     const assetDetails = document.createElement('div');
