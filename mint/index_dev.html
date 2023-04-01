@@ -20,9 +20,17 @@
                 <input type="file" id="image-file" accept="image/*">
             </div>
             <div class="form-group">
-                <label for="bitcoin-address">Artist / Creator Bitcoin Address:</label>
+                <label for="bitcoin-address">Artist / Creator Bitcoin Address (Base58):</label>
                 <input type="text" id="bitcoin-address" required>
             </div>
+            <div class="form-group">
+                <label for="creator-name">Artist / Creator Name (optional):</label>
+                <input type="text" id="creator-name">
+            </div>
+            <div class="form-group">
+                <label for="collection-name">Collection Name (optional):</label>
+                <input type="text" id="collection-name">
+            </div>    
             <button type="submit">Submit</button>
         </form>
         <p id="please-wait" hidden>Please wait...</p>
