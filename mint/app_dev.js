@@ -15,17 +15,19 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("please-wait").hidden = false;
 
         const imageFile = imageFileInput.files[0];
-        const bitcoinAddress = document.getElementById("bitcoin-address").value;
 
         if (!imageFile) {
             alert("Please upload an image.");
             return;
         }
 
+        const bitcoinAddress = document.getElementById("bitcoin-address").value;
         const base64String = await convertImageToBase64(imageFile);
-
-        sendDataToLambda(base64String, bitcoinAddress);
-
+        const fileName = imageFile.name;
+        const creatorName = document.getElementById("creator-name").value;
+        const collectionName = document.getElementById("collection-name").value;
+        sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName);
+        
         // Disable the submit button after sending data
         submitButton.disabled = true;
     });
@@ -62,20 +64,19 @@ function convertImageToBase64(imageFile) {
     });
 }
   
-async function sendDataToLambda(base64String, bitcoinAddress) {
+async function sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName) {
     if (base64String.length > 7000) {
         alert("The base64 string is too long (over 7000 characters). Please upload a smaller image.");
         document.getElementById("please-wait").hidden = true;
         return;
     }
 
-    //const apiEndpoint = "https://kbwl5ukvwrwtzuacdlz3bkzc4a0ezjgz.lambda-url.us-east-1.on.aws/";
     const apiEndpoint = "https://yxzz5lsstucttpyholm7dppkhq0pdose.lambda-url.us-east-1.on.aws/";
 
-    console.log("Sending data to Lambda");
+    console.log("Sending data");
 
     try {
-        console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress });
+        console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, fileName, collectionName, creatorName });
 
         const response = await fetch(apiEndpoint, {
             method: "POST",
@@ -84,18 +85,19 @@ async function sendDataToLambda(base64String, bitcoinAddress) {
             },
             body: JSON.stringify({
                 file_content: base64String,
-                address: bitcoinAddress
+                address: bitcoinAddress,
+                file_name: fileName,
+                collection_name: collectionName,
+                creator_name: creatorName
             })
         });
 
-        console.log("Received response from Lambda:", response);
+        console.log("Received response:", response);
 
         if (response.ok) {
             const responseData = await response.json();
-            console.log("Parsed response data:", responseData);
 
             const responseBody = responseData;
-            console.log("Parsed response body:", responseBody);
 
             document.getElementById("please-wait").hidden = true;
 

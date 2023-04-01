@@ -1,5 +1,6 @@
 // const mainnet = bitcoin.networks.bitcoin;
 
+
 document.addEventListener("DOMContentLoaded", () => {
     const uploadForm = document.getElementById("upload-form");
     const imageFileInput = document.getElementById("image-file");
@@ -67,11 +68,6 @@ async function sendDataToLambda(base64String, bitcoinAddress) {
         document.getElementById("please-wait").hidden = true;
         return;
     }
-    // if (!isValidBase58Address(bitcoinAddress, mainnet)) {
-    //     alert("Please enter a valid Base58 Bitcoin address (Segwit is not supported).");
-    //     document.getElementById("please-wait").hidden = true;
-    //     return;
-    //   }
     
     const apiEndpoint = "https://kbwl5ukvwrwtzuacdlz3bkzc4a0ezjgz.lambda-url.us-east-1.on.aws/"
     //const apiEndpoint = "https://yxzz5lsstucttpyholm7dppkhq0pdose.lambda-url.us-east-1.on.aws/"
@@ -80,7 +76,7 @@ async function sendDataToLambda(base64String, bitcoinAddress) {
 
     try {
         console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress });
-   
+
         const response = await fetch(apiEndpoint, {
             method: "POST",
             headers: {
@@ -89,17 +85,17 @@ async function sendDataToLambda(base64String, bitcoinAddress) {
             body: JSON.stringify({
                 file_content: base64String,
                 address: bitcoinAddress
-            })            
+            })
         });
 
-        console.log("Received response from Lambda:", response);
+        console.log("Received response:", response);
 
         if (response.ok) {
             const responseData = await response.json();
-            console.log("Parsed response data:", responseData);
-            
+            // console.log("Parsed response data:", responseData);
+
             const responseBody = responseData;
-            console.log("Parsed response body:", responseBody);
+            // console.log("Parsed response body:", responseBody);
 
             document.getElementById("please-wait").hidden = true;
 
@@ -111,8 +107,13 @@ async function sendDataToLambda(base64String, bitcoinAddress) {
     } catch (error) {
         console.error("Error during fetch operation:", error);
         alert("An error occurred while sending data.");
+    } finally {
+        // Re-enable the submit button and hide the "please wait" message
+        submitButton.disabled = false;
+        document.getElementById("please-wait").hidden = true;
     }
 }
+
 
 function displayOutput(data) {
     const outputDiv = document.getElementById("output");
