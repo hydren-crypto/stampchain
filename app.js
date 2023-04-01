@@ -11,7 +11,10 @@ function indexPage() {
                 img.src = item.stamp_url;
                 img.width = 210;
                 img.height = 210;
-                img.onerror = "this.onerror=null;this.src='images/sad.png';";
+                img.onerror = function() {
+                    this.onerror = null;
+                    this.src = 'images/sad.png';
+                };
                 img.style.objectFit = 'contain';
                 img.style.imageRendering = 'pixelated';
                 img.style.imageRendering = '-moz-crisp-edges';
@@ -101,7 +104,10 @@ function assetPage() {
     img.src = data.stamp_url;
     img.width = 420;
     img.height = 420;
-    img.onerror = "this.onerror=null;this.src='images/sad.png';";
+    img.onerror = function() {
+        this.onerror = null;
+        this.src = 'images/sad.png';
+     };    
     img.style.objectFit = 'contain';
     img.style.imageRendering = 'pixelated';
     img.style.imageRendering = '-moz-crisp-edges';
