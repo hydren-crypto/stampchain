@@ -26,7 +26,7 @@ function indexPage() {
     // Clear the previous items from the container
     dataContainer.innerHTML = '';
 
-    data.reverse().forEach((item, index) => {
+    data.forEach((item, index) => {
       const itemContainer = document.createElement('div');
       itemContainer.classList.add('item');
       if (item.stamp_url) {
