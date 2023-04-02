@@ -181,7 +181,7 @@ function assetPage() {
     assetDetails.appendChild(assetDetail);
 
     const txHashDetail = document.createElement('pre');
-    txHashDetail.innerText = `Tx Hash: ${data.tx_hash}`;
+    txHashDetail.innerText = `BTC TX: ${data.tx_hash}`;
     assetDetails.appendChild(txHashDetail);
 
     assetContainer.appendChild(assetDetails);
