@@ -9,6 +9,9 @@ function indexPage() {
     fetch('https://stampchain.io/stamp.json')
       .then(response => response.json())
       .then(data => {
+        // Reverse the data array to start with the newest item
+        data.reverse();
+
         const startIndex = (page - 1) * itemsPerPage;
         const endIndex = page * itemsPerPage;
         const pageData = data.slice(startIndex, endIndex);
