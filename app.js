@@ -25,6 +25,12 @@ function indexPage() {
             const stampInfo = document.createElement('pre');
             stampInfo.innerText = `Stamp: ${item.stamp}`;
             itemContainer.appendChild(stampInfo);
+
+            const txHashInfo = document.createElement('pre');
+            const truncatedTxHash = `${item.tx_hash.slice(0, 5)}...${item.tx_hash.slice(-5)}`;
+            txHashInfo.innerText = `Tx Hash: ${truncatedTxHash}`;
+            itemContainer.appendChild(txHashInfo);
+
             const viewMoreBtn = document.createElement('button');
             viewMoreBtn.innerText = 'View More';
             viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
