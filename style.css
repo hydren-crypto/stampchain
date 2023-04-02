@@ -114,3 +114,6 @@ h3 {color:white;text-align:center;}
 	
 #asset-container pre {color:white;text-align:center;}
 #asset-container pre a {color:white;text-align:center;}
+
+#pagination-container {text-align:center;}
+#pagination-container button {margin:10px;background-color:black;}
