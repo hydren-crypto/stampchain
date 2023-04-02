@@ -1,6 +1,6 @@
 // Set the current page and items per page
 let currentPage = 1;
-const itemsPerPage = 100;
+const itemsPerPage = 1000;
 
 function indexPage() {
   fetchDataAndRender(currentPage);
@@ -70,7 +70,7 @@ function indexPage() {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     const prevButton = document.createElement('button');
-    prevButton.innerText = '< Previous';
+    prevButton.innerText = '< Next';
     prevButton.disabled = page === 1;
     prevButton.addEventListener('click', () => {
       currentPage--;
@@ -78,7 +78,7 @@ function indexPage() {
     });
 
     const nextButton = document.createElement('button');
-    nextButton.innerText = 'Next >';
+    nextButton.innerText = 'Previous >';
     nextButton.disabled = page === totalPages;
     nextButton.addEventListener('click', () => {
       currentPage++;
