@@ -1,14 +1,16 @@
-
 body {
-	background-color: #181818;
-	color: #6d6b6b;
-	font-family: Courier New;
-	text-transform: uppercase;
-	}
+    background-color: #181818;
+    color: #6d6b6b;
+    font-family: Courier New;
+    text-transform: uppercase;
+}
 
 .container {
     width: 50%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .form-group {
@@ -35,17 +37,21 @@ input[type="text"] {
 
 button {
     display: inline-block;
-    background-color: #007BFF;
+    background-color: #666666;
     color: white;
-    padding: 0.5rem 1rem;
+    padding: 10px 20px;
     border: none;
+    border-radius: 12px;
+    font-size: 12px;
     cursor: pointer;
-    font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 button:hover {
-    background-color: #0056B3;
+    background-color: #555555;
 }
+
 
 .item {
     display: flex;
@@ -55,14 +61,22 @@ button:hover {
     padding: 15px;
 }
 
-.output-container {
-    width: 50%;
-    margin: 0 auto;
-}
-
 #output {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-top: 15px;
+}
+
+.item > p:not(:last-child) {
+    margin-bottom: 0;
+}
+
+.item > p:nth-child(2) {
+    white-space: pre-wrap;
+}
+
+.item > p:nth-child(3) {
+    white-space: pre-wrap;
 }
