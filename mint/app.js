@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const isValidAddress = await isValidBTCAddress(bitcoinAddress);
         if (!isValidAddress) {
             alert('Please enter a valid Bitcoin address (Base58 or Bech32).');
+            document.getElementById("please-wait").hidden = true;
             return;
         }
 
@@ -39,7 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
     imageFileInput.addEventListener("change", () => {
         submitButton.disabled = false;
     });
+
+    // Re-enable the submit button when the user changes the bitcoin address input
+    bitcoinAddressInput.addEventListener("input", () => {
+        submitButton.disabled = false;
+    });
 });
+
 
   
 function convertImageToBase64(imageFile) {
