@@ -2,7 +2,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const uploadForm = document.getElementById("upload-form");
     const imageFileInput = document.getElementById("image-file");
-    const bitcoinAddressInput = document.getElementById("bitcoin-address");
     const submitButton = uploadForm.querySelector("button[type='submit']");
 
     uploadForm.addEventListener("submit", async (e) => {
@@ -14,17 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("please-wait").hidden = false;
 
         const imageFile = imageFileInput.files[0];
-        const bitcoinAddress = bitcoinAddressInput.value;
+        const bitcoinAddress = document.getElementById("bitcoin-address").value;
 
         if (!imageFile) {
             alert("Please upload an image.");
-            return;
-        }
-
-        const isValidAddress = await isValidBTCAddress(bitcoinAddress);
-        if (!isValidAddress) {
-            alert('Please enter a valid Bitcoin address (Base58 or Bech32).');
-            document.getElementById("please-wait").hidden = true;
             return;
         }
 
@@ -40,13 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     imageFileInput.addEventListener("change", () => {
         submitButton.disabled = false;
     });
-
-    // Re-enable the submit button when the user changes the bitcoin address input
-    bitcoinAddressInput.addEventListener("input", () => {
-        submitButton.disabled = false;
-    });
 });
-
 
   
 function convertImageToBase64(imageFile) {
@@ -159,93 +145,4 @@ function displayOutput(data) {
         
         document.getElementById("confirmation-message").hidden = false;
     });
-}
-
-async function isValidBTCAddress(address) {
-    const base58regex = /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/;
-    const bech32regex = /^bc1[a-zA-HJ-NP-Z0-9]{6,}$/;
-
-    const isBase58 = base58regex.test(address);
-    const isBech32 = bech32regex.test(address);
-
-    if (!isBase58 && !isBech32) {
-        return false;
-    }
-
-    if (isBase58) {
-        const alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
-        let num = BigInt(0);
-        let base = BigInt(1);
-
-        for (let i = address.length - 1; i >= 0; i--) {
-            const char = address[i];
-            const value = BigInt(alphabet.indexOf(char));
-
-            if (value === -1n) {
-                return false;
-            }
-
-            num = num + (value * base);
-            base = base * 58n;
-        }
-
-        const numHex = num.toString(16);
-        const padNumHex = '0'.repeat(50 - numHex.length) + numHex;
-        const versionAndHash = padNumHex.slice(0, -8);
-        const checksum = padNumHex.slice(-8);
-
-        const sha256 = (message) => {
-            const msgBuffer = new TextEncoder('utf-8').encode(message);
-            return crypto.subtle.digest('SHA-256', msgBuffer)
-                .then((buf) => {
-                    return Array.prototype.map.call(new Uint8Array(buf), x => ('00' + x.toString(16)).slice(-2)).join('');
-                });
-        };
-
-        const isValidBase58 = await sha256(versionAndHash)
-            .then(sha256)
-            .then((hash) => {
-                const calculatedChecksum = hash.slice(0, 8).toUpperCase();
-                return checksum.toUpperCase() === calculatedChecksum;
-            });
-
-        return isValidBase58;
-    }
-
-    if (isBech32) {
-        const bech32Alphabet = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
-        const bech32Separator = '1';
-        const [humanReadablePart, dataPart] = address.split(bech32Separator);
-
-        if (humanReadablePart !== 'bc') {
-            return false;
-        }
-
-        const values = [];
-        for (let i = 0; i < dataPart.length; i++) {
-            const value = bech32Alphabet.indexOf(dataPart[i]);
-            if (value === -1) {
-                return false;
-            }
-            values.push(value);
-        }
-
-        const polyMod = (values) => {
-            const GENERATOR = [BigInt(0x3b6a57b2), BigInt(0x26508e6d), BigInt(0x1ea119fa), BigInt(0x3d4233dd), BigInt(0x2a1462b3)];
-            let chk = BigInt(1);
-            for (let i = 0; i < values.length; i++) {
-                const top = chk >> BigInt(25);
-                chk = (chk & BigInt(0x1ffffff)) << BigInt(5) ^ BigInt(values[i]);
-                for (let j = 0; j < 5; j++) {
-                    if ((top >> BigInt(j)) & BigInt(1)) {
-                        chk ^= GENERATOR[j];
-                    }
-                }
-            }
-            return chk;
-        };
-
-        const checksum = polyMod(values.concat([0, 0, 0, 0, 0, 0])) ^ BigInt(1);
-        return checksum === BigInt(0);
-    }
 }
