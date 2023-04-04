@@ -117,3 +117,11 @@ h3 {color:white;text-align:center;}
 
 #pagination-container {text-align:center;}
 #pagination-container button {margin:10px;background-color:black;}
+
+#upload-form {color:white;text-align:center;}
+#output {color:white;text-align:center;}
+#confirmation-message {color:white;text-align:center;}
+#notes {color:white;text-align:center;font-size:12px;color:red;}
+#please-wait {color:white;text-align:center;}
+label {margin:40px;display:block;}
+#bitcoin-address {height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
