@@ -26,7 +26,7 @@
                 <input type="file" id="image-file" accept="image/*">
             </div>
             <div class="form-group">
-                <label for="bitcoin-address">Artist / Creator Bitcoin Address (Base58):</label>
+                <label for="bitcoin-address">Artist / Creator Bitcoin Address.<br>Note: Legacy (starts with 1) or Segwit (starts with bc1). Do not use a Taproot address:</label>
                 <input type="text" id="bitcoin-address" required>
             </div>        
             <button type="submit">Submit</button>
@@ -34,7 +34,7 @@
         <p id="please-wait" hidden>Please wait...</p>
         <div id="output"></div>
         <p id="confirmation-message" hidden>You will receive no further confirmation on this page. Please monitor the artist / creator wallet for the incoming stamp. Non-image files are not supported on the STAMP protocol.</p>
-        <p id="notes"> This app is under development. Stamps will be minted quickly, but we are experiencing delays sending the associated counterparty assets.</p>
+        <p id="notes">This app is under development. Stamps will be minted quickly, but we are experiencing delays sending the associated counterparty assets. A conveniece charge is added when using this service.</p>
     </div>
     <!DOCTYPE html>
 
