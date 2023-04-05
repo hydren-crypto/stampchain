@@ -24,9 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const bitcoinAddress = document.getElementById("bitcoin-address").value;
         const base64String = await convertImageToBase64(imageFile);
         const fileName = imageFile.name;
-        const creatorName = document.getElementById("creator-name").value;
-        const collectionName = document.getElementById("collection-name").value;
-        sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName);
+        const creatorName = document.getElementById("creator-name").value || "Undefined";
+        const collectionName = document.getElementById("collection-name").value || "Undefined";
+        const assetLock = document.getElementById("asset-lock").value;
+        const assetIssuance = document.getElementById("asset-issuance").value;
+        sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance);
         
         // Disable the submit button after sending data
         submitButton.disabled = true;
@@ -64,7 +66,7 @@ function convertImageToBase64(imageFile) {
     });
 }
   
-async function sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName) {
+async function sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance) {
     if (base64String.length > 7000) {
         alert("The base64 string is too long (over 7000 characters). Please upload a smaller image.");
         document.getElementById("please-wait").hidden = true;
@@ -76,7 +78,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
     console.log("Sending data");
 
     try {
-        console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, fileName, collectionName, creatorName });
+        console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance });
 
         const response = await fetch(apiEndpoint, {
             method: "POST",
@@ -88,7 +90,9 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
                 address: bitcoinAddress,
                 file_name: fileName,
                 collection_name: collectionName,
-                creator_name: creatorName
+                creator_name: creatorName,
+                asset_lock: assetLock ?? true,
+                asset_issuance: assetIssuance ?? 1
             })
         });
 
