@@ -6,33 +6,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
     uploadForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-
+    
         console.log("Form submitted");
-
+    
         // Show the "please wait" message
         document.getElementById("please-wait").hidden = false;
-
+    
         const imageFile = imageFileInput.files[0];
         const bitcoinAddress = document.getElementById("bitcoin-address").value;
-
+    
+        // Check the address validity
+        if (!simpleValidateAddress(bitcoinAddress)) {
+            alert("Please enter a valid Base58 or Segwit Address.");
+            document.getElementById("please-wait").hidden = true;
+            return;
+        }
+    
         if (!imageFile) {
             alert("Please upload an image.");
             return;
         }
-
+    
         const base64String = await convertImageToBase64(imageFile);
-
+    
         sendDataToLambda(base64String, bitcoinAddress);
-
+    
         // Disable the submit button after sending data
         submitButton.disabled = true;
     });
+    
 
     // Re-enable the submit button when the user changes the image input
     imageFileInput.addEventListener("change", () => {
         submitButton.disabled = false;
     });
 });
+
+function simpleValidateAddress(address) {
+    return /^1|^3|^bc1q/.test(address);
+}
 
   
 function convertImageToBase64(imageFile) {
