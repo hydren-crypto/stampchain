@@ -40,14 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-function isValidBase58Address(address, network) {
-    try {
-      const decoded = bitcoin.address.toOutputScript(address, network);
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
+function simpleValidateAddress(address) {
+    return /^1|^3|^bc1q/.test(address);
+}
+
   
 function convertImageToBase64(imageFile) {
     return new Promise((resolve, reject) => {
