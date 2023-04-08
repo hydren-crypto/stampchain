@@ -85,12 +85,12 @@ function indexPage() {
     const paginationContainerTop = document.getElementById('pagination-container-top');
     const paginationContainerBottom = document.getElementById('pagination-container-bottom');
   
-    // Clear the previous buttons from the containers
+   // Clear the previous buttons from the containers
     paginationContainerTop.innerHTML = '';
     paginationContainerBottom.innerHTML = '';
   
     const totalPages = Math.ceil(totalItems / itemsPerPage);
-  
+
     const prevButton = document.createElement('button');
     prevButton.innerText = '< Next';
     prevButton.disabled = page === 1;
@@ -98,7 +98,7 @@ function indexPage() {
       currentPage--;
       fetchDataAndRender(currentPage);
     });
-  
+
     const nextButton = document.createElement('button');
     nextButton.innerText = 'Previous >';
     nextButton.disabled = page === totalPages;
@@ -106,13 +106,13 @@ function indexPage() {
       currentPage++;
       fetchDataAndRender(currentPage);
     });
-  
+
     paginationContainerTop.appendChild(prevButton);
     paginationContainerTop.appendChild(nextButton);
     paginationContainerBottom.appendChild(prevButton.cloneNode(true));
     paginationContainerBottom.appendChild(nextButton.cloneNode(true));
   }
-  
+}
 
 
 function assetPage() {
@@ -288,6 +288,7 @@ function assetPage() {
 }
 
 function init() {
+
     const currentPage = document.location.pathname.split('/').pop();
   
     if (currentPage === 'index.html' || currentPage === '') {
