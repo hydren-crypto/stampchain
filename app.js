@@ -102,18 +102,19 @@ function assetPage() {
   async function fetchAssetDetails() {
     const urlParams = new URLSearchParams(window.location.search);
     const stampNumber = urlParams.get('stampNumber');
-    const asset = urlParams.get('asset');
+    const assetParam = urlParams.get('asset');
   
+    let assetData;
     try {
       const assetResponse = await fetch('https://stampchain.io/stamp.json');
       const allAssetData = await assetResponse.json();
   
-      let assetData;
       if (stampNumber) {
         assetData = allAssetData.find(asset => asset.stamp === parseInt(stampNumber));
-      } else if (asset) {
-        assetData = allAssetData.find(asset => asset.asset === asset);
+      } else if (assetParam) {
+        assetData = allAssetData.find(asset => asset.asset === assetParam);
       }
+
   
       if (assetData) {
         displayAssetDetails(assetData);
