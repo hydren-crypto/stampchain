@@ -82,32 +82,34 @@ function indexPage() {
   }
 
   function renderPaginationButtons(page, totalItems) {
-    const paginationContainer = document.getElementById('pagination-container');
-    // Clear the previous buttons from the container
-    paginationContainer.innerHTML = '';
-
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-    const prevButton = document.createElement('button');
-    prevButton.innerText = '< Next';
-    prevButton.disabled = page === 1;
-    prevButton.addEventListener('click', () => {
-      currentPage--;
-      fetchDataAndRender(currentPage);
+    const paginationContainers = document.querySelectorAll('.pagination-container');
+    
+    paginationContainers.forEach(paginationContainer => {
+      paginationContainer.innerHTML = '';
+  
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+  
+      const prevButton = document.createElement('button');
+      prevButton.innerText = '< Next';
+      prevButton.disabled = page === 1;
+      prevButton.addEventListener('click', () => {
+        currentPage--;
+        fetchDataAndRender(currentPage);
+      });
+  
+      const nextButton = document.createElement('button');
+      nextButton.innerText = 'Previous >';
+      nextButton.disabled = page === totalPages;
+      nextButton.addEventListener('click', () => {
+        currentPage++;
+        fetchDataAndRender(currentPage);
+      });
+  
+      paginationContainer.appendChild(prevButton);
+      paginationContainer.appendChild(nextButton);
     });
-
-    const nextButton = document.createElement('button');
-    nextButton.innerText = 'Previous >';
-    nextButton.disabled = page === totalPages;
-    nextButton.addEventListener('click', () => {
-      currentPage++;
-      fetchDataAndRender(currentPage);
-    });
-
-    paginationContainer.appendChild(prevButton);
-    paginationContainer.appendChild(nextButton);
   }
-}
+  
 
 
 function assetPage() {
