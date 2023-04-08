@@ -90,11 +90,31 @@ function indexPage() {
     const prevButtonBottom = prevButtonTop.cloneNode(true);
     const nextButtonBottom = nextButtonTop.cloneNode(true);
   
+    prevButtonBottom.removeEventListener('click', () => {
+      currentPage--;
+      fetchDataAndRender(currentPage);
+    });
+  
+    nextButtonBottom.removeEventListener('click', () => {
+      currentPage++;
+      fetchDataAndRender(currentPage);
+    });
+  
+    prevButtonBottom.addEventListener('click', () => {
+      currentPage--;
+      fetchDataAndRender(currentPage);
+    });
+  
+    nextButtonBottom.addEventListener('click', () => {
+      currentPage++;
+      fetchDataAndRender(currentPage);
+    });
+  
     paginationContainerTop.appendChild(prevButtonTop);
     paginationContainerTop.appendChild(nextButtonTop);
     paginationContainerBottom.appendChild(prevButtonBottom);
     paginationContainerBottom.appendChild(nextButtonBottom);
-  }  
+  }ß  
 }
 
 
