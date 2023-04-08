@@ -23,11 +23,6 @@ function indexPage() {
 
   function renderData(data) {
     const dataContainer = document.getElementById('data-container');
-    if (!dataContainer) {
-      console.error('Element with ID "data-container" not found.');
-      return;
-    }
-  
     // Clear the previous items from the container
     dataContainer.innerHTML = '';
 
