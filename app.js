@@ -82,32 +82,35 @@ function indexPage() {
   }
 
   function renderPaginationButtons(page, totalItems) {
-    const paginationContainers = document.querySelectorAll('.pagination-container');
-    
-    paginationContainers.forEach(paginationContainer => {
-      paginationContainer.innerHTML = '';
+    const paginationContainerTop = document.getElementById('pagination-container-top');
+    const paginationContainerBottom = document.getElementById('pagination-container-bottom');
   
-      const totalPages = Math.ceil(totalItems / itemsPerPage);
+    // Clear the previous buttons from the containers
+    paginationContainerTop.innerHTML = '';
+    paginationContainerBottom.innerHTML = '';
   
-      const prevButton = document.createElement('button');
-      prevButton.innerText = '< Next';
-      prevButton.disabled = page === 1;
-      prevButton.addEventListener('click', () => {
-        currentPage--;
-        fetchDataAndRender(currentPage);
-      });
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
   
-      const nextButton = document.createElement('button');
-      nextButton.innerText = 'Previous >';
-      nextButton.disabled = page === totalPages;
-      nextButton.addEventListener('click', () => {
-        currentPage++;
-        fetchDataAndRender(currentPage);
-      });
-  
-      paginationContainer.appendChild(prevButton);
-      paginationContainer.appendChild(nextButton);
+    const prevButton = document.createElement('button');
+    prevButton.innerText = '< Next';
+    prevButton.disabled = page === 1;
+    prevButton.addEventListener('click', () => {
+      currentPage--;
+      fetchDataAndRender(currentPage);
     });
+  
+    const nextButton = document.createElement('button');
+    nextButton.innerText = 'Previous >';
+    nextButton.disabled = page === totalPages;
+    nextButton.addEventListener('click', () => {
+      currentPage++;
+      fetchDataAndRender(currentPage);
+    });
+  
+    paginationContainerTop.appendChild(prevButton);
+    paginationContainerTop.appendChild(nextButton);
+    paginationContainerBottom.appendChild(prevButton.cloneNode(true));
+    paginationContainerBottom.appendChild(nextButton.cloneNode(true));
   }
   
 
