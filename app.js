@@ -90,6 +90,7 @@ function indexPage() {
     const prevButtonBottom = prevButtonTop.cloneNode(true);
     const nextButtonBottom = nextButtonTop.cloneNode(true);
   
+    // Remove the previous event listeners
     prevButtonBottom.removeEventListener('click', () => {
       currentPage--;
       fetchDataAndRender(currentPage);
@@ -100,6 +101,7 @@ function indexPage() {
       fetchDataAndRender(currentPage);
     });
   
+    // Add new event listeners
     prevButtonBottom.addEventListener('click', () => {
       currentPage--;
       fetchDataAndRender(currentPage);
@@ -110,11 +112,12 @@ function indexPage() {
       fetchDataAndRender(currentPage);
     });
   
+    // Replace the old buttons in the DOM with the new ones
     paginationContainerTop.appendChild(prevButtonTop);
     paginationContainerTop.appendChild(nextButtonTop);
     paginationContainerBottom.appendChild(prevButtonBottom);
     paginationContainerBottom.appendChild(nextButtonBottom);
-  }ß  
+  }  
 }
 
 
