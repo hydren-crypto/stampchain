@@ -115,8 +115,10 @@ h3 {color:white;text-align:center;}
 #asset-container pre {color:white;text-align:center;}
 #asset-container pre a {color:white;text-align:center;}
 
-#pagination-container {text-align:center;}
-#pagination-container button {margin:10px;background-color:black;}
+#pagination-container-top {text-align:center;}
+#pagination-container-top button {margin:10px;background-color:black;}
+#pagination-container-bottom {text-align:center;}
+#pagination-container-bottom button {margin:10px;background-color:black;}
 
 #upload-form {text-transform:none;color:white;text-align:center;}
 #output {text-transform:none;color:white;text-align:center;}
