@@ -102,14 +102,21 @@ function assetPage() {
   async function fetchAssetDetails() {
     const urlParams = new URLSearchParams(window.location.search);
     const stampNumber = urlParams.get('stampNumber');
-
+    const asset = urlParams.get('asset');
+  
     try {
-        const assetResponse = await fetch('https://stampchain.io/stamp.json');
-        const allAssetData = await assetResponse.json();
-        const assetData = allAssetData.find(asset => asset.stamp === parseInt(stampNumber));
-
-        if (assetData) {
-            displayAssetDetails(assetData);
+      const assetResponse = await fetch('https://stampchain.io/stamp.json');
+      const allAssetData = await assetResponse.json();
+  
+      let assetData;
+      if (stampNumber) {
+        assetData = allAssetData.find(asset => asset.stamp === parseInt(stampNumber));
+      } else if (asset) {
+        assetData = allAssetData.find(asset => asset.asset === asset);
+      }
+  
+      if (assetData) {
+        displayAssetDetails(assetData);
 
             const proxyUrl = 'https://k6e0ufzq8h.execute-api.us-east-1.amazonaws.com/beta/counterpartyproxy';
 
