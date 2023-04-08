@@ -258,14 +258,32 @@ function assetPage() {
 }
 
 function init() {
-    const currentPage = document.location.pathname.split('/').pop();
-  
-    if (currentPage === 'index.html' || currentPage === '') {
-      indexPage();
-    } else if (currentPage === 'asset.html') {
-      assetPage();
-    }
+  const currentPage = document.location.pathname.split('/').pop();
+
+  if (currentPage === 'index.html' || currentPage === '') {
+    indexPage();
+
+    // Add event listener for search form submit
+    const searchForm = document.getElementById('search-form');
+    searchForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const searchInput = document.getElementById('search-input');
+      const searchValue = searchInput.value.trim();
+      if (/^\d+$/.test(searchValue)) {
+        // Redirect to asset page with stampNumber parameter
+        window.location.href = `asset.html?stampNumber=${searchValue}`;
+      } else if (/^A\d+$/.test(searchValue)) {
+        // Redirect to asset page with asset parameter
+        window.location.href = `asset.html?asset=${searchValue}`;
+      } else {
+        console.error('Invalid search input');
+      }
+    });
+  } else if (currentPage === 'asset.html') {
+    assetPage();
   }
+}
+
 
 
 // Call the init function when the DOM is fully loaded
