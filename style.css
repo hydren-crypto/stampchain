@@ -125,3 +125,7 @@ h3 {color:white;text-align:center;}
 #please-wait {text-transform:none;color:white;text-align:center;}
 label {text-transform:none;margin:40px;display:block;}
 #bitcoin-address {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
+#creator-name {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
+#collection-name {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
+#asset-lock {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
+#asset-issuance {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
