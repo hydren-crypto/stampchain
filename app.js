@@ -3,39 +3,20 @@ let currentPage = 1;
 const itemsPerPage = 1000;
 
 function indexPage() {
-  const searchInput = document.getElementById('search-input');
-  const searchButton = document.getElementById('search-button');
-
-  searchButton.addEventListener('click', () => {
-    const searchQuery = searchInput.value.toLowerCase().trim();
-
-    if (searchQuery !== '') {
-      fetchDataAndRender(currentPage, searchQuery);
-    }
-  });
-
   fetchDataAndRender(currentPage);
 
-  function fetchDataAndRender(page, searchQuery = '') {
+  function fetchDataAndRender(page) {
     fetch('https://stampchain.io/stamp.json')
       .then(response => response.json())
       .then(data => {
         // Reverse the data array to start with the newest item
         data.reverse();
 
-        // Filter the data based on the search query
-        const filteredData = data.filter(item => {
-          const stamp = item.stamp;
-          const asset = item.asset.toUpperCase();
-          const searchQueryUpper = searchQuery.toUpperCase();
-          return stamp.includes(searchQuery) || asset.includes(searchQueryUpper);
-        });        
-
         const startIndex = (page - 1) * itemsPerPage;
         const endIndex = page * itemsPerPage;
-        const pageData = filteredData.slice(startIndex, endIndex);
+        const pageData = data.slice(startIndex, endIndex);
         renderData(pageData);
-        renderPaginationButtons(page, filteredData.length);
+        renderPaginationButtons(page, data.length);
       })
       .catch(error => console.error(error));
   }
@@ -82,35 +63,32 @@ function indexPage() {
   }
 
   function renderPaginationButtons(page, totalItems) {
-    const paginationContainerTop = document.getElementById('pagination-container-top');
-    const paginationContainerBottom = document.getElementById('pagination-container-bottom');
+    const paginationContainers = document.querySelectorAll('.pagination-container');
+    
+    paginationContainers.forEach(paginationContainer => {
+      paginationContainer.innerHTML = '';
   
-   // Clear the previous buttons from the containers
-    paginationContainerTop.innerHTML = '';
-    paginationContainerBottom.innerHTML = '';
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
   
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-    const prevButton = document.createElement('button');
-    prevButton.innerText = '< Next';
-    prevButton.disabled = page === 1;
-    prevButton.addEventListener('click', () => {
-      currentPage--;
-      fetchDataAndRender(currentPage);
+      const prevButton = document.createElement('button');
+      prevButton.innerText = '< Next';
+      prevButton.disabled = page === 1;
+      prevButton.addEventListener('click', () => {
+        currentPage--;
+        fetchDataAndRender(currentPage);
+      });
+  
+      const nextButton = document.createElement('button');
+      nextButton.innerText = 'Previous >';
+      nextButton.disabled = page === totalPages;
+      nextButton.addEventListener('click', () => {
+        currentPage++;
+        fetchDataAndRender(currentPage);
+      });
+  
+      paginationContainer.appendChild(prevButton);
+      paginationContainer.appendChild(nextButton);
     });
-
-    const nextButton = document.createElement('button');
-    nextButton.innerText = 'Previous >';
-    nextButton.disabled = page === totalPages;
-    nextButton.addEventListener('click', () => {
-      currentPage++;
-      fetchDataAndRender(currentPage);
-    });
-
-    paginationContainerTop.appendChild(prevButton);
-    paginationContainerTop.appendChild(nextButton);
-    paginationContainerBottom.appendChild(prevButton.cloneNode(true));
-    paginationContainerBottom.appendChild(nextButton.cloneNode(true));
   }
 }
 
@@ -118,78 +96,57 @@ function indexPage() {
 function assetPage() {
   async function fetchAssetDetails() {
     const urlParams = new URLSearchParams(window.location.search);
-    let stampNumber = urlParams.get('stampNumber');
-    let assetNumber = urlParams.get('assetNumber');
-    const searchInput = document.getElementById('search-input');
-  
-    if (searchInput.value) {
-      const searchValue = searchInput.value.trim();
-      if (!isNaN(searchValue)) {
-        stampNumber = parseInt(searchValue);
-      } else if (searchValue.match(/^A\d+$/)) {
-        assetNumber = searchValue;
-      } else {
-        console.error('Invalid search value');
-        return;
-      }
-    }
-  
+    const stampNumber = urlParams.get('stampNumber');
+
     try {
-      const assetResponse = await fetch('https://stampchain.io/stamp.json');
-      const allAssetData = await assetResponse.json();
-  
-      let assetData;
-      if (stampNumber) {
-        assetData = allAssetData.find(asset => asset.stamp === stampNumber);
-      } else if (assetNumber) {
-        assetData = allAssetData.find(asset => asset.asset === assetNumber);
-      }
-  
-      if (assetData) {
-        // Display asset details
-        displayAssetDetails(assetData);
-  
-        // Fetch and display counterparty asset details
-        const proxyUrl = 'https://k6e0ufzq8h.execute-api.us-east-1.amazonaws.com/beta/counterpartyproxy';
-  
-        const requestOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Accept': 'application/json, text/javascript',
-            'Authorization': 'Basic ' + btoa('rpc:rpc'),
-          },
-          body: JSON.stringify({
-            rpcUser: 'rpc',
-            rpcPassword: 'rpc',
-            request: {
-              jsonrpc: '2.0',
-              id: 0,
-              method: 'get_asset_info',
-              params: {
-                assets: [assetData.asset],
-              },
-            },
-          }),
-        };
-  
-        const counterpartyResponse = await fetch(proxyUrl, requestOptions);
-        const counterpartyData = await counterpartyResponse.json();
-  
-        if (counterpartyData.result && counterpartyData.result.length > 0) {
-          const counterpartyassetData = counterpartyData.result[0];
-          displayCounterpartyAssetDetails(counterpartyassetData, assetData.tx_hash, assetData.stamp_url);
+        const assetResponse = await fetch('https://stampchain.io/stamp.json');
+        const allAssetData = await assetResponse.json();
+        const assetData = allAssetData.find(asset => asset.stamp === parseInt(stampNumber));
+
+        if (assetData) {
+            displayAssetDetails(assetData);
+
+            const proxyUrl = 'https://k6e0ufzq8h.execute-api.us-east-1.amazonaws.com/beta/counterpartyproxy';
+
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json, text/javascript',
+                    'Authorization': 'Basic ' + btoa('rpc:rpc'),
+                },
+                body: JSON.stringify({
+                    rpcUser: 'rpc',
+                    rpcPassword: 'rpc',
+                    request: {
+                        jsonrpc: '2.0',
+                        id: 0,
+                        method: 'get_asset_info',
+                        params: {
+                            assets: [assetData.asset],
+                        },
+                    },
+                }),
+            };
+
+            const counterpartyResponse = await fetch(proxyUrl, requestOptions);
+            const counterpartyData = await counterpartyResponse.json();
+
+            if (counterpartyData.result && counterpartyData.result.length > 0) {
+                const counterpartyassetData = counterpartyData.result[0];
+                displayCounterpartyAssetDetails(counterpartyassetData, assetData.tx_hash, assetData.stamp_url);
+            } else {
+                console.error('Asset not found on Counterparty');
+            }
+
         } else {
-          console.error('Asset not found on Counterparty');
+            console.error('Asset not found');
         }
-  
-      } else {
-        console.error('Asset not found');
-      }
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
   }
+
 
 
   function displayAssetDetails(data) {
@@ -288,7 +245,6 @@ function assetPage() {
 }
 
 function init() {
-
     const currentPage = document.location.pathname.split('/').pop();
   
     if (currentPage === 'index.html' || currentPage === '') {
