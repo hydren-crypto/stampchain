@@ -131,3 +131,7 @@ label {text-transform:none;margin:40px;display:block;}
 #collection-name {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
 #asset-lock {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
 #asset-issuance {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
+
+#search-form {text-align:center;}
+#search-form label {color:white;margin-bottom:0px;}
+#search-input {border:1px solid yellow;background-color:black;font-size:16px;color:white;padding:8px;}
