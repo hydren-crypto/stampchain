@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const uploadForm = document.getElementById("upload-form");
     const imageFileInput = document.getElementById("image-file");
     const submitButton = uploadForm.querySelector("button[type='submit']");
+    const confirmButton = document.getElementById("confirm-button");
 
     uploadForm.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -36,6 +37,32 @@ document.addEventListener("DOMContentLoaded", () => {
     // Re-enable the submit button when the user changes the image input
     imageFileInput.addEventListener("change", () => {
         submitButton.disabled = false;
+    });
+
+    // Call sendDataToLambda with action "confirm" when the confirm button is clicked
+    confirmButton.addEventListener("click", async () => {
+        // Show the "please wait" message
+        document.getElementById("please-wait").hidden = false;
+
+        const imageFile = imageFileInput.files[0];
+
+        if (!imageFile) {
+            alert("Please upload an image.");
+            return;
+        }
+
+        const bitcoinAddress = document.getElementById("bitcoin-address").value;
+        const base64String = await convertImageToBase64(imageFile);
+        const fileName = imageFile.name;
+        const creatorName = document.getElementById("creator-name").value || "Undefined";
+        const collectionName = document.getElementById("collection-name").value || "Undefined";
+        const assetLock = document.getElementById("asset-lock").checked;
+        const assetIssuance = document.getElementById("asset-issuance").value;
+        const action = "confirm";
+        sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton);
+
+        // Disable the submit button after sending data
+        submitButton.disabled = true;
     });
 });
 
@@ -88,7 +115,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
                 creator_name: creatorName,
                 asset_lock: assetLock,
                 asset_issuance: assetIssuance ?? 1,
-                action: "check"
+                action: action
             })
             
         });
