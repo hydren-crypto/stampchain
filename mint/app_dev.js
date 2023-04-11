@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const assetLock = document.getElementById("asset-lock").checked;
         const assetIssuance = document.getElementById("asset-issuance").value;
         const action = "check";
-        sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action);
+        sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton);
         
         // Disable the submit button after sending data
         submitButton.disabled = true;
@@ -61,7 +61,7 @@ function convertImageToBase64(imageFile) {
     });
 }
 
-async function sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action) {
+async function sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton) {
     if (base64String.length > 7000) {
         alert("The base64 string is too long (over 7000 characters). Please upload a smaller image.");
         document.getElementById("please-wait").hidden = true;
@@ -117,12 +117,14 @@ send
     }
 }
 
-
 function displayOutput(data) {
     const outputDiv = document.getElementById("output");
     console.log("Output Div:", outputDiv);
 
     outputDiv.innerHTML = '';
+
+    const confirmButton = document.getElementById("confirm-button");
+    let shouldDisplayConfirmButton = false;
 
     data.forEach(item => {
         const itemDiv = document.createElement("div");
@@ -131,8 +133,8 @@ function displayOutput(data) {
         const transferAddress = document.createElement("p");
         transferAddress.textContent = `Creator/Artist Address: ${item.transfer_address}`;
         itemDiv.appendChild(transferAddress);
-
-        const formattedFee = !isNaN(parseFloat(item.total_fees_with_dust)) ? parseFloat(item.total_fees_with_dust).toFixed(6) : "Invalid value";
+        const formattedFee = !isNaN(parseFloat(item.total_fees_with_dust)) ? (parseFloat(item.total_fees_with_dust) * 100000000).toFixed(6) : "Invalid value";
+        // const formattedFee = !isNaN(parseFloat(item.total_fees_with_dust)) ? parseFloat(item.total_fees_with_dust).toFixed(6) : "Invalid value";
         const computedFee = document.createElement("p");
         computedFee.textContent = `Total Mint PRICE (BTC): ${formattedFee}`;
         itemDiv.appendChild(computedFee);
@@ -154,11 +156,15 @@ function displayOutput(data) {
             });
 
             itemDiv.appendChild(qrCodeImage);
+        } else {
+            shouldDisplayConfirmButton = true;
         }
 
         outputDiv.appendChild(itemDiv);
-        
+
         document.getElementById("confirmation-message").hidden = false;
     });
-}
 
+    // Conditionally display the "Confirm" button
+    confirmButton.hidden = !shouldDisplayConfirmButton;
+}
