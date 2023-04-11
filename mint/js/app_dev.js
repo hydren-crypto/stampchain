@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const assetLock = document.getElementById("asset-lock").checked;
         const assetIssuance = document.getElementById("asset-issuance").value;
         const action = "check";
-        sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action);
+        sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton);
         
         // Disable the submit button after sending data
         submitButton.disabled = true;
@@ -73,7 +73,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
     console.log("Sending data");
 
     try {
-        console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action });
+        console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton });
 
         const response = await fetch(apiEndpoint, {
             method: "POST",
