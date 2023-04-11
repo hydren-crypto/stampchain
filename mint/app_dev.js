@@ -86,7 +86,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
                 file_name: fileName,
                 collection_name: collectionName,
                 creator_name: creatorName,
-                asset_lock: assetLock ?? true,
+                asset_lock: assetLock === "on" ? true : false,
                 asset_issuance: assetIssuance ?? 1,
                 action: "check"
             })
