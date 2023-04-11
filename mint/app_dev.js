@@ -162,4 +162,3 @@ function displayOutput(data) {
     });
 }
 
-}
