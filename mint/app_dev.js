@@ -94,7 +94,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
         });
 
         console.log("Received response:", response);
-
+send
         if (response.ok) {
             const responseData = await response.json();
 
@@ -141,21 +141,25 @@ function displayOutput(data) {
         currentFeeRate.textContent = `Fee Rate: ${item.current_fee_rate} BTC/kB`;
         itemDiv.appendChild(currentFeeRate);
 
-        const sendtoAddress = document.createElement("p");
-        sendtoAddress.textContent = `Send ${formattedFee} to: ${item.send_to_address}`;
-        itemDiv.appendChild(sendtoAddress);
+        if (item.send_to_address) {
+            const sendtoAddress = document.createElement("p");
+            sendtoAddress.textContent = `Send ${formattedFee} to: ${item.send_to_address}`;
+            itemDiv.appendChild(sendtoAddress);
 
-        const qrCodeImage = document.createElement("img");
-        const btcUri = `bitcoin:${item.send_to_address}?amount=${formattedFee}`;
-        QRCode.toDataURL(btcUri, { width: 256, height: 256 }, function (error, url) {
-            if (error) console.error(error);
-            qrCodeImage.src = url;
-        });
+            const qrCodeImage = document.createElement("img");
+            const btcUri = `bitcoin:${item.send_to_address}?amount=${formattedFee}`;
+            QRCode.toDataURL(btcUri, { width: 256, height: 256 }, function (error, url) {
+                if (error) console.error(error);
+                qrCodeImage.src = url;
+            });
 
-        itemDiv.appendChild(qrCodeImage);
+            itemDiv.appendChild(qrCodeImage);
+        }
 
         outputDiv.appendChild(itemDiv);
         
         document.getElementById("confirmation-message").hidden = false;
     });
+}
+
 }
