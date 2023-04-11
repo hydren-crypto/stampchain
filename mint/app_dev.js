@@ -82,7 +82,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
             },
             body: JSON.stringify({
                 file_content: base64String,
-                address: bitcoinAddress,
+                target_address: bitcoinAddress,
                 file_name: fileName,
                 collection_name: collectionName,
                 creator_name: creatorName,
@@ -90,6 +90,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
                 asset_issuance: assetIssuance ?? 1,
                 action: "check"
             })
+            
         });
 
         console.log("Received response:", response);
