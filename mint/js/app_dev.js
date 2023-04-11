@@ -94,7 +94,6 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
         });
 
         console.log("Received response:", response);
-send
         if (response.ok) {
             const responseData = await response.json();
 
