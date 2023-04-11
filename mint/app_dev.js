@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const fileName = imageFile.name;
         const creatorName = document.getElementById("creator-name").value || "Undefined";
         const collectionName = document.getElementById("collection-name").value || "Undefined";
-        const assetLock = document.getElementById("asset-lock").value;
+        const assetLock = document.getElementById("asset-lock").checked;
         const assetIssuance = document.getElementById("asset-issuance").value;
         const action = "check";
         sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action);
@@ -60,7 +60,7 @@ function convertImageToBase64(imageFile) {
         reader.readAsDataURL(imageFile);
     });
 }
-  
+
 async function sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action) {
     if (base64String.length > 7000) {
         alert("The base64 string is too long (over 7000 characters). Please upload a smaller image.");
@@ -86,7 +86,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
                 file_name: fileName,
                 collection_name: collectionName,
                 creator_name: creatorName,
-                asset_lock: assetLock === "on" ? true : false,
+                asset_lock: assetLock,
                 asset_issuance: assetIssuance ?? 1,
                 action: "check"
             })
