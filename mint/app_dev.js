@@ -130,7 +130,7 @@ function displayOutput(data) {
         transferAddress.textContent = `Creator/Artist Address: ${item.transfer_address}`;
         itemDiv.appendChild(transferAddress);
 
-        const formattedFee = !isNaN(parseFloat(item.computed_fee)) ? parseFloat(item.computed_fee).toFixed(6) : "Invalid value";
+        const formattedFee = !isNaN(parseFloat(item.total_fees_with_dust)) ? parseFloat(item.total_fees_with_dust).toFixed(6) : "Invalid value";
         const computedFee = document.createElement("p");
         computedFee.textContent = `Total Mint PRICE (BTC): ${formattedFee}`;
         itemDiv.appendChild(computedFee);
