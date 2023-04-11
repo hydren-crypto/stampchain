@@ -61,7 +61,7 @@ function convertImageToBase64(imageFile) {
     });
 }
 
-async function sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action) {
+async function sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton) {
     if (base64String.length > 7000) {
         alert("The base64 string is too long (over 7000 characters). Please upload a smaller image.");
         document.getElementById("please-wait").hidden = true;
