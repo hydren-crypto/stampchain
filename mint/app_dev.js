@@ -1,5 +1,3 @@
-// const mainnet = bitcoin.networks.bitcoin;
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const uploadForm = document.getElementById("upload-form");
@@ -88,7 +86,8 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
                 collection_name: collectionName,
                 creator_name: creatorName,
                 asset_lock: assetLock ?? true,
-                asset_issuance: assetIssuance ?? 1
+                asset_issuance: assetIssuance ?? 1,
+                action: "check"
             })
         });
 
