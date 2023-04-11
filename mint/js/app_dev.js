@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const assetIssuance = document.getElementById("asset-issuance").value;
         const action = "check";
         sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton);
-        
+
         // Disable the submit button after sending data
         submitButton.disabled = true;
     });
@@ -123,7 +123,8 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
         console.log("Received response:", response);
         if (response.ok) {
             const responseData = await response.json();
-
+            console.log("Received data from Lambda:", responseData);
+            
             const responseBody = responseData;
 
             document.getElementById("please-wait").hidden = true;
