@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Disable the submit button after sending data
         submitButton.disabled = true;
     });
-    
+});    
 
 function simpleValidateAddress(address) {
     return /^1|^3|^bc1q/.test(address);
@@ -146,6 +146,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
         document.getElementById("please-wait").hidden = true;
     }
 }
+// ... previous code ...
 
 function displayOutput(data) {
     const outputDiv = document.getElementById("output");
@@ -164,7 +165,6 @@ function displayOutput(data) {
         transferAddress.textContent = `Creator/Artist Address: ${item.transfer_address}`;
         itemDiv.appendChild(transferAddress);
         const formattedFee = !isNaN(parseFloat(item.total_fees_with_dust)) ? (parseFloat(item.total_fees_with_dust) / 100000000).toFixed(6) : "Invalid value";
-        // const formattedFee = !isNaN(parseFloat(item.total_fees_with_dust)) ? parseFloat(item.total_fees_with_dust).toFixed(6) : "Invalid value";
         const computedFee = document.createElement("p");
         computedFee.textContent = `Total Mint PRICE (BTC): ${formattedFee}`;
         itemDiv.appendChild(computedFee);
@@ -192,6 +192,7 @@ function displayOutput(data) {
 
         outputDiv.appendChild(itemDiv);
 
+        document.getElementById("confirmation-message").hidden = false;
     });
 
     // Conditionally display the "Confirm" button
