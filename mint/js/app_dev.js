@@ -41,8 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Call sendDataToLambda with action "confirm" when the confirm button is clicked
     confirmButton.addEventListener("click", async () => {
-        // Hide the "confirmation-message" and show the "please-wait" message
-        document.getElementById("please-wait").hidden = false;
+        // Hide the "confirmation-message"
         document.getElementById("confirmation-message").hidden = true;
     
         const imageFile = imageFileInput.files[0];
@@ -65,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Disable the submit button after sending data
         submitButton.disabled = true;
     });
+    
     
 
 function simpleValidateAddress(address) {
@@ -101,6 +101,13 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
     console.log("Sending data");
 
     try {
+        // Show the "please-wait" message and hide the "confirmation-message"
+        document.getElementById("please-wait").hidden = false;
+        if (action === "confirm") {
+            document.getElementById("confirmation-message").hidden = true;
+        }
+
+
         console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton });
 
         const response = await fetch(apiEndpoint, {
