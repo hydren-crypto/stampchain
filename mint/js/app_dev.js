@@ -129,7 +129,9 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
 
             document.getElementById("please-wait").hidden = true;
 
-            displayOutput(responseBody);
+            console.log("Data passed to displayOutput:", responseData);
+            displayOutput(responseData);
+            
         } else {
             console.error("Error response from Lambda:", await response.text());
             alert("An error occurred while sending data.");
