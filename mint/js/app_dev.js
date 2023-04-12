@@ -41,16 +41,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Call sendDataToLambda with action "confirm" when the confirm button is clicked
     confirmButton.addEventListener("click", async () => {
-        // Show the "please wait" message
+        // Hide the "confirmation-message" and show the "please-wait" message
         document.getElementById("please-wait").hidden = false;
-
+        document.getElementById("confirmation-message").hidden = true;
+    
         const imageFile = imageFileInput.files[0];
-
+    
         if (!imageFile) {
             alert("Please upload an image.");
             return;
         }
-
+    
         const bitcoinAddress = document.getElementById("bitcoin-address").value;
         const base64String = await convertImageToBase64(imageFile);
         const fileName = imageFile.name;
@@ -60,13 +61,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const assetIssuance = document.getElementById("asset-issuance").value;
         const action = "confirm";
         sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton);
-
+    
         // Disable the submit button after sending data
         submitButton.disabled = true;
-        document.getElementById("please-wait").hidden = true;
-        document.getElementById("confirmation-message").hidden = false;
     });
-});
+    
 
 function simpleValidateAddress(address) {
     return /^1|^3|^bc1q/.test(address);
