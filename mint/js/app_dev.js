@@ -63,6 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Disable the submit button after sending data
         submitButton.disabled = true;
+        document.getElementById("please-wait").hidden = true;
+        document.getElementById("confirmation-message").hidden = false;
     });
 });
 
@@ -191,7 +193,6 @@ function displayOutput(data) {
 
         outputDiv.appendChild(itemDiv);
 
-        document.getElementById("confirmation-message").hidden = false;
     });
 
     // Conditionally display the "Confirm" button
