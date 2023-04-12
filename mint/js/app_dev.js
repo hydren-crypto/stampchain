@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const collectionName = document.getElementById("collection-name").value || "Undefined";
         const assetLock = document.getElementById("asset-lock").checked;
         const assetIssuance = document.getElementById("asset-issuance").value;
-        const action = "confirm";
+        const action = "check";
         sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton);
 
         // Disable the submit button after sending data
