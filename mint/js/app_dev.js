@@ -41,16 +41,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Call sendDataToLambda with action "confirm" when the confirm button is clicked
     confirmButton.addEventListener("click", async () => {
-        // Hide the "confirmation-message"
-        document.getElementById("confirmation-message").hidden = true;
-    
+        // Show the "please wait" message
+        document.getElementById("please-wait").hidden = false;
+
         const imageFile = imageFileInput.files[0];
-    
+
         if (!imageFile) {
             alert("Please upload an image.");
             return;
         }
-    
+
         const bitcoinAddress = document.getElementById("bitcoin-address").value;
         const base64String = await convertImageToBase64(imageFile);
         const fileName = imageFile.name;
@@ -60,12 +60,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const assetIssuance = document.getElementById("asset-issuance").value;
         const action = "confirm";
         sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton);
-    
+
         // Disable the submit button after sending data
         submitButton.disabled = true;
     });
-    
-    
+});
 
 function simpleValidateAddress(address) {
     return /^1|^3|^bc1q/.test(address);
@@ -101,13 +100,6 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
     console.log("Sending data");
 
     try {
-        // Show the "please-wait" message and hide the "confirmation-message"
-        document.getElementById("please-wait").hidden = false;
-        if (action === "confirm") {
-            document.getElementById("confirmation-message").hidden = true;
-        }
-
-
         console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton });
 
         const response = await fetch(apiEndpoint, {
@@ -199,6 +191,7 @@ function displayOutput(data) {
 
         outputDiv.appendChild(itemDiv);
 
+        document.getElementById("confirmation-message").hidden = false;
     });
 
     // Conditionally display the "Confirm" button
