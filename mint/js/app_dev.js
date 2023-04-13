@@ -97,8 +97,6 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
     }
     
     const apiEndpoint = "https://fed2zpf904.execute-api.us-east-1.amazonaws.com/dev/submit";
-    // const apiEndpoint = "https://yxzz5lsstucttpyholm7dppkhq0pdose.lambda-url.us-east-1.on.aws/";
-
 
     try {
         // console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton });
@@ -149,7 +147,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
 
 function displayOutput(data) {
     const outputDiv = document.getElementById("output");
-    console.log("Output Div:", outputDiv);
+    // console.log("Output Div:", outputDiv);
 
     outputDiv.innerHTML = '';
 
