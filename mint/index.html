@@ -19,27 +19,42 @@
                 
                 <br><img id="marquee" src="https://stampchain.io/stamps/2855c2e46e900171099cff0afb077dc4e5dd10d738afde476d108983632f166c.gif">
                 
-                
-                
-                
                 <label for="image-file">Image File:</label>
                 <input type="file" id="image-file" accept="image/*">
             </div>
             <div class="form-group">
-                <label for="bitcoin-address">Artist / Creator Bitcoin Address.<br>Note: Legacy (starts with 1 or 3) or Segwit (starts with bc1q). Do not use a Taproot (bc1p) address:</label>
+                <label for="bitcoin-address">Artist / Creator Bitcoin Address.<br>Legacy (starts with 1 or 3) or Segwit (starts with bc1q)</label>
                 <input type="text" id="bitcoin-address" required>
-            </div>        
-            <button type="submit">Submit</button>
+            </div> 
+            <div class="form-group">
+                <label for="creator-name">Artist / Creator Name (optional):</label>
+                <input type="text" id="creator-name">
+            </div>
+            <div class="form-group">
+                <label for="collection-name">Collection Name (optional):</label>
+                <input type="text" id="collection-name">
+            </div>
+            <div class="form-group">
+                <label for="asset-issuance">Asset Issuance:</label>
+                <input type="number" id="asset-issuance" min="1" max="10000000000000000000000" step="1" value="1">
+            </div> 
+            <div class="form-group">
+                <div class="lock-asset-container">
+                    <label for="asset-lock">Lock Asset:</label>
+                    <input type="checkbox" id="asset-lock" checked>
+                </div>
+            </div>                                 
+            <button type="submit">Check</button>
+            <button id="confirm-button" type="button" hidden>Confirm</button>
         </form>
-        <p id="please-wait" hidden>Please wait...</p>
+        <p id="please-wait" hidden>Please wait...Building Your Transaction...</p>
         <div id="output"></div>
         <p id="confirmation-message" hidden>You will receive no further confirmation on this page. Please monitor the artist / creator wallet for the incoming stamp. Non-image files are not supported on the STAMP protocol.</p>
-        <p id="notes">This app is under development. Stamps will be minted within 5 minutes, and sent within 10 minutes of confirmation. A conveniece charge is added when using this service.</p>
+        <p id="notes">Stamps will be minted within 5 minutes of confirmation of payment, and sent within 10 minutes of confirmation. Please contact us for bulk minting services. A convenience charge is added when using this service.</p>n
     </div>
     <!DOCTYPE html>
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/src/index.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
-    <script src="app.js" defer></script>
+    <script src="js/app.js" defer></script>
 </body>
 </html>

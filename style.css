@@ -135,3 +135,9 @@ label {text-transform:none;margin:40px;display:block;}
 #search-form {text-align:center;}
 #search-form label {color:white;margin-bottom:0px;}
 #search-input {border:1px solid yellow;background-color:black;font-size:16px;color:white;padding:8px;}
+
+.lock-asset-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
