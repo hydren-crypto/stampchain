@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     uploadForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        console.log("Form submitted");
+        // console.log("Form submitted");
 
         // Show the "please wait" message
         document.getElementById("please-wait").hidden = false;
@@ -95,13 +95,13 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
         document.getElementById("please-wait").hidden = true;
         return;
     }
+    
+    const apiEndpoint = "https://fed2zpf904.execute-api.us-east-1.amazonaws.com/dev/submit";
+    // const apiEndpoint = "https://yxzz5lsstucttpyholm7dppkhq0pdose.lambda-url.us-east-1.on.aws/";
 
-    const apiEndpoint = "https://yxzz5lsstucttpyholm7dppkhq0pdose.lambda-url.us-east-1.on.aws/";
-
-    console.log("Sending data");
 
     try {
-        console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton });
+        // console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton });
 
         const response = await fetch(apiEndpoint, {
             method: "POST",
@@ -121,20 +121,20 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
             
         });
 
-        console.log("Received response:", response);
+        // console.log("Received response:", response);
         if (response.ok) {
             const responseData = await response.json();
-            console.log("Received data from Lambda:", responseData);
+            // console.log("Received data:", responseData);
             
             const responseBody = responseData;
 
             document.getElementById("please-wait").hidden = true;
 
-            console.log("Data passed to displayOutput:", responseData);
+            // console.log("Data passed to displayOutput:", responseData);
             displayOutput(responseData);
             
         } else {
-            console.error("Error response from Lambda:", await response.text());
+            console.error("Error response from backend:", await response.text());
             alert("An error occurred while sending data.");
         }
     } catch (error) {
@@ -146,7 +146,6 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
         document.getElementById("please-wait").hidden = true;
     }
 }
-// ... previous code ...
 
 function displayOutput(data) {
     const outputDiv = document.getElementById("output");
@@ -186,13 +185,14 @@ function displayOutput(data) {
             });
 
             itemDiv.appendChild(qrCodeImage);
+
+            // Show confirmation-message only if item.send_to_address is available
+            document.getElementById("confirmation-message").hidden = false;
         } else {
             shouldDisplayConfirmButton = true;
         }
 
         outputDiv.appendChild(itemDiv);
-
-        document.getElementById("confirmation-message").hidden = false;
     });
 
     // Conditionally display the "Confirm" button
