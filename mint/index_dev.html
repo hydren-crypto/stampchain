@@ -35,22 +35,22 @@
                 <input type="text" id="collection-name">
             </div>
             <div class="form-group">
+                <label for="asset-issuance">Asset Issuance:</label>
+                <input type="number" id="asset-issuance" min="1" max="10000000000000000000000" step="1" value="1">
+            </div> 
+            <div class="form-group">
                 <div class="lock-asset-container">
                     <label for="asset-lock">Lock Asset:</label>
                     <input type="checkbox" id="asset-lock" checked>
                 </div>
-            </div>                    
-            <div class="form-group">
-                <label for="asset-issuance">Asset Issuance:</label>
-                <input type="number" id="asset-issuance" min="1" max="10000000000000000000000" step="1" value="1">
-            </div>                                   
+            </div>                                 
             <button type="submit">Check</button>
             <button id="confirm-button" type="button" hidden>Confirm</button>
         </form>
         <p id="please-wait" hidden>Please wait...</p>
         <div id="output"></div>
         <p id="confirmation-message" hidden>You will receive no further confirmation on this page. Please monitor the artist / creator wallet for the incoming stamp. Non-image files are not supported on the STAMP protocol.</p>
-        <p id="notes">Stamps will be minted within 5 minutes of confirmation of payment, and sent within 10 minutes of confirmation. A conveniece charge is added when using this service.</p>
+        <p id="notes">Stamps will be minted within 5 minutes of confirmation of payment, and sent within 10 minutes of confirmation. A convenience charge is added when using this service.</p>
     </div>
     <!DOCTYPE html>
 
