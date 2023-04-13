@@ -1,7 +1,11 @@
+[{
+    "collection": "dots",
+    "assets": [1, 2],
+    "artist_name": ""
+},
 {
-    "dots": [1, 2],
-    "flocks": [8, 9, 10, 11],
-    "censor": [12958, 13947],
-    "purge": ["01ab4274f26ab082d7eb5750707f97e4a80fcfdc8402bc4544686dd9055bddc4", "b900fb2dfdd5c6183941440471c334adad386ec1ee637343b6899b2b63fe8b09"]
+    "collection": "bitcoin flocks",
+    "assets": [8, 9, 10, 11, 31, 32, 33, 34, 35, 36, 38, 39, 40],
+    "artist_name": ""
 }
-  
+]
