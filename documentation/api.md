@@ -2,17 +2,16 @@
 
 This gateway is in dev mode and is subject to change as new features are added. All stamps up to the current block may not be present as we work on integrating multiple data sources. Please contact us if you have any questions or suggestions.
 
-Current API URL for testing - this will return all stamps:
+Current API URL - this will return all stamps:
 
-https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/
+https://stampchain.io/api/stamps
 
-pending: api.stampchain.io/v1 (pending SSL certificate)
 
 ---
 ## Query Parameters
 
 #### Search For Single Stamp By Id
-https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?stamp=1609
+https://stampchain.io/api/stamps?stamp=1609
 
     {
     "stamp": "1609"
@@ -21,7 +20,7 @@ https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?stamp=1609
 <br>
 
 #### Search For Ranges Of Stamps (Stamp_Being And Stamp_End)
-https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?stamp_begin=1600&stamp_end=1610
+https://stampchain.io/api/stamps?stamp_begin=1600&stamp_end=1610
 
     {
     "stamp_begin": "1600",
@@ -31,7 +30,7 @@ https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?stamp_begin=1600&stam
 <br>
 
 #### Search For Multiple Stamps
-https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?stamp=343,454,896
+https://stampchain.io/api/stamps?stamp=343,454,896
     
     {
     "stamp": "343,454,896"
@@ -39,7 +38,7 @@ https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?stamp=343,454,896
 
 #### Search For Stamps In A Block
 
-https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?block_index=783417
+https://stampchain.io/api/stamps?block_index=783417
 
     {
     "block_index": "784620"
@@ -49,7 +48,7 @@ https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?block_index=783417
 
 #### Search For Stamps By Counterparty Asset (Only Numeric Assets Are Supported By Bitcoin Stamps)
 
-https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?asset=A2536547015909490700
+https://stampchain.io/api/stamps?asset=A2536547015909490700
 
     {
     "asset": "A2536547015909490700"
@@ -59,7 +58,7 @@ https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?asset=A25365470159094
 
 ### Search For Stamps By BTC Transaction Id
 
-https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4a12d54ee54355646bc43d0c1c
+https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4a12d54ee54355646bc43d0c1c
 
     {
     "tx_hash": "46e283ebe0f6d7d73ef835c10a911c157f071b4a12d54ee54355646bc43d0c1c"
@@ -79,4 +78,53 @@ https://6b1ckwacmb.execute-api.us-east-1.amazonaws.com/v1/?tx_hash=46e283ebe0f6d
 <br>
 
 ## Notes
-- please enquire about CORS support for direct connection from your web integrations
+- There are no CORS restrictions on this API, feel free to integrate it into your own projects with care. Access may be limited as we see fit. 
+
+<br><br>
+# Official BITCOIN STAMPS Minting Service API
+
+We welcome integrations into our minting service. This allows you to process Stamp mints directly from your application. 
+
+
+The requests from the web application are sent to the server via a POST request. The server then responds with a JSON object containing the minting fees, and with the action of mint it will return the BTC address to send funds for minting.
+
+    const apiEndpoint = "<<provided on request>>/dev/submit";
+    const response = await fetch(apiEndpoint, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            file_content: base64String,
+            target_address: bitcoinAddress,
+            file_name: fileName,
+            collection_name: collectionName,
+            creator_name: creatorName,
+            asset_lock: assetLock,
+            asset_issuance: assetIssuance ?? 1,
+            action: check,
+            source: MintingServiceName
+        })
+    }
+
+### Parameter Definitions
+
+**file_content:** `<base64 encoded string>` The image base64 string, and checking of image type must be done on the front end 
+
+**target_address:** `<bitcoin address>` The bitcoin address to send the stamp to, which is stamp owner, artist, and issuer NO TAPROOT ADDRESSES
+
+**asset_lock:** `<boolean>` Lock the asset to prevent further issuance. We encourage True
+
+**asset_issuance:** `<number>` The qty of the asset to issue. We encourage and default to 1
+
+**action** `<check>` or `<mint>` Check will return the fee rates without minting. Mint will return all the content in check, plus the address to send BTC funds for mint
+
+**file_name:** `<optional>` The name of the file, simply for reference `<optional>`  
+
+**collection_name:** `<optional>` Collection name  
+
+**creator_name:** `<optional>` Creator / Artist name 
+
+Minting is processed on the next block after payment receipt, and asset sends are processed on the next block after minting. Multiple file processing needs to be handled on the front end application. Currently the minting API can handle approximately 75 unconfirmed mints at one time, and will grow according to capacity. 
+
+Feedback is welcome, and contact us directly for other bulk minting options. 
