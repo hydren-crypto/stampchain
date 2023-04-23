@@ -13,11 +13,6 @@
     - [Search For Stamps In A Block](#search-for-stamps-in-a-block)
     - [Search For Stamps By Counterparty Asset (Only Numeric Assets Are Supported By Bitcoin Stamps)](#search-for-stamps-by-counterparty-asset-only-numeric-assets-are-supported-by-bitcoin-stamps)
     - [Search For Stamps By BTC Transaction Id](#search-for-stamps-by-btc-transaction-id)
-    - [Search For Stamps By STAMP Owner](#search-for-stamps-by-stamp-owner)
-    - [Search For Stamps By STAMP Issuer (Artist)](#search-for-stamps-by-stamp-issuer-artist)
-  - [Future Functionality To Be Implemented:](#future-functionality-to-be-implemented)
-  - [Notes](#notes)
-- [Official BITCOIN STAMPS Minting Service API](#official-bitcoin-stamps-minting-service-api)
     - [Parameter Definitions to Pass to the API](#parameter-definitions-to-pass-to-the-api)
     - [Conributors](#conributors)
 
@@ -139,16 +134,7 @@ https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4
 ```
 <br>
 
-### Search For Stamps By STAMP Owner
-This will return all stamps owned by the wallet address. The ownership of a stamp can be transferred to another wallet address. Each particular stamp may have additional holders represented by the `supply` field. **See Note Below**
-
-https://stampchain.io/api/stamps?owner=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
 ```
-    {
-    "owner": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5"
-    }
-```
-
 ### Search For Stamps By STAMP Issuer (Artist)
 The issuer of a stamp cannot be changed, and is typically used to identify the Artist/Creator wallet. This will return all stamps issued by the wallet address. Each particular stamp may have additional holders represented represented by the `supply` field. **See Note Below** 
 
