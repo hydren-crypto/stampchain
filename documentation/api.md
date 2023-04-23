@@ -1,6 +1,6 @@
 # Official BITCOIN STAMPS API
 
-This gateway is in dev mode and is subject to change as new features are added. **All stamps up to the current block may not be present as we work on integrating multiple data sources.** Please contact us if you have any questions or suggestions.
+This Stamp API is in dev mode and is subject to change as new features are added. All stamps up to the current block may not be present in the results as we work on integrating all relevant stamp data. This page will be updated when in full production mode. Please contact us if you have any questions or suggestions.
 
 Current API URL - this will return all stamps:
 
@@ -55,6 +55,7 @@ https://stampchain.io/api/stamps
 
 
 ### Search For Single Stamp By Id
+
 https://stampchain.io/api/stamps?stamp=1609
 ```
     {
@@ -64,6 +65,7 @@ https://stampchain.io/api/stamps?stamp=1609
 <br>
 
 ### Search For Ranges Of Stamps (Stamp_Being And Stamp_End)
+
 https://stampchain.io/api/stamps?stamp_begin=1600&stamp_end=1610
 ```
     {
@@ -74,6 +76,7 @@ https://stampchain.io/api/stamps?stamp_begin=1600&stamp_end=1610
 <br>
 
 ### Search For Multiple Stamps
+
 https://stampchain.io/api/stamps?stamp=343,454,896
 ```    
     {
@@ -91,6 +94,7 @@ https://stampchain.io/api/stamps?block_index=783417
 <br>
 
 ### Search For Stamps By Counterparty Asset (Only Numeric Assets Are Supported By Bitcoin Stamps)
+This will return all stamps based upon their corresponding Counterparty asset id.
 
 https://stampchain.io/api/stamps?asset=A2536547015909490700
 ```
@@ -101,6 +105,7 @@ https://stampchain.io/api/stamps?asset=A2536547015909490700
 <br>
 
 ### Search For Stamps By BTC Transaction Id
+This will return all stamps included in the transaction.
 
 https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4a12d54ee54355646bc43d0c1c
 ```
@@ -110,6 +115,25 @@ https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4
 ```
 <br>
 
+### Search For Stamps By STAMP Owner
+This will return all stamps owned by the wallet address. The ownership of a stamp can be transferred to another wallet address. Each particular stamp may have additional holders represented by the `supply` field. **See Note Below**
+
+https://stampchain.io/api/stamps?owner=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
+```
+    {
+    "owner": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5"
+    }
+```
+
+### Search For Stamps By STAMP Issuer (Artist)
+The issuer of a stamp cannot be changed, and is typically used to identify the Artist/Creator wallet. This will return all stamps issued by the wallet address. Each particular stamp may have additional holders represented represented by the `supply` field. **See Note Below** 
+
+https://stampchain.io/api/stamps?issuer=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
+```
+    {
+    "issuer": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5"
+    }
+```
 
 ## Future Functionality To Be Implemented:
 
@@ -123,7 +147,8 @@ https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4
 <br>
 
 ## Notes
-- There are no CORS restrictions on this API, feel free to integrate it into your own projects with care. Access may be limited as we see fit. 
+- There are no CORS restrictions on this API, feel free to integrate it into your own projects with care. Access may be limited as we see fit.
+- The owner and issuer fields are a 1 to 1 relationship to the original stamp transaction. The `supply` represends additional assets issued to that original stamp transaction. These assets are effectively represent a fractional ownership of the parent stamp. This is why we recommend using a 1 of 1 issuance when minting a stamp.
 
 <br><br>
 # Official BITCOIN STAMPS Minting Service API
