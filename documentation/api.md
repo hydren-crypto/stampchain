@@ -1,6 +1,25 @@
 # Official BITCOIN STAMPS API
 
-This Stamp API is in dev mode and is subject to change as new features are added. All stamps up to the current block may not be present in the results as we work on integrating all relevant stamp data. This page will be updated when in full production mode. Please contact us if you have any questions or suggestions.
+## Table of Contents
+- [Official BITCOIN STAMPS API](#official-bitcoin-stamps-api)
+  - [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [API URL](#api-url)
+  - [Output](#output)
+  - [Query Parameters](#query-parameters)
+    - [Search For Single Stamp By Id](#search-for-single-stamp-by-id)
+    - [Search For Ranges Of Stamps (Stamp\_Being And Stamp\_End)](#search-for-ranges-of-stamps-stamp_being-and-stamp_end)
+    - [Search For Multiple Stamps](#search-for-multiple-stamps)
+    - [Search For Stamps In A Block](#search-for-stamps-in-a-block)
+    - [Search For Stamps By Counterparty Asset (Only Numeric Assets Are Supported By Bitcoin Stamps)](#search-for-stamps-by-counterparty-asset-only-numeric-assets-are-supported-by-bitcoin-stamps)
+    - [Search For Stamps By BTC Transaction Id](#search-for-stamps-by-btc-transaction-id)
+    - [Parameter Definitions to Pass to the API](#parameter-definitions-to-pass-to-the-api)
+    - [Conributors](#conributors)
+
+## Description
+This gateway is in dev mode and is subject to change as new features are added. **All stamps up to the current block may not be present as we work on integrating multiple data sources.** Please contact us if you have any questions or suggestions.
+
+## API URL
 
 Current API URL - this will return all stamps:
 
@@ -115,16 +134,7 @@ https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4
 ```
 <br>
 
-### Search For Stamps By STAMP Owner
-This will return all stamps owned by the wallet address. The ownership of a stamp can be transferred to another wallet address. Each particular stamp may have additional holders represented by the `supply` field. **See Note Below**
-
-https://stampchain.io/api/stamps?owner=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
 ```
-    {
-    "owner": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5"
-    }
-```
-
 ### Search For Stamps By STAMP Issuer (Artist)
 The issuer of a stamp cannot be changed, and is typically used to identify the Artist/Creator wallet. This will return all stamps issued by the wallet address. Each particular stamp may have additional holders represented represented by the `supply` field. **See Note Below** 
 
