@@ -1,6 +1,30 @@
 # Official BITCOIN STAMPS API
 
-This Stamp API is in dev mode and is subject to change as new features are added. All stamps up to the current block may not be present in the results as we work on integrating all relevant stamp data. This page will be updated when in full production mode. Please contact us if you have any questions or suggestions.
+## Table of Contents
+- [Official BITCOIN STAMPS API](#official-bitcoin-stamps-api)
+  - [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [API URL](#api-url)
+  - [Output](#output)
+  - [Query Parameters](#query-parameters)
+    - [Search For Single Stamp By Id](#search-for-single-stamp-by-id)
+    - [Search For Ranges Of Stamps (Stamp\_Being And Stamp\_End)](#search-for-ranges-of-stamps-stamp_being-and-stamp_end)
+    - [Search For Multiple Stamps](#search-for-multiple-stamps)
+    - [Search For Stamps In A Block](#search-for-stamps-in-a-block)
+    - [Search For Stamps By Counterparty Asset (Only Numeric Assets Are Supported By Bitcoin Stamps)](#search-for-stamps-by-counterparty-asset-only-numeric-assets-are-supported-by-bitcoin-stamps)
+    - [Search For Stamps By BTC Transaction Id](#search-for-stamps-by-btc-transaction-id)
+    - [Search For Stamps By STAMP Owner](#search-for-stamps-by-stamp-owner)
+    - [Search For Stamps By STAMP Issuer (Artist)](#search-for-stamps-by-stamp-issuer-artist)
+  - [Future Functionality To Be Implemented:](#future-functionality-to-be-implemented)
+  - [Notes](#notes)
+- [Official BITCOIN STAMPS Minting Service API](#official-bitcoin-stamps-minting-service-api)
+    - [Parameter Definitions to Pass to the API](#parameter-definitions-to-pass-to-the-api)
+    - [Conributors](#conributors)
+
+## Description
+This gateway is in dev mode and is subject to change as new features are added. **All stamps up to the current block may not be present as we work on integrating multiple data sources.** Please contact us if you have any questions or suggestions.
+
+## API URL
 
 Current API URL - this will return all stamps:
 
