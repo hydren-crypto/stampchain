@@ -1,14 +1,58 @@
 # Official BITCOIN STAMPS API
 
-This gateway is in dev mode and is subject to change as new features are added. All stamps up to the current block may not be present as we work on integrating multiple data sources. Please contact us if you have any questions or suggestions.
+This gateway is in dev mode and is subject to change as new features are added. **All stamps up to the current block may not be present as we work on integrating multiple data sources.** Please contact us if you have any questions or suggestions.
 
 Current API URL - this will return all stamps:
 
 https://stampchain.io/api/stamps
 
+## Output
+
+```JSON
+    {
+        "message_index": 9233094,
+        "block_index": 783923,
+        "timestamp": 1680624258,
+        "tx_hash": "947e2415326b4b9d43332022b601fdfa4ceda25df9d71d0df8c380a048b13893",
+        "asset": "A15809424410153628000",
+        "tx_index": 2285399,
+        "stamp_mimetype": "",
+        "stamp_url": "https://stampchain.io/stamps/947e2415326b4b9d43332022b601fdfa4ceda25df9d71d0df8c380a048b13893.png",
+        "stamp": 5869,
+        "supply": 1,
+        "locked": true,
+        "divisible": false,
+        "issuer": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5",
+        "owner": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5"
+    },
+```
+| Variable                          | Comments                                                               |
+| :---                              | :---    
+| `message_index`                      | The index of the message in the block |
+| `block_index`                        | The index of the block the message was included in |
+| `timestamp`                          | The timestamp of the block the message was included in |
+| `tx_hash`                            | The hash of the transaction that included the message |
+| `asset`                              | The asset id of the Bitcoin Stamp |
+| `tx_index`                           | The index of the transaction that included the message |
+| `stamp_mimetype`                     | The mimetype of the stamp **[pending implementation]**|
+| `stamp_url`                          | The URL of the stamp |
+| `stamp`                             | The Bitcoin Stamp number |
+| `supply`                            | The supply of the corresponding Bitcoin Stamp asset (we encourage 1)|
+| `locked`                            | Whether the corresponding Bitcoin Stamp asset is locked (we encourage True) |
+| `divisible`                          | Whether the stamp is divisible (we encourage false)|
+| `issuer`                             | The issuer / Artist of the Bitcoin Stamp ***(Immutable Value)***|
+| `owner`                              | The owner of the Bitcoin Stamp ***(transferrable)*** |
+
+
 
 ---
+
+<br>
+
 ## Query Parameters
+
+
+
 
 ### Search For Single Stamp By Id
 https://stampchain.io/api/stamps?stamp=1609
@@ -65,6 +109,7 @@ https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4
     }
 ```
 <br>
+
 
 ## Future Functionality To Be Implemented:
 
