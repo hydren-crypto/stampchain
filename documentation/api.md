@@ -41,8 +41,7 @@ https://stampchain.io/api/stamps
         "supply": 1,
         "locked": true,
         "divisible": false,
-        "issuer": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5",
-        "owner": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5"
+        "creator": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5",
     },
 ```
 | Variable                          | Comments                                                               |
