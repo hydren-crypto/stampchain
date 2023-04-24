@@ -11,7 +11,7 @@
     - [Search For Ranges Of Stamps (Stamp\_Being And Stamp\_End)](#search-for-ranges-of-stamps-stamp_being-and-stamp_end)
     - [Search For Multiple Stamps](#search-for-multiple-stamps)
     - [Search For Stamps In A Block](#search-for-stamps-in-a-block)
-    - [Search For Stamps By Counterparty Asset (Only Numeric Assets Are Supported By Bitcoin Stamps)](#search-for-stamps-by-counterparty-asset-only-numeric-assets-are-supported-by-bitcoin-stamps)
+    - [Search For Stamps By Counterparty Asset ID (Only Numeric Assets Are Supported By Bitcoin Stamps)](#search-for-stamps-by-counterparty-asset-id-only-numeric-assets-are-supported-by-bitcoin-stamps)
     - [Search For Stamps By BTC Transaction Id](#search-for-stamps-by-btc-transaction-id)
     - [Parameter Definitions to Pass to the API](#parameter-definitions-to-pass-to-the-api)
     - [Conributors](#conributors)
@@ -28,39 +28,39 @@ https://stampchain.io/api/stamps
 ## Output
 
 ```JSON
-    {
-        "message_index": 9233094,
-        "block_index": 783923,
-        "timestamp": 1680624258,
-        "tx_hash": "947e2415326b4b9d43332022b601fdfa4ceda25df9d71d0df8c380a048b13893",
-        "asset": "A15809424410153628000",
-        "tx_index": 2285399,
-        "stamp_mimetype": "",
-        "stamp_url": "https://stampchain.io/stamps/947e2415326b4b9d43332022b601fdfa4ceda25df9d71d0df8c380a048b13893.png",
-        "stamp": 5869,
-        "supply": 1,
-        "locked": true,
-        "divisible": false,
-        "creator": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5",
-    },
+{
+    "stamp": 111,
+    "block_index": 781927,
+    "cpid": "A3350277194614503217",
+    "creator": "1GPfBjHemZayEHkPFuMTQsPUPDSdv86oHf",
+    "message_index": 9167380,
+    "stamp_base64": "iVBORw0KGgoAAAA\...guAt0enhcvAAAAAElFTkSuQmCC",
+    "stamp_mimetype": "image/png",
+    "stamp_url": "https://stampchain.io/stamps/2ea4efe57832f4c593212d8aebb6ade1777886165df459e02ffe78ff84280585.png",
+    "timestamp": 1679468917,
+    "tx_hash": "2ea4efe57832f4c593212d8aebb6ade1777886165df459e02ffe78ff84280585",
+    "tx_index": 2271179,
+    "supply": 1,
+    "locked": true,
+    "divisible": false
+  }
 ```
-| Variable                          | Comments                                                               |
-| :---                              | :---    
-| `message_index`                      | The index of the message in the block |
-| `block_index`                        | The index of the block the message was included in |
-| `timestamp`                          | The timestamp of the block the message was included in |
-| `tx_hash`                            | The hash of the transaction that included the message |
-| `asset`                              | The asset id of the Bitcoin Stamp |
-| `tx_index`                           | The index of the transaction that included the message |
-| `stamp_mimetype`                     | The mimetype of the stamp **[pending implementation]**|
-| `stamp_url`                          | The URL of the stamp |
-| `stamp`                             | The Bitcoin Stamp number |
-| `supply`                            | The supply of the corresponding Bitcoin Stamp asset (we encourage 1)|
-| `locked`                            | Whether the corresponding Bitcoin Stamp asset is locked (we encourage True) |
-| `divisible`                          | Whether the stamp is divisible (we encourage false)|
-| `issuer`                             | The issuer / Artist of the Bitcoin Stamp ***(Immutable Value)***|
-| `owner`                              | The owner of the Bitcoin Stamp ***(transferrable)*** |
-
+| Variable          | Comments                                                                 |
+|-------------------|-------------------------------------------------------------------------|
+| `stamp`           | The Bitcoin Stamp number                                                 |
+| `block_index`     | The index of the block the message was included in                       |
+| `cpid`            | The asset id of the Bitcoin Stamp                                        |
+| `creator`         | The issuer / Artist of the Bitcoin Stamp ***(Immutable Value)***         |
+| `message_index`   | The index of the message in the block                                    |
+| `stamp_base64`    | The base64 encoded stamp image                                           |
+| `stamp_mimetype`  | The mimetype of the stamp                                                |
+| `stamp_url`       | The URL of the stamp                                                     |
+| `timestamp`       | The timestamp of the block the message was included in                   |
+| `tx_hash`         | The hash of the transaction that included the message                    |
+| `tx_index`        | The index of the transaction that included the message                   |
+| `supply`          | The supply of the corresponding Bitcoin Stamp asset (we encourage 1)     |
+| `locked`          | Whether the corresponding Bitcoin Stamp asset is locked (we encourage True) |
+| `divisible`       | Whether the stamp is divisible (we encourage false)                      |
 
 
 ---
@@ -111,13 +111,13 @@ https://stampchain.io/api/stamps?block_index=783417
 ```
 <br>
 
-### Search For Stamps By Counterparty Asset (Only Numeric Assets Are Supported By Bitcoin Stamps)
+### Search For Stamps By Counterparty Asset ID (Only Numeric Assets Are Supported By Bitcoin Stamps)
 This will return all stamps based upon their corresponding Counterparty asset id.
 
 https://stampchain.io/api/stamps?asset=A2536547015909490700
 ```
     {
-    "asset": "A2536547015909490700"
+    "cpid": "A2536547015909490700"
     }
 ```
 <br>
@@ -134,10 +134,10 @@ https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4
 <br>
 
 ```
-### Search For Stamps By STAMP Issuer (Artist)
-The issuer of a stamp cannot be changed, and is typically used to identify the Artist/Creator wallet. This will return all stamps issued by the wallet address. Each particular stamp may have additional holders represented represented by the `supply` field. **See Note Below** 
+### Search For Stamps By STAMP Creator (Artist)
+The issuer of a Bitcoin Stamp cannot be changed, and is typically used to identify the Artist/Creator wallet. This will return all stamps issued by the wallet address. Each particular stamp may have additional holders represented represented by the `supply` field. **See Note Below** 
 
-https://stampchain.io/api/stamps?issuer=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
+https://stampchain.io/api/stamps?creator=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
 ```
     {
     "issuer": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5"
@@ -146,10 +146,10 @@ https://stampchain.io/api/stamps?issuer=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
 
 ## Future Functionality To Be Implemented:
 
-- official stampchain.io URL (pending SSL certificate)
-- Search for stamps by wallet owners BTC address
+
+- Search for Bitcoin Stamps by wallet owners BTC address
 - include base64 data in response
-- search for stamps that have participated in the key burn: 
+- search for Bitcoin Stamps that have participated in the key burn: 
   - https://github.com/mikeinspace/stamps/blob/main/Key-Burn.md
   - filter upon unpsent outputs and spent outputs
   
