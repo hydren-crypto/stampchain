@@ -7,12 +7,18 @@
   - [API URL](#api-url)
   - [Output](#output)
   - [Query Parameters](#query-parameters)
-    - [Search For Single Stamp By Id](#search-for-single-stamp-by-id)
-    - [Search For Ranges Of Stamps (Stamp\_Being And Stamp\_End)](#search-for-ranges-of-stamps-stamp_being-and-stamp_end)
+  - [Query for All Stamps](#query-for-all-stamps)
+    - [Search for Stamps Owned By Address](#search-for-stamps-owned-by-address)
+    - [Search For Single Stamp By Stamp Number](#search-for-single-stamp-by-stamp-number)
+    - [Search For Ranges Of Stamps (stamp\_begin / stamp\_end)](#search-for-ranges-of-stamps-stamp_begin--stamp_end)
     - [Search For Multiple Stamps](#search-for-multiple-stamps)
     - [Search For Stamps In A Block](#search-for-stamps-in-a-block)
-    - [Search For Stamps By Counterparty Asset ID (Only Numeric Assets Are Supported By Bitcoin Stamps)](#search-for-stamps-by-counterparty-asset-id-only-numeric-assets-are-supported-by-bitcoin-stamps)
+    - [Search For Stamps By CPID](#search-for-stamps-by-cpid)
     - [Search For Stamps By BTC Transaction Id](#search-for-stamps-by-btc-transaction-id)
+    - [Search For Stamps By **Creator** (Artist)](#search-for-stamps-by-creator-artist)
+  - [Future Functionality To Be Implemented:](#future-functionality-to-be-implemented)
+  - [Notes](#notes)
+- [Official BITCOIN STAMPS Minting Service API](#official-bitcoin-stamps-minting-service-api)
     - [Parameter Definitions to Pass to the API](#parameter-definitions-to-pass-to-the-api)
     - [Conributors](#conributors)
 
@@ -21,7 +27,7 @@ This gateway is in dev mode and is subject to change as new features are added. 
 
 ## API URL
 
-Current API URL - this will return all stamps:
+Current API URL 
 
 https://stampchain.io/api/stamps
 
@@ -42,15 +48,22 @@ https://stampchain.io/api/stamps
     "tx_index": 2271179,
     "supply": 1,
     "locked": true,
-    "divisible": false
+    "divisible": false,
+    "holders": [
+        {
+            "address": "1LS6mBq1QabgnQYQdB7pQMP7S7o1tq7rP9",
+            "address_quantity": 1,
+            "escrow": null
+        }
+    ]
   }
 ```
 | Variable          | Comments                                                                 |
 |-------------------|-------------------------------------------------------------------------|
 | `stamp`           | The Bitcoin Stamp number                                                 |
 | `block_index`     | The index of the block the message was included in                       |
-| `cpid`            | The asset id of the Bitcoin Stamp                                        |
-| `creator`         | The issuer / Artist of the Bitcoin Stamp ***(Immutable Value)***         |
+| `cpid`            | The Counterparty ID of the Bitcoin Stamp                                 |
+| `creator`         | The issuer / Artist of the Bitcoin Stamp        |
 | `message_index`   | The index of the message in the block                                    |
 | `stamp_base64`    | The base64 encoded stamp image                                           |
 | `stamp_mimetype`  | The mimetype of the stamp                                                |
@@ -69,10 +82,27 @@ https://stampchain.io/api/stamps
 
 ## Query Parameters
 
+## Query for All Stamps
+
+Note that this query will only return 1000 stamps at a time.  (**This is pending full implementation**)
+
+https://stampchain.io/api/stamps?page=1&page_size=1000
+
+https://stampchain.io/api/stamps?page=2&page_size=1000
 
 
+### Search for Stamps Owned By Address
+This returns all stamps which are owned by the address provided in the query parameter.
 
-### Search For Single Stamp By Id
+https://stampchain.io/api/stamps?wallet_address=14wD9ShyhwEskG84q6CWMVpnPZw5B8NvLg
+
+```
+    {
+    "wallet_address": "14wD9ShyhwEskG84q6CWMVpnPZw5B8NvLg"
+    }
+```
+
+### Search For Single Stamp By Stamp Number
 
 https://stampchain.io/api/stamps?stamp=1609
 ```
@@ -82,7 +112,7 @@ https://stampchain.io/api/stamps?stamp=1609
 ```
 <br>
 
-### Search For Ranges Of Stamps (Stamp_Being And Stamp_End)
+### Search For Ranges Of Stamps (stamp_begin / stamp_end)
 
 https://stampchain.io/api/stamps?stamp_begin=1600&stamp_end=1610
 ```
@@ -101,6 +131,8 @@ https://stampchain.io/api/stamps?stamp=343,454,896
     "stamp": "343,454,896"
     }
 ```
+<br>
+
 ### Search For Stamps In A Block
 
 https://stampchain.io/api/stamps?block_index=783417
@@ -111,10 +143,10 @@ https://stampchain.io/api/stamps?block_index=783417
 ```
 <br>
 
-### Search For Stamps By Counterparty Asset ID (Only Numeric Assets Are Supported By Bitcoin Stamps)
+### Search For Stamps By CPID
 This will return all stamps based upon their corresponding Counterparty asset id.
 
-https://stampchain.io/api/stamps?asset=A2536547015909490700
+https://stampchain.io/api/stamps?cpid=A2536547015909490700
 ```
     {
     "cpid": "A2536547015909490700"
@@ -123,7 +155,7 @@ https://stampchain.io/api/stamps?asset=A2536547015909490700
 <br>
 
 ### Search For Stamps By BTC Transaction Id
-This will return all stamps included in the transaction.
+This will return stamp by the transaction.
 
 https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4a12d54ee54355646bc43d0c1c
 ```
@@ -133,23 +165,26 @@ https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4
 ```
 <br>
 
-```
-### Search For Stamps By STAMP Creator (Artist)
+
+### Search For Stamps By **Creator** (Artist)
 The issuer of a Bitcoin Stamp cannot be changed, and is typically used to identify the Artist/Creator wallet. This will return all stamps issued by the wallet address. Each particular stamp may have additional holders represented represented by the `supply` field. **See Note Below** 
 
 https://stampchain.io/api/stamps?creator=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
+
 ```
     {
     "issuer": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5"
     }
 ```
+<br>
 
 ## Future Functionality To Be Implemented:
 
 
-- Search for Bitcoin Stamps by wallet owners BTC address
-- include base64 data in response
-- search for Bitcoin Stamps that have participated in the key burn: 
+- ~~Search for Bitcoin Stamps by wallet owners BTC address~~
+- ~~Search for Bitcoin Stamps by Creator (Artist) BTC address~~
+- ~~Include base64 data in response~~
+- Search for Bitcoin Stamps that have participated in the key burn: 
   - https://github.com/mikeinspace/stamps/blob/main/Key-Burn.md
   - filter upon unpsent outputs and spent outputs
   
@@ -157,7 +192,7 @@ https://stampchain.io/api/stamps?creator=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
 
 ## Notes
 - There are no CORS restrictions on this API, feel free to integrate it into your own projects with care. Access may be limited as we see fit.
-- The owner and issuer fields are a 1 to 1 relationship to the original stamp transaction. The `supply` represends additional assets issued to that original stamp transaction. These assets are effectively represent a fractional ownership of the parent stamp. This is why we recommend using a 1 of 1 issuance when minting a stamp.
+
 
 <br><br>
 # Official BITCOIN STAMPS Minting Service API
