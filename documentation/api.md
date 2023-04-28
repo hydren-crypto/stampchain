@@ -7,7 +7,6 @@
   - [API URL](#api-url)
   - [Output](#output)
   - [Query Parameters](#query-parameters)
-  - [Query for All Stamps](#query-for-all-stamps)
     - [Search for Stamps Owned By Address](#search-for-stamps-owned-by-address)
     - [Search For Single Stamp By Stamp Number](#search-for-single-stamp-by-stamp-number)
     - [Search For Ranges Of Stamps (stamp\_begin / stamp\_end)](#search-for-ranges-of-stamps-stamp_begin--stamp_end)
@@ -30,6 +29,12 @@ This gateway is in dev mode and is subject to change as new features are added. 
 Current API URL 
 
 https://stampchain.io/api/stamps
+
+This query will only return 1000 stamps at a time by default. Pagination is available by passing the page and page_size parameters.
+
+https://stampchain.io/api/stamps?page=1&page_size=1000
+
+https://stampchain.io/api/stamps?page=2&page_size=1000
 
 ## Output
 
@@ -81,15 +86,6 @@ https://stampchain.io/api/stamps
 <br>
 
 ## Query Parameters
-
-## Query for All Stamps
-
-Note that this query will only return 1000 stamps at a time.  (**This is pending full implementation**)
-
-https://stampchain.io/api/stamps?page=1&page_size=1000
-
-https://stampchain.io/api/stamps?page=2&page_size=1000
-
 
 ### Search for Stamps Owned By Address
 This returns all stamps which are owned by the address provided in the query parameter.
