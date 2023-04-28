@@ -1,21 +1,22 @@
 // Set the current page and items per page
 let currentPage = 1;
 const itemsPerPage = 1000;
+const apiBaseUrl = 'https://stampchain.io/api/stamps';
+let totalNumberOfStamps = 0;
 
 function indexPage() {
   fetchDataAndRender(currentPage);
 
   function fetchDataAndRender(page) {
-    fetch('https://stampchain.io/stamp.json')
+    fetch(`${apiBaseUrl}?page=${page}&page_size=${itemsPerPage}`)
       .then(response => response.json())
       .then(data => {
-        // Reverse the data array to start with the newest item
-        data.reverse();
+        // If this is the first page, set the total number of stamps (our only chance, really)
+        if (currentPage === 1 && data[0]) {
+          totalNumberOfStamps = Number(data[0].stamp)
+        }
 
-        const startIndex = (page - 1) * itemsPerPage;
-        const endIndex = page * itemsPerPage;
-        const pageData = data.slice(startIndex, endIndex);
-        renderData(pageData);
+        renderData(data);
         renderPaginationButtons(page, data.length);
       })
       .catch(error => console.error(error));
@@ -62,62 +63,62 @@ function indexPage() {
     });
   }
 
-  function renderPaginationButtons(page, totalItems) {
+  function renderPaginationButtons(page) {
     const paginationContainerTop = document.getElementById('pagination-container-top');
     const paginationContainerBottom = document.getElementById('pagination-container-bottom');
-  
+
     paginationContainerTop.innerHTML = '';
     paginationContainerBottom.innerHTML = '';
-  
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-  
+
+    const totalPages = Math.ceil(totalNumberOfStamps / itemsPerPage);
+
     const prevButtonTop = document.createElement('button');
-    prevButtonTop.innerText = '< Next';
+    prevButtonTop.innerText = '< Previous';
     prevButtonTop.disabled = page === 1;
     prevButtonTop.addEventListener('click', () => {
       currentPage--;
       fetchDataAndRender(currentPage);
     });
-  
+
     const nextButtonTop = document.createElement('button');
-    nextButtonTop.innerText = 'Previous >';
+    nextButtonTop.innerText = 'Next >';
     nextButtonTop.disabled = page === totalPages;
     nextButtonTop.addEventListener('click', () => {
       currentPage++;
       fetchDataAndRender(currentPage);
     });
-  
+
     const prevButtonBottom = prevButtonTop.cloneNode(true);
     const nextButtonBottom = nextButtonTop.cloneNode(true);
-  
+
     // Remove the previous event listeners
     prevButtonBottom.removeEventListener('click', () => {
       currentPage--;
       fetchDataAndRender(currentPage);
     });
-  
+
     nextButtonBottom.removeEventListener('click', () => {
       currentPage++;
       fetchDataAndRender(currentPage);
     });
-  
+
     // Add new event listeners
     prevButtonBottom.addEventListener('click', () => {
       currentPage--;
       fetchDataAndRender(currentPage);
     });
-  
+
     nextButtonBottom.addEventListener('click', () => {
       currentPage++;
       fetchDataAndRender(currentPage);
     });
-  
+
     // Replace the old buttons in the DOM with the new ones
     paginationContainerTop.appendChild(prevButtonTop);
     paginationContainerTop.appendChild(nextButtonTop);
     paginationContainerBottom.appendChild(prevButtonBottom);
     paginationContainerBottom.appendChild(nextButtonBottom);
-  }  
+  }
 }
 
 
@@ -126,19 +127,21 @@ function assetPage() {
     const urlParams = new URLSearchParams(window.location.search);
     const stampNumber = urlParams.get('stampNumber');
     const assetParam = urlParams.get('asset');
-  
-    let assetData;
+
     try {
-      const assetResponse = await fetch('https://stampchain.io/stamp.json');
-      const allAssetData = await assetResponse.json();
-  
+      let assetData;
+      const fetchUrl = new URL(apiBaseUrl);
       if (stampNumber) {
-        assetData = allAssetData.find(asset => asset.stamp === parseInt(stampNumber));
+        fetchUrl.searchParams.append('stamp', stampNumber)
       } else if (assetParam) {
-        assetData = allAssetData.find(asset => asset.asset === assetParam);
+        fetchUrl.searchParams.append('asset', assetParam)
+      }
+      const resp = await fetch(fetchUrl);
+      const json  = await resp.json();
+      if (json[0]) {
+        assetData = json[0];
       }
 
-  
       if (assetData) {
         displayAssetDetails(assetData);
 
@@ -159,7 +162,7 @@ function assetPage() {
                         id: 0,
                         method: 'get_asset_info',
                         params: {
-                            assets: [assetData.asset],
+                            assets: [assetData.cpid],
                         },
                     },
                 }),
@@ -196,14 +199,14 @@ function assetPage() {
     img.onerror = function() {
         this.onerror = null;
         this.src = 'images/sad.png';
-     };    
+    };
     img.style.objectFit = 'contain';
     img.style.imageRendering = 'pixelated';
     img.style.imageRendering = '-moz-crisp-edges';
     img.style.imageRendering = 'crisp-edges';
     img.style.backgroundColor = '#000000';
     assetContainer.appendChild(img);
-      
+
 
 
     // Display asset details
@@ -215,7 +218,7 @@ function assetPage() {
     assetDetails.appendChild(stampDetail);
 
     const assetDetail = document.createElement('pre');
-    assetDetail.innerText = `Asset: ${data.asset}`;
+    assetDetail.innerText = `Asset: ${data.cpid}`;
     assetDetails.appendChild(assetDetail);
 
     const txHashDetail = document.createElement('pre');
