@@ -5,6 +5,7 @@
   - [Table of Contents](#table-of-contents)
   - [Description](#description)
   - [API URL](#api-url)
+    - [Sort Order](#sort-order)
   - [Output](#output)
   - [Query Parameters](#query-parameters)
     - [Search for Stamps Owned By Address](#search-for-stamps-owned-by-address)
@@ -35,6 +36,14 @@ This query will only return 1000 stamps at a time by default. Pagination is avai
 https://stampchain.io/api/stamps?page=1&page_size=1000
 
 https://stampchain.io/api/stamps?page=2&page_size=1000
+
+### Sort Order
+
+May be specified by passing the sort_order parameter.  The default sort order is by `stamp` ascending.
+
+```
+sort_order=asc or desc
+```
 
 ## Output
 
