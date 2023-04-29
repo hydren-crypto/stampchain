@@ -8,7 +8,7 @@ function indexPage() {
   fetchDataAndRender(currentPage);
 
   function fetchDataAndRender(page) {
-    fetch(`${apiBaseUrl}?page=${page}&page_size=${itemsPerPage}`)
+    fetch(`${apiBaseUrl}?page=${page}&page_size=${itemsPerPage}&sort_order=desc`)
       .then(response => response.json())
       .then(data => {
         // If this is the first page, set the total number of stamps (our only chance, really)
