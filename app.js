@@ -50,10 +50,11 @@ function indexPage() {
       stampInfo.innerText = `Stamp: ${item.stamp}`;
       itemContainer.appendChild(stampInfo);
 
-      const txHashInfo = document.createElement('pre');
-      const truncatedTxHash = `${item.tx_hash.slice(0, 5)}...${item.tx_hash.slice(-5)}`;
-      txHashInfo.innerText = `Tx Hash: ${truncatedTxHash}`;
-      itemContainer.appendChild(txHashInfo);
+      const creatorInfo = document.createElement('pre');
+      const truncatedCreator = `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
+
+      creatorInfo.innerText = `Creator: ${truncatedCreator}`;
+      itemContainer.appendChild(creatorInfo);
 
       const viewMoreBtn = document.createElement('button');
       viewMoreBtn.innerText = 'View More';
