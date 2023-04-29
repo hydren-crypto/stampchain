@@ -36,6 +36,9 @@ https://stampchain.io/api/stamps?page=1&page_size=1000
 
 https://stampchain.io/api/stamps?page=2&page_size=1000
 
+To sort: 
+sort_order=asc or dsc (default is dsc)
+
 ## Output
 
 ```JSON
