@@ -11,4 +11,4 @@ See: [Bitcoin Stamps Protocol](https://github.com/mikeinspace/stamps/blob/main/R
 
 We encourage all builders to utilize our Bitcoin Stamps API. This will allo you to integrate Bitcoin Stamps into your own applications.  The API is currently in beta and is being actively developed for wallet integration and minting services.
 
-See: [Bitcoin Stamps API](https://github.com/hydren-crypto/stampchain/blob/main/docs/api.md)
+See: [Bitcoin Stamps API](api.md)
