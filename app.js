@@ -218,9 +218,25 @@ function assetPage() {
     stampDetail.innerText = `Stamp: ${data.stamp}`;
     assetDetails.appendChild(stampDetail);
 
+    const CreatorDetail = document.createElement('pre');
+    stampDetail.innerText = `Creator: ${data.creator}`;
+    assetDetails.appendChild(stampDetail);
+
     const assetDetail = document.createElement('pre');
-    assetDetail.innerText = `Asset: ${data.cpid}`;
+    assetDetail.innerText = `CPID: ${data.cpid}`;
     assetDetails.appendChild(assetDetail);
+
+    const supplyDetail = document.createElement('pre');
+    supplyDetail.innerText = `Supply: ${data.supply}`;
+    assetDetails.appendChild(supplyDetail);
+
+    const divisibleDetail = document.createElement('pre');
+    divisibleDetail.innerText = `Divisible: ${data.divisible}`;
+    assetDetails.appendChild(divisibleDetail);
+
+    const lockedDetail = document.createElement('pre');
+    lockedDetail.innerText = `Locked: ${data.locked}`;
+    assetDetails.appendChild(lockedDetail);
 
     const txHashDetail = document.createElement('pre');
     txHashDetail.innerText = `BTC TX: ${data.tx_hash}`;
@@ -240,8 +256,8 @@ function assetPage() {
     // assetDetailsContainer.appendChild(assetDetailsTitle);
 
     const assetDetails = document.createElement('pre');
-    assetDetails.innerText = `Creator/Artist: ${assetData.owner}\nTotal Issued: ${assetData.supply}\nDivisible: ${assetData.divisible}\nLocked: ${assetData.locked}`;
-    assetDetailsContainer.appendChild(assetDetails);
+    // assetDetails.innerText = `Creator/Artist: ${assetData.owner}\nTotal Issued: ${assetData.supply}\nDivisible: ${assetData.divisible}\nLocked: ${assetData.locked}`;
+    // assetDetailsContainer.appendChild(assetDetails);
 
     const mediaLink = document.createElement('pre');
     const mediaLinkAnchor = document.createElement('a');
@@ -260,7 +276,7 @@ function assetPage() {
 
     const xchainExplorerLink = document.createElement('pre');
     const xchainExplorerLinkAnchor = document.createElement('a');
-    xchainExplorerLinkAnchor.href = `https://xchain.io/asset/${assetData.asset}`;
+    xchainExplorerLinkAnchor.href = `https://xchain.io/asset/${assetData.cpid}`;
     xchainExplorerLinkAnchor.innerText = 'Xchain.io Asset Information';
     xchainExplorerLink.appendChild(xchainExplorerLinkAnchor);
     assetDetailsContainer.appendChild(xchainExplorerLink);
