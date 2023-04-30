@@ -242,6 +242,27 @@ function assetPage() {
     txHashDetail.innerText = `BTC TX: ${data.tx_hash}`;
     assetDetails.appendChild(txHashDetail);
 
+    const xchainExplorerLink = document.createElement('pre');
+    const xchainExplorerLinkAnchor = document.createElement('a');
+    xchainExplorerLinkAnchor.href = `https://xchain.io/asset/${data.cpid}`;
+    xchainExplorerLinkAnchor.innerText = 'Xchain.io Asset Information';
+    xchainExplorerLink.appendChild(xchainExplorerLinkAnchor);
+    assetDetails.appendChild(xchainExplorerLink);
+
+    const txnDataLink = document.createElement('pre');
+    const txnDataLinkAnchor = document.createElement('a');
+    txnDataLinkAnchor.href = `https://jpja.github.io/Electrum-Counterparty/decode_tx.html?tx=${data.tx_hash}`;
+    txnDataLinkAnchor.innerText = 'Txn Data Decoder';
+    txnDataLink.appendChild(txnDataLinkAnchor);
+    assetDetails.appendChild(txnDataLink);
+
+    const mediaLink = document.createElement('pre');
+    const mediaLinkAnchor = document.createElement('a');
+    mediaLinkAnchor.href = `${data.stamp_url}`;
+    mediaLinkAnchor.innerText = 'Binary Media';
+    mediaLink.appendChild(mediaLinkAnchor);
+    assetDetails.appendChild(mediaLink);
+
     assetContainer.appendChild(assetDetails);
   }
 
@@ -255,31 +276,10 @@ function assetPage() {
     // assetDetailsTitle.innerText = 'Asset Details';
     // assetDetailsContainer.appendChild(assetDetailsTitle);
 
-    const assetDetails = document.createElement('pre');
+    // const assetDetails = document.createElement('pre');
     // assetDetails.innerText = `Creator/Artist: ${assetData.owner}\nTotal Issued: ${assetData.supply}\nDivisible: ${assetData.divisible}\nLocked: ${assetData.locked}`;
     // assetDetailsContainer.appendChild(assetDetails);
 
-    const mediaLink = document.createElement('pre');
-    const mediaLinkAnchor = document.createElement('a');
-    mediaLinkAnchor.href = `${data.stamp_url}`;
-    mediaLinkAnchor.innerText = 'Binary Media';
-
-    mediaLink.appendChild(mediaLinkAnchor);
-    assetDetailsContainer.appendChild(mediaLink);
-
-    const txnDataLink = document.createElement('pre');
-    const txnDataLinkAnchor = document.createElement('a');
-    txnDataLinkAnchor.href = `https://jpja.github.io/Electrum-Counterparty/decode_tx.html?tx=${data.tx_hash}`;
-    txnDataLinkAnchor.innerText = 'Txn Data Decoder';
-    txnDataLink.appendChild(txnDataLinkAnchor);
-    assetDetailsContainer.appendChild(txnDataLink);
-
-    const xchainExplorerLink = document.createElement('pre');
-    const xchainExplorerLinkAnchor = document.createElement('a');
-    xchainExplorerLinkAnchor.href = `https://xchain.io/asset/${data.cpid}`;
-    xchainExplorerLinkAnchor.innerText = 'Xchain.io Asset Information';
-    xchainExplorerLink.appendChild(xchainExplorerLinkAnchor);
-    assetDetailsContainer.appendChild(xchainExplorerLink);
 
     assetContainer.appendChild(assetDetailsContainer);
   }
@@ -297,7 +297,7 @@ function assetPage() {
     }
   }
 
-  fetchAssetDetails();
+  // fetchAssetDetails();
 }
 
 function init() {
