@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pngquant/2.12.5/pngquant.min.js"></script>
+</head>
+<body>
+  <input type="file" id="inputImage" accept="image/png" />
+  <canvas id="sourceCanvas"></canvas>
+  <button id="saveButton">Save</button>
+  <script>
+    const inputImage = document.getElementById('inputImage');
+    const sourceCanvas = document.getElementById('sourceCanvas');
+    const ctx = sourceCanvas.getContext('2d');
+
+    inputImage.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const img = new Image();
+        img.onload = function () {
+          sourceCanvas.width = img.width;
+          sourceCanvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    async function compressImage(imageData) {
+      const compressedData = await pngquant(imageData, {
+        quality: [80, 80], // Set quality to 80%
+      });
+      return compressedData;
+    }
+
+    saveButton.addEventListener('click', async function () {
+      const sourceImageData = sourceCanvas.toDataURL('image/png');
+      const compressedImageData = await compressImage(sourceImageData);
+      console.log(compressedImageData);
+
+      const link = document.createElement('a');
+      link.href = compressedImageData;
+      link.download = 'compressed_image.png';
+      link.click();
+    });
+  </script>
+</body>
+</html>
