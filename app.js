@@ -146,39 +146,6 @@ function assetPage() {
       if (assetData) {
         displayAssetDetails(assetData);
 
-            const proxyUrl = 'https://k6e0ufzq8h.execute-api.us-east-1.amazonaws.com/beta/counterpartyproxy';
-
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    'Accept': 'application/json, text/javascript',
-                    'Authorization': 'Basic ' + btoa('rpc:rpc'),
-                },
-                body: JSON.stringify({
-                    rpcUser: 'rpc',
-                    rpcPassword: 'rpc',
-                    request: {
-                        jsonrpc: '2.0',
-                        id: 0,
-                        method: 'get_asset_info',
-                        params: {
-                            assets: [assetData.cpid],
-                        },
-                    },
-                }),
-            };
-
-            const counterpartyResponse = await fetch(proxyUrl, requestOptions);
-            const counterpartyData = await counterpartyResponse.json();
-
-            if (counterpartyData.result && counterpartyData.result.length > 0) {
-                const counterpartyassetData = counterpartyData.result[0];
-                displayCounterpartyAssetDetails(counterpartyassetData, assetData.tx_hash, assetData.stamp_url);
-            } else {
-                console.error('Asset not found on Counterparty');
-            }
-
         } else {
             console.error('Asset not found');
         }
@@ -266,23 +233,6 @@ function assetPage() {
     assetContainer.appendChild(assetDetails);
   }
 
-  function displayCounterpartyAssetDetails(assetData, txHash, stamp_url) {
-    const assetContainer = document.getElementById('asset-container');
-
-    const assetDetailsContainer = document.createElement('div');
-    assetDetailsContainer.style.textAlign = 'center';
-
-    // const assetDetailsTitle = document.createElement('h3');
-    // assetDetailsTitle.innerText = 'Asset Details';
-    // assetDetailsContainer.appendChild(assetDetailsTitle);
-
-    // const assetDetails = document.createElement('pre');
-    // assetDetails.innerText = `Creator/Artist: ${assetData.owner}\nTotal Issued: ${assetData.supply}\nDivisible: ${assetData.divisible}\nLocked: ${assetData.locked}`;
-    // assetDetailsContainer.appendChild(assetDetails);
-
-
-    assetContainer.appendChild(assetDetailsContainer);
-  }
 
 
   function displayDispenserDetails(dispenserData) {
@@ -297,7 +247,7 @@ function assetPage() {
     }
   }
 
-  // fetchAssetDetails();
+  fetchAssetDetails();
 }
 
 function init() {
