@@ -261,7 +261,7 @@ function assetPage() {
 
     const mediaLink = document.createElement('pre');
     const mediaLinkAnchor = document.createElement('a');
-    mediaLinkAnchor.href = `${stamp_url}`;
+    mediaLinkAnchor.href = `${data.stamp_url}`;
     mediaLinkAnchor.innerText = 'Binary Media';
 
     mediaLink.appendChild(mediaLinkAnchor);
@@ -269,14 +269,14 @@ function assetPage() {
 
     const txnDataLink = document.createElement('pre');
     const txnDataLinkAnchor = document.createElement('a');
-    txnDataLinkAnchor.href = `https://jpja.github.io/Electrum-Counterparty/decode_tx.html?tx=${txHash}`;
+    txnDataLinkAnchor.href = `https://jpja.github.io/Electrum-Counterparty/decode_tx.html?tx=${data.tx_hash}`;
     txnDataLinkAnchor.innerText = 'Txn Data Decoder';
     txnDataLink.appendChild(txnDataLinkAnchor);
     assetDetailsContainer.appendChild(txnDataLink);
 
     const xchainExplorerLink = document.createElement('pre');
     const xchainExplorerLinkAnchor = document.createElement('a');
-    xchainExplorerLinkAnchor.href = `https://xchain.io/asset/${assetData.cpid}`;
+    xchainExplorerLinkAnchor.href = `https://xchain.io/asset/${data.cpid}`;
     xchainExplorerLinkAnchor.innerText = 'Xchain.io Asset Information';
     xchainExplorerLink.appendChild(xchainExplorerLinkAnchor);
     assetDetailsContainer.appendChild(xchainExplorerLink);
