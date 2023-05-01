@@ -34,15 +34,23 @@
 	  <h2><em>Unprunable UTXO Art, Because Sats Don’t Exist.</em></h2>
 	  
 	  <form id="search-form">
-		<label for="search-input">Search by Stamp Number or Asset:</label>
-		<input type="text" id="search-input" name="search" required>
+		<input type="text" id="search-input" name="search" required placeholder="stamp / tx hash / cpid">
 		<button type="submit">Search</button>
 	  </form>
 
-	<div id="pagination-container-top"></div>
+	  <div id="pagination-container-top">
+		<button id="first-page-top">First</button>
+		<button id="prev-page-top">Previous</button>
+		<button id="next-page-top">Next</button>
+		<button id="last-page-top">Last</button>
+	  </div>
 	<div id="data-container"></div>
-	<div id="pagination-container-bottom"></div>
-
+	<div id="pagination-container-bottom">
+		<button id="first-page-bottom">First</button>
+		<button id="prev-page-bottom">Previous</button>
+		<button id="next-page-bottom">Next</button>
+		<button id="last-page-bottom">Last</button>
+	  </div>
 	
 	<p id="copyright">&copy 2023 Bitcoin Stamps</p>
   
