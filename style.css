@@ -119,6 +119,11 @@ h3 {color:white;text-align:center;}
 #pagination-container-top button {margin:10px;background-color:black;}
 #pagination-container-bottom {text-align:center;}
 #pagination-container-bottom button {margin:10px;background-color:black;}
+#pagination-container-top button,
+#pagination-container-bottom button {
+  margin: 0 5px;
+}
+
 
 #upload-form {text-transform:none;color:white;text-align:center;}
 #output {text-transform:none;color:white;text-align:center;}
