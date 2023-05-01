@@ -146,3 +146,12 @@ label {text-transform:none;margin:40px;display:block;}
     align-items: center;
     justify-content: center;
 }
+
+.title-link {
+	text-decoration: none;
+	color: white;
+  }
+  
+.title-link:hover {
+color: yellow;
+}

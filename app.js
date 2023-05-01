@@ -4,6 +4,11 @@ const itemsPerPage = 500;
 const apiBaseUrl = 'https://stampchain.io/api/stamps';
 let totalNumberOfStamps = 0;
 
+function simpleValidateAddress(address) {
+  return /^1|^3|^bc1q/.test(address);
+}
+
+
 function indexPage() {
   // Get the creator address from URL query parameter if exists
   const urlParams = new URLSearchParams(window.location.search);
@@ -317,13 +322,17 @@ function init() {
       } else if (/^A\d+$/.test(searchValue)) {
         // Redirect to asset page with asset parameter
         window.location.href = `asset.html?asset=${searchValue}`;
-      } else if (/^[a-fA-F0-9]{64}$/.test(searchValue)) { // Add this block
+      } else if (/^[a-fA-F0-9]{64}$/.test(searchValue)) {
         // Redirect to asset page with tx_hash parameter
         window.location.href = `asset.html?tx_hash=${searchValue}`;
+      } else if (simpleValidateAddress(searchValue)) { // Add this condition
+        // Redirect to index page with creator parameter
+        window.location.href = `index.html?creator=${searchValue}`;
       } else {
         console.error('Invalid search input');
       }
     });
+
   } else if (currentPage === 'asset.html') {
     assetPage();
   }
