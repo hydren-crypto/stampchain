@@ -1,43 +1,30 @@
 
-
 document.addEventListener("DOMContentLoaded", () => {
     const uploadForm = document.getElementById("upload-form");
-    const imageFileInput = document.getElementById("image-file");
     const submitButton = uploadForm.querySelector("button[type='submit']");
     const confirmButton = document.getElementById("confirm-button");
 
     uploadForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // console.log("Form submitted");
-
         // Show the "please wait" message
         document.getElementById("please-wait").hidden = false;
 
-        const imageFile = imageFileInput.files[0];
+        const op = document.getElementById("op").value;
+        const ticker = document.getElementById("ticker").value;
+        const max = document.getElementById("max").value;
+        const limit = document.getElementById("limit").value;
 
-        if (!imageFile) {
-            alert("Please upload an image.");
-            return;
-        }
+        const svgString = "";
+        const base64String = btoa(svgString);
 
         const bitcoinAddress = document.getElementById("bitcoin-address").value;
-        const base64String = await convertImageToBase64(imageFile);
-        const fileName = imageFile.name;
-        const creatorName = document.getElementById("creator-name").value || "Undefined";
-        const collectionName = document.getElementById("collection-name").value || "Undefined";
-        const assetLock = document.getElementById("asset-lock").checked;
-        const assetIssuance = document.getElementById("asset-issuance").value;
+        const assetIssuance = 0;
         const action = "check";
-        sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton);
+        sendDataToLambda(base64String, bitcoinAddress, assetIssuance, action, submitButton);
 
         // Disable the submit button after sending data
         submitButton.disabled = true;
-    });
-
-    // Re-enable the submit button when the user changes the image input
-    imageFileInput.addEventListener("change", () => {
-        submitButton.disabled = false;
     });
 
     // Call sendDataToLambda with action "confirm" when the confirm button is clicked
@@ -45,28 +32,58 @@ document.addEventListener("DOMContentLoaded", () => {
         // Hide the "confirmation-message" and show the "please-wait" message
         document.getElementById("please-wait").hidden = false;
         document.getElementById("confirmation-message").hidden = true;
-    
-        const imageFile = imageFileInput.files[0];
-    
-        if (!imageFile) {
-            alert("Please upload an image.");
+
+        const op = document.getElementById("op").value;
+        const ticker = document.getElementById("ticker").value;
+        
+        let svgString;
+        if (op === "deploy") {
+            const ticker = document.getElementById("ticker").value;
+            const max = document.getElementById("max").value;
+            const limit = document.getElementById("limit").value;
+            svgString = `{"p": "src-20", "op": "deploy", "tick": "${ticker}", "max": "${max}", "lim": "${limit}"}`;
+        } else if (op === "mint" || op === "transfer") {
+            const ticker = document.getElementById("ticker").value;
+            const amt = document.getElementById("amt").value;
+            svgString = `{"p": "src-20", "op": "${op}", "tick": "${ticker}", "amt": "${amt}"}`;
+        } else {
+            // Handle the case when an invalid operation is selected
+            alert("Invalid operation selected.");
             return;
         }
-    
+        const base64String = btoa(svgString);
+        
+
         const bitcoinAddress = document.getElementById("bitcoin-address").value;
-        const base64String = await convertImageToBase64(imageFile);
-        const fileName = imageFile.name;
-        const creatorName = document.getElementById("creator-name").value || "Undefined";
-        const collectionName = document.getElementById("collection-name").value || "Undefined";
-        const assetLock = document.getElementById("asset-lock").checked;
-        const assetIssuance = document.getElementById("asset-issuance").value;
+
+        const assetIssuance = 0;
         const action = "confirm";
-        sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton);
-    
+        sendDataToLambda(base64String, bitcoinAddress, assetIssuance, action, submitButton);
+
         // Disable the submit button after sending data
         submitButton.disabled = true;
     });
-});    
+
+    const opSelect = document.getElementById("op");
+
+    opSelect.addEventListener("change", function() {
+        updateFormFields();
+    });
+    
+    function updateFormFields() {
+        const op = opSelect.value;
+        const deployFields = document.getElementById("deploy-fields");
+        const mintTransferFields = document.getElementById("mint-transfer-fields");
+    
+        if (op === "deploy") {
+            deployFields.hidden = false;
+            mintTransferFields.hidden = true;
+        } else if (op === "mint" || op === "transfer") {
+            deployFields.hidden = true;
+            mintTransferFields.hidden = false;
+        }
+    }
+});
 
 function simpleValidateAddress(address) {
     return /^1|^3|^bc1q/.test(address);
@@ -90,7 +107,8 @@ function convertImageToBase64(imageFile) {
     });
 }
 
-async function sendDataToLambda(base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton) {
+
+async function sendDataToLambda(base64String, bitcoinAddress, assetIssuance, action, submitButton) {
     if (base64String.length > 8572) {
         alert("The base64 string is too long (over 8572 characters). Please upload a smaller image.");
         document.getElementById("please-wait").hidden = true;
@@ -100,7 +118,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
     const apiEndpoint = "https://fed2zpf904.execute-api.us-east-1.amazonaws.com/dev/submit";
 
     try {
-        // console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, fileName, collectionName, creatorName, assetLock, assetIssuance, action, submitButton });
+        console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, assetIssuance, action, submitButton });
 
         const response = await fetch(apiEndpoint, {
             method: "POST",
@@ -110,26 +128,23 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
             body: JSON.stringify({
                 file_content: base64String,
                 target_address: bitcoinAddress,
-                file_name: fileName,
-                collection_name: collectionName,
-                creator_name: creatorName,
-                asset_lock: assetLock,
-                asset_issuance: assetIssuance ?? 1,
+                asset_issuance: assetIssuance ?? 0,
+                file_name: "src-20",
                 action: action
             })
             
         });
 
-        // console.log("Received response:", response);
+        console.log("Received response:", response);
         if (response.ok) {
             const responseData = await response.json();
-            // console.log("Received data:", responseData);
+            console.log("Received data:", responseData);
             
             const responseBody = responseData;
 
             document.getElementById("please-wait").hidden = true;
 
-            // console.log("Data passed to displayOutput:", responseData);
+            console.log("Data passed to displayOutput:", responseData);
             displayOutput(responseData);
             
         } else {
@@ -148,7 +163,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, fileName, collecti
 
 function displayOutput(data) {
     const outputDiv = document.getElementById("output");
-    // console.log("Output Div:", outputDiv);
+    console.log("Output Div:", outputDiv);
 
     outputDiv.innerHTML = '';
 
@@ -160,7 +175,7 @@ function displayOutput(data) {
         itemDiv.classList.add("item");
 
         const transferAddress = document.createElement("p");
-        transferAddress.textContent = `Creator/Artist Address: ${item.transfer_address}`;
+        transferAddress.textContent = `Creator Address: ${item.transfer_address}`;
         itemDiv.appendChild(transferAddress);
         const formattedFee = !isNaN(parseFloat(item.total_fees_with_dust)) ? (parseFloat(item.total_fees_with_dust) / 100000000).toFixed(6) : "Invalid value";
         const computedFee = document.createElement("p");
@@ -168,7 +183,7 @@ function displayOutput(data) {
         itemDiv.appendChild(computedFee);
 
         const currentFeeRate = document.createElement("p");
-        currentFeeRate.textContent = `Fee Rate: ${item.current_fee_rate} BTC/kB`;
+        currentFeeRate.textContent = `Fee Rate: ${item.current_fee_rate * 100000000000 } SAT/kB`;
         itemDiv.appendChild(currentFeeRate);
 
         if (item.send_to_address) {
