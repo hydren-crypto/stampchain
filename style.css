@@ -155,3 +155,7 @@ label {text-transform:none;margin:40px;display:block;}
 .title-link:hover {
 color: yellow;
 }
+
+.normal-case {
+	text-transform: none;
+}
