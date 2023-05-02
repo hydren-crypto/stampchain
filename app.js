@@ -8,6 +8,10 @@ function simpleValidateAddress(address) {
   return /^1|^3|^bc1q/.test(address);
 }
 
+function isValidCpid(cpid) {
+  return /^A\d+$/.test(cpid);
+}
+
 
 function indexPage() {
   // Get the creator address from URL query parameter if exists
@@ -66,6 +70,9 @@ function indexPage() {
 
       const creatorInfo = document.createElement('pre');
       const truncatedCreator = `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
+      creatorInfo.innerHTML = `Creator: <span class="normal-case">${truncatedCreator}</span>`; 
+      itemContainer.appendChild(creatorInfo);
+      
 
       creatorInfo.innerText = `Creator: ${truncatedCreator}`;
       itemContainer.appendChild(creatorInfo);
@@ -178,22 +185,23 @@ function indexPage() {
 function assetPage() {
   async function fetchAssetDetails() {
     const urlParams = new URLSearchParams(window.location.search);
+    const asset = urlParams.get('asset');
+    const cpid = urlParams.get('cpid');
+    const tx_hash = urlParams.get('tx_hash');
     const stampNumber = urlParams.get('stampNumber');
-    const assetParam = urlParams.get('asset');
-    const txHashParam = urlParams.get('tx_hash'); // Add this line
   
     try {
       let assetData;
       const fetchUrl = new URL(apiBaseUrl);
       if (stampNumber) {
-        fetchUrl.searchParams.append('stamp', stampNumber)
-      } else if (assetParam) {
-        fetchUrl.searchParams.append('asset', assetParam)
-      } else if (txHashParam) { // Add this block
-        fetchUrl.searchParams.append('tx_hash', txHashParam)
+        fetchUrl.searchParams.append('stamp', stampNumber);
+      } else if (asset || cpid) {
+        fetchUrl.searchParams.append('cpid', asset || cpid);
+      } else if (tx_hash) {
+        fetchUrl.searchParams.append('tx_hash', tx_hash);
       }
       const resp = await fetch(fetchUrl);
-      const json  = await resp.json();
+      const json = await resp.json();
       if (json[0]) {
         assetData = json[0];
       }
@@ -207,6 +215,7 @@ function assetPage() {
       console.error(error);
     }
   }
+  
   
 
 
@@ -234,14 +243,14 @@ function assetPage() {
     // Display asset details
     const assetDetails = document.createElement('div');
     assetDetails.style.textAlign = 'center';
-
+  
     const stampDetail = document.createElement('pre');
     stampDetail.innerText = `Stamp: ${data.stamp}`;
     assetDetails.appendChild(stampDetail);
-
+  
     const CreatorDetail = document.createElement('pre');
-    stampDetail.innerText = `Creator: ${data.creator}`;
-    assetDetails.appendChild(stampDetail);
+    CreatorDetail.innerHTML = `Creator: <span class="normal-case">${data.creator}</span>`; // Updated this line
+    assetDetails.appendChild(CreatorDetail);
 
     const assetDetail = document.createElement('pre');
     assetDetail.innerText = `CPID: ${data.cpid}`;
@@ -260,7 +269,7 @@ function assetPage() {
     assetDetails.appendChild(lockedDetail);
 
     const txHashDetail = document.createElement('pre');
-    txHashDetail.innerText = `BTC TX: ${data.tx_hash}`;
+    txHashDetail.innerHTML = `BTC TX: <span class="normal-case">${data.tx_hash}</span>`; // Updated this line
     assetDetails.appendChild(txHashDetail);
 
     const xchainExplorerLink = document.createElement('pre');
@@ -310,28 +319,24 @@ function init() {
   if (currentPage === 'index.html' || currentPage === '') {
     indexPage();
 
-    // Add event listener for search form submit
     const searchForm = document.getElementById('search-form');
     searchForm.addEventListener('submit', (event) => {
       event.preventDefault();
       const searchInput = document.getElementById('search-input');
       const searchValue = searchInput.value.trim();
       if (/^\d+$/.test(searchValue)) {
-        // Redirect to asset page with stampNumber parameter
         window.location.href = `asset.html?stampNumber=${searchValue}`;
-      } else if (/^A\d+$/.test(searchValue)) {
-        // Redirect to asset page with asset parameter
+      } else if (isValidCpid(searchValue)) {
         window.location.href = `asset.html?asset=${searchValue}`;
       } else if (/^[a-fA-F0-9]{64}$/.test(searchValue)) {
-        // Redirect to asset page with tx_hash parameter
         window.location.href = `asset.html?tx_hash=${searchValue}`;
-      } else if (simpleValidateAddress(searchValue)) { // Add this condition
-        // Redirect to index page with creator parameter
+      } else if (simpleValidateAddress(searchValue)) {
         window.location.href = `index.html?creator=${searchValue}`;
       } else {
         console.error('Invalid search input');
       }
     });
+    
 
   } else if (currentPage === 'asset.html') {
     assetPage();
