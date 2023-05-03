@@ -62,16 +62,22 @@ To ensure your transactions are conforming to the SRC-20 standard, you can use t
 ## SRC-20 Token Examples
 
 ```
-valid   {"p": "src-20", "op": "mint", "tick": "STAMP", "amt": "18446744073709551615"}
-invalid {"p": "src-20", "op": "mint", "tick": "🙂APL", "amt": "18446744073709551616"} ## over uint64_max
-invalid {"p": "src-20", "op": "mint", "tick": "🙂@PL", "amt": "18,446"}     ## commas not allowed in amt
-valid   {"p": "src-20", "tick": "🙂APL", "op": "mint", "amt": "100"}
-invalid {"p": "src-20", "op": "mint", "tick": "🙂"PL", "amt": "100"}        ## double quotes not allowed in tick
-valid   {"p": "src-20", "op": "mint", "tick": "🙂P`L", "amt": "100"}
-valid   {"p": "src-20", "op": "mint", "tick": "🙂PL?", "amt": "100"}
-valid   {"p": "src-20", "op": "mint", "tick": "🙂PL?", "amt": "100"}
-valid   {"p": "src-20", "op": "mint", "tick": "🙂PL", "amt": "100"}
-valid   {
+🔺🔺 Invalid Examples: 🚫🚫
+
+{"p": "src-20", "op": "mint", "tick": "🙂APL", "amt": "18446744073709551616"} ## over uint64_max
+{"p": "src-20", "op": "mint", "tick": "🙂@PL", "amt": "18,446"}     ## commas not allowed in amt
+{"p": "src-20", "op": "mint", "tick": "🙂"PL", "amt": "100"}        ## double quotes not allowed in tick
+```
+```
+Valid Examples:
+
+{"p": "src-20", "tick": "🙂APL", "op": "mint", "amt": "100"}
+{"p": "src-20", "op": "mint", "tick": "STAMP", "amt": "18446744073709551615"}
+{"p": "src-20", "op": "mint", "tick": "🙂P`L", "amt": "100"}
+{"p": "src-20", "op": "mint", "tick": "🙂PL?", "amt": "100"}
+{"p": "src-20", "op": "mint", "tick": "🙂PL?", "amt": "100"}
+{"p": "src-20", "op": "mint", "tick": "🙂PL", "amt": "100"}
+{
  "p": "src-20",
  "op": "deploy",
  "tick": "KEVN",
@@ -80,7 +86,7 @@ valid   {
 }
 ```
 
-INVALID tokens will not be created in the Bitcoin Stamps Protocol index or API, and the transaction will not be considered a valid SRC-20 transaction. Any further modifications to the standard must be designed around backwards compatibility.
+**INVALID** tokens will not be created in the Bitcoin Stamps Protocol index or API, and the transaction will not be considered a valid SRC-20 transaction. Any further modifications to the standard must be designed around backwards compatibility.
 
 
 ## Allowed Unicode Chars for Tick Field
