@@ -2,7 +2,7 @@
 
  SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Number will not be created and the transaction will not be considered a valid SRC-20 transaction. 
 
-### Mint
+### MINT
 ```
 {
     "p": "src-20", 
@@ -57,11 +57,11 @@
 ## SRC-20 Token Examples
 
 ```
-valid   {"p": "src-20", "op": "mint", "tick": "AAPL", "amt": "18446744073709551615"}
+valid   {"p": "src-20", "op": "mint", "tick": "STAMP", "amt": "18446744073709551615"}
 invalid {"p": "src-20", "op": "mint", "tick": "🙂APL", "amt": "18446744073709551616"} ## over uint64_max
 invalid {"p": "src-20", "op": "mint", "tick": "🙂@PL", "amt": "18,446"}     ## commas not allowed in amt
 valid   {"p": "src-20", "tick": "🙂APL", "op": "mint", "amt": "100"}
-invalid {"p": "src-20", "op": "mint", "tick": "🙂"PL", "amt": "100"}
+invalid {"p": "src-20", "op": "mint", "tick": "🙂"PL", "amt": "100"}        ## double quotes not allowed in tick
 valid   {"p": "src-20", "op": "mint", "tick": "🙂P`L", "amt": "100"}
 valid   {"p": "src-20", "op": "mint", "tick": "🙂PL?", "amt": "100"}
 valid   {"p": "src-20", "op": "mint", "tick": "🙂PL?", "amt": "100"}
