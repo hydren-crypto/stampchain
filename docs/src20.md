@@ -48,7 +48,7 @@
 4. Other Qualifications:
     - CP Asset must be of 0 supply, locked, and multisig dust assigned to qualified burn address
     - not case sensitive DOGE=doge
-    - max mint/transfer/lim amount: uint64_max 18,446,744,073,709,551,615 
+    - max mint/transfer/lim amount: uint64_max 18,446,744,073,709,551,615 (**commaas not allowed**, here for readability only)
     - max decimals: 18 (default)
     - json strings are not order sensitive
     - json strings are not case sensitive
