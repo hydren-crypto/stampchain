@@ -1,24 +1,24 @@
 ## SRC-20 Token Specification
 
- SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Number will not be created and the transaction will not be considered a valid SRC-20 transaction. 
+ SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Number will not be created, the transaction will not be considered a valid SRC-20 transaction, and they will not appear in the Bitcoin Stamps Protocol index / API. 
 
-### MINT
-```
-{
-    "p": "src-20", 
-    "op": "mint", 
-    "tick": "KEVN",
-    "max": "100000", 
-    "lim": "100",
-    "dec": "18" [optional]
-}
-```
 ### DEPLOY
 ```
 {
     "p": "src-20", 
     "op": "deploy", 
-    "tick": "KEVN", 
+    "tick": "STAMP",
+    "max": "100000", 
+    "lim": "100",
+    "dec": "18" [optional]
+}
+```
+### MINT
+```
+{
+    "p": "src-20", 
+    "op": "mint", 
+    "tick": "STAMP", 
     "amt": "100"
 }
 ```
@@ -27,7 +27,7 @@
 {
     "p": "src-20", 
     "op": "transfer", 
-    "tick": "KEVN", 
+    "tick": "STAMP", 
     "amt": "100",
     "to": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"
 }
@@ -80,7 +80,7 @@ valid   {
 }
 ```
 
-INVALID tokens will not be created in the stampchain.io index, and the transaction will not be considered a valid SRC-20 transaction. Any further modifications to the standard must be designed around backwards compatibility.
+INVALID tokens will not be created in the Bitcoin Stamps Protocol index or API, and the transaction will not be considered a valid SRC-20 transaction. Any further modifications to the standard must be designed around backwards compatibility.
 
 
 ## Allowed Unicode Chars for Tick Field
@@ -95,7 +95,7 @@ Emoji_Modifier: This property contains characters that can be used to modify the
 
 ## Excluded Unicode Chars for Tick Field
 
-These chars are excluded from the allowed chars list because they are not printable, and are not allowed in the tick field. Tokens with these chars will not be created in the stampchain.io index, and the transaction will not be considered a valid SRC-20 transaction.
+These chars are excluded from the allowed chars list because they are not printable, and are not allowed in the tick field. Tokens with these chars will not be created in Bitcoin Stamps Protocol index or API, and the transaction will not be considered a valid SRC-20 transaction.
 
 
 
