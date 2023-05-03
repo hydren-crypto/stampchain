@@ -20,28 +20,32 @@
                 <select id="op" name="op" required>
                     <option value="deploy">Deploy</option>
                     <option value="mint">Mint</option>
-                    <!-- <option value="transfer">Transfer</option> -->
+                    <option value="transfer">Transfer</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="ticker">Tick (1-4 Alpha characters):</label>
-                <input type="text" id="ticker" pattern="[A-Za-z]{1,4}" required>
-            </div>
+                <label for="ticker">Tick (1-5 characters):</label>
+                <input type="text" id="ticker" name="ticker" pattern="[\w~!@#$%^&*()_+`\-={}|[\]\\:;>?.?/\\p{Punctuation}\\p{Symbol}(\\p{Emoji_Presentation}|\\p{Emoji_Modifier_Base}\\p{Emoji_Modifier}?)]{1,5}" required>
             <div id="deploy-fields">
                 <div class="form-group">
                     <label for="max">Total Supply:</label>
-                    <input type="number" id="max" min="1" max="10000000000000000000000" step="1">
+                    <input type="number" id="max" min="1" max="18446744073709551615" step="1">
                 </div>
                 <div class="form-group">
                     <label for="limit">Limit Per Mint:</label>
-                    <input type="number" id="limit" min="1" max="10000000000000000000000" step="1">
+                    <input type="number" id="limit" name="limit" min="1" max="18446744073709551615" step="1">
                 </div>
             </div>
             <div id="mint-transfer-fields" hidden>
-
                 <div class="form-group">
                     <label for="amt">Amount:</label>
-                    <input type="number" id="amt" min="1" max="10000000000000000000000" step="1">
+                    <input type="number" id="amt" name="amt" min="1" max="18446744073709551615" step="1">
+                </div>
+            </div>
+            <div id="transfer-fields" hidden>
+                <div class="form-group">
+                    <label for="to">Transfer To BTC Address:<br>Must be a valid BTC address</label>
+                    <input type="text" id="to" name="to" hidden>
                 </div>
             </div>
             <div class="form-group">
@@ -51,6 +55,8 @@
             <button type="submit">QUOTE</button>
             <button id="confirm-button" type="button" hidden>STAMP</button>
         </form>
+    </div>
+    
         <p id="please-wait" hidden>Please wait...Building Your Transaction...</p>
         <div id="output"></div>
         <p id="confirmation-message" hidden>You will receive no further confirmation on this page. Please monitor the creator wallet for the incoming SRC-20 stamp. </p>
