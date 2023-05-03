@@ -55,7 +55,7 @@
 
 ## Creating a SRC-20 Token
 
-To ensure your transactions are conforming to the SRC-20 standard, you can use the StampChain.io SRC-20 Token Generator.
+To ensure your transactions are conforming to the SRC-20 standard, you can use the stampchain.io SRC-20 Token Generator.
 
 [https://stampchain.io/src20](https://stampchain.io/src20)
 
@@ -69,7 +69,7 @@ To ensure your transactions are conforming to the SRC-20 standard, you can use t
 {"p": "src-20", "op": "mint", "tick": "🙂"PL", "amt": "100"}        ## double quotes not allowed in tick
 ```
 ```
-Valid Examples:
+👍👌 Valid Examples: 👌👍
 
 {"p": "src-20", "tick": "🙂APL", "op": "mint", "amt": "100"}
 {"p": "src-20", "op": "mint", "tick": "STAMP", "amt": "18446744073709551615"}
