@@ -53,6 +53,11 @@
     - json strings are not order sensitive
     - json strings are not case sensitive
 
+## Creating a SRC-20 Token
+
+To ensure your transactions are conforming to the SRC-20 standard, you can use the StampChain.io SRC-20 Token Generator.
+
+[https://stampchain.io/src20](https://stampchain.io/src20)
 
 ## SRC-20 Token Examples
 
