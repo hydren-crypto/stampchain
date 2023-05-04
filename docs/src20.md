@@ -1,6 +1,14 @@
 ## SRC-20 Token Specification
 
- SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Number will not be created, the transaction will not be considered a valid SRC-20 transaction, and they will not appear in the Bitcoin Stamps Protocol index / API. 
+Please note: SRC-20 is a bleeding edge specification modelled after BRC-20 and does not work like traditional Counterparty assets you may be accusomted to. Tooling is very minimal or non-existant at the moment. If you do not fully understand how SRC-20 works, it is recommended that you exercise caution.
+
+While the specification is completely "open" and you are free to mint SRC-20 without the assistance of a minting service, it is highly recommended that you do so in order to avoid validity issues or wasted money. KeyBurn, in particular, is a requirement and cannot be accomplished through Freewallet at this time.
+
+Recommended minting service: https://stampchain.io/src20/
+
+## Introduction
+
+SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Number will not be created, the transaction will not be considered a valid SRC-20 transaction, and they will not appear in the Bitcoin Stamps Protocol index / API. 
 
 ### DEPLOY
 ```
@@ -46,7 +54,7 @@
    c. Special characters not present in 2c
 4. Only numeric values are allowed in the "max", "amt", "lim" fields
 4. Other Qualifications:
-    - CP Asset must be of 0 supply, locked, and multisig dust assigned to qualified burn address
+    - CP Asset must be of 0 supply, locked, and multisig dust assigned to qualified burn address For more details on "KeyBurn" see: https://github.com/mikeinspace/stamps/blob/main/Key-Burn.md
     - not case sensitive DOGE=doge
     - max mint/transfer/lim amount: uint64_max 18,446,744,073,709,551,615 (**commaas not allowed**, here for readability only)
     - max decimals: 18 (default)
