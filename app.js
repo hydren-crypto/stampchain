@@ -256,6 +256,10 @@ function assetPage() {
     assetDetail.innerText = `CPID: ${data.cpid}`;
     assetDetails.appendChild(assetDetail);
 
+    const blockIndexDetail = document.createElement('pre');
+    blockIndexDetail.innerText = `Block Index: ${data.block_index}`;
+    assetDetails.appendChild(blockIndexDetail);
+
     const supplyDetail = document.createElement('pre');
     supplyDetail.innerText = `Supply: ${data.supply}`;
     assetDetails.appendChild(supplyDetail);
@@ -271,6 +275,13 @@ function assetPage() {
     const txHashDetail = document.createElement('pre');
     txHashDetail.innerHTML = `BTC TX: <span class="normal-case">${data.tx_hash}</span>`; // Updated this line
     assetDetails.appendChild(txHashDetail);
+
+    const blockChainExplorerLink = document.createElement('pre');
+    const blockChainExplorerLinkAnchor = document.createElement('a');
+    blockChainExplorerLinkAnchor.href = `https://www.blockchain.com/explorer/transactions/btc/${data.tx_hash}`;
+    blockChainExplorerLinkAnchor.innerText = 'Blockchain.com Transaction Information';
+    blockChainExplorerLink.appendChild(blockChainExplorerLinkAnchor);
+    assetDetails.appendChild(blockChainExplorerLink);
 
     const xchainExplorerLink = document.createElement('pre');
     const xchainExplorerLinkAnchor = document.createElement('a');
