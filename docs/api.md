@@ -8,22 +8,20 @@
     - [Sort Order](#sort-order)
   - [Output](#output)
   - [Query Parameters](#query-parameters)
-    - [Search for Stamps Owned By Address](#search-for-stamps-owned-by-address)
-    - [Search For Single Stamp By Stamp Number](#search-for-single-stamp-by-stamp-number)
-    - [Search For Ranges Of Stamps (stamp\_begin / stamp\_end)](#search-for-ranges-of-stamps-stamp_begin--stamp_end)
-    - [Search For Multiple Stamps](#search-for-multiple-stamps)
-    - [Search For Stamps In A Block](#search-for-stamps-in-a-block)
-    - [Search For Stamps By CPID](#search-for-stamps-by-cpid)
-    - [Search For Stamps By BTC Transaction Id](#search-for-stamps-by-btc-transaction-id)
-    - [Search For Stamps By **Creator** (Artist)](#search-for-stamps-by-creator-artist)
+    - [Search for Bitcoin Stamps Owned By Address](#search-for-bitcoin-stamps-owned-by-address)
+    - [Search For Single Bitcoin Stamp By Stamp Number](#search-for-single-bitcoin-stamp-by-stamp-number)
+    - [Search For Ranges Of Bitcoin Stamps (stamp\_begin / stamp\_end)](#search-for-ranges-of-bitcoin-stamps-stamp_begin--stamp_end)
+    - [Search For Multiple Bitcoin Stamps](#search-for-multiple-bitcoin-stamps)
+    - [Search For Bitcoin Stamps In A Block](#search-for-bitcoin-stamps-in-a-block)
+    - [Search For Bitcoin Stamps By CPID](#search-for-bitcoin-stamps-by-cpid)
+    - [Search For Bitcoin Stamps By BTC Transaction Hash](#search-for-bitcoin-stamps-by-btc-transaction-hash)
+    - [Search For Bitcoin Stamps By **Creator** (Artist)](#search-for-bitcoin-stamps-by-creator-artist)
   - [Future Functionality To Be Implemented:](#future-functionality-to-be-implemented)
   - [Notes](#notes)
-- [Official BITCOIN STAMPS Minting Service API](#official-bitcoin-stamps-minting-service-api)
-    - [Parameter Definitions to Pass to the API](#parameter-definitions-to-pass-to-the-api)
     - [Conributors](#conributors)
 
 ## Description
-This gateway is in dev mode and is subject to change as new features are added. **All stamps up to the current block may not be present as we work on integrating multiple data sources.** Please contact us if you have any questions or suggestions.
+The Bitcoin Stamps API is the complete resource for wallet and application integrations. This will return all Bitcoin Stamp information including direct links to image binary files which may be used in your application. Please contact us if you have any questions or suggestions.
 
 ## API URL
 
@@ -63,17 +61,12 @@ sort_order=asc or desc
     "supply": 1,
     "locked": true,
     "divisible": false,
-    "holders": [
-        {
-            "address": "1LS6mBq1QabgnQYQdB7pQMP7S7o1tq7rP9",
-            "address_quantity": 1,
-            "escrow": null
-        }
-    ]
   }
+  <br>
+
 ```
 | Variable          | Comments                                                                 |
-|-------------------|-------------------------------------------------------------------------|
+| :---              | :---                                                                   |
 | `stamp`           | The Bitcoin Stamp number                                                 |
 | `block_index`     | The index of the block the message was included in                       |
 | `cpid`            | The Counterparty ID of the Bitcoin Stamp                                 |
@@ -89,15 +82,14 @@ sort_order=asc or desc
 | `locked`          | Whether the corresponding Bitcoin Stamp asset is locked (we encourage True) |
 | `divisible`       | Whether the stamp is divisible (we encourage false)                      |
 
-
 ---
 
 <br>
 
 ## Query Parameters
 
-### Search for Stamps Owned By Address
-This returns all stamps which are owned by the address provided in the query parameter.
+### Search for Bitcoin Stamps Owned By Address
+This returns all Bitcoin Stamps which are owned by the address provided in the query parameter.
 
 https://stampchain.io/api/stamps?wallet_address=14wD9ShyhwEskG84q6CWMVpnPZw5B8NvLg
 
@@ -107,7 +99,7 @@ https://stampchain.io/api/stamps?wallet_address=14wD9ShyhwEskG84q6CWMVpnPZw5B8Nv
     }
 ```
 
-### Search For Single Stamp By Stamp Number
+### Search For Single Bitcoin Stamp By Stamp Number
 
 https://stampchain.io/api/stamps?stamp=1609
 ```
@@ -117,7 +109,7 @@ https://stampchain.io/api/stamps?stamp=1609
 ```
 <br>
 
-### Search For Ranges Of Stamps (stamp_begin / stamp_end)
+### Search For Ranges Of Bitcoin Stamps (stamp_begin / stamp_end)
 
 https://stampchain.io/api/stamps?stamp_begin=1600&stamp_end=1610
 ```
@@ -128,7 +120,7 @@ https://stampchain.io/api/stamps?stamp_begin=1600&stamp_end=1610
 ```
 <br>
 
-### Search For Multiple Stamps
+### Search For Multiple Bitcoin Stamps
 
 https://stampchain.io/api/stamps?stamp=343,454,896
 ```    
@@ -138,7 +130,7 @@ https://stampchain.io/api/stamps?stamp=343,454,896
 ```
 <br>
 
-### Search For Stamps In A Block
+### Search For Bitcoin Stamps In A Block
 
 https://stampchain.io/api/stamps?block_index=783417
 ```
@@ -148,8 +140,8 @@ https://stampchain.io/api/stamps?block_index=783417
 ```
 <br>
 
-### Search For Stamps By CPID
-This will return all stamps based upon their corresponding Counterparty asset id.
+### Search For Bitcoin Stamps By CPID
+This will return all Bitcoin Stamps based upon their corresponding Counterparty asset ID.
 
 https://stampchain.io/api/stamps?cpid=A2536547015909490700
 ```
@@ -159,8 +151,8 @@ https://stampchain.io/api/stamps?cpid=A2536547015909490700
 ```
 <br>
 
-### Search For Stamps By BTC Transaction Id
-This will return stamp by the transaction.
+### Search For Bitcoin Stamps By BTC Transaction Hash
+This will return Bitcoin Stamp by the Bitconi transaction hash.
 
 https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4a12d54ee54355646bc43d0c1c
 ```
@@ -171,14 +163,14 @@ https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4
 <br>
 
 
-### Search For Stamps By **Creator** (Artist)
-The issuer of a Bitcoin Stamp cannot be changed, and is typically used to identify the Artist/Creator wallet. This will return all stamps issued by the wallet address. Each particular stamp may have additional holders represented represented by the `supply` field. **See Note Below** 
+### Search For Bitcoin Stamps By **Creator** (Artist)
+The issuer of a Bitcoin Stamp cannot be changed, and is typically used to identify the Artist/Creator wallet. This will return all stamps issued by the wallet address. The `supply` field is a representation of how many holders there may be for this Bitcoin Stamp. We encourage a supply of 1 for each Bitcoin Stamp, but this is ultimately up to the creator. 
 
 https://stampchain.io/api/stamps?creator=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
 
 ```
     {
-    "issuer": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5"
+    "creator": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5"
     }
 ```
 <br>
@@ -197,54 +189,6 @@ https://stampchain.io/api/stamps?creator=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
 
 ## Notes
 - There are no CORS restrictions on this API, feel free to integrate it into your own projects with care. Access may be limited as we see fit.
-
-
-<br><br>
-# Official BITCOIN STAMPS Minting Service API
-
-We welcome integrations into our minting service. This allows you to process Stamp mints directly from your application. 
-
-
-The requests from the web application are sent to the server via a POST request. The server then responds with a JSON object containing the minting fees, and with the action of mint it will return the BTC address to send funds for minting.
-
-```JS
-    const apiEndpoint = "https://<<provided on request>>/dev/submit";
-    const response = await fetch(apiEndpoint, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            file_content: base64String,
-            target_address: bitcoinAddress,
-            file_name: fileName,
-            collection_name: collectionName,
-            creator_name: creatorName,
-            asset_lock: assetLock,
-            asset_issuance: assetIssuance ?? 1,
-            action: check,
-            source: MintingServiceName
-        })
-    }
-```
-
-### Parameter Definitions to Pass to the API
-
-| Variable                          | Comments                                                               |
-| :---                              | :---                                                                   |
-| `file_content`                      | The image `base64` string. Checking of image type (png,gif,etc) must be done on the front end |
-| `target_address`                    | The `bitcoin address` for the stamp owner, artist, and issuer `NO TAPROOT ADDRESSES`. **Validation must be done on the front end** |
-| `asset_lock`                        | Lock the asset to prevent further issuance. We encourage `True` |
-| `asset_issuance`                    | The qty of the asset to issue. We encourage and default to `1` |
-| `action`                            | `<check>` or `<mint>` Check will return the fee rates without minting. Mint will return all the content in check, plus the address to send BTC funds for mint |
-| `file_name`                         | The name of the file, simply for reference `<optional>` |
-| `collection_name`                   | Collection name `<optional>` |
-| `creator_name`                      | Creator / Artist name `<optional>` |
-| `source`                            | The name of the minting service `<optional>` |
-
-Minting is processed on the next block after payment receipt, and asset sends are processed on the next block after minting. Multiple file processing needs to be handled on the front end application. Currently the minting API can handle approximately 75 unconfirmed mints at one time, and will grow according to capacity. 
-
-Feedback is welcome, and contact us directly for other bulk minting options. 
 
 ### Conributors
 - [REINAMORA](https://twitter.com/reinamora_137)
