@@ -18,6 +18,7 @@ function indexPage() {
   const urlParams = new URLSearchParams(window.location.search);
   const creatorAddress = urlParams.get('creator');
 
+
   fetchDataAndRender(currentPage, creatorAddress);
 
   function fetchDataAndRender(page, creator) {
@@ -69,13 +70,10 @@ function indexPage() {
       itemContainer.appendChild(stampInfo);
 
       const creatorInfo = document.createElement('pre');
-      const truncatedCreator = `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
-      creatorInfo.innerHTML = `Creator: <span class="normal-case">${truncatedCreator}</span>`; 
+      const displayedCreator = item.artist_name ? item.artist_name : `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
+      creatorInfo.innerHTML = `Creator: <span class="normal-case">${displayedCreator}</span>`;
       itemContainer.appendChild(creatorInfo);
       
-
-      creatorInfo.innerText = `Creator: ${truncatedCreator}`;
-      itemContainer.appendChild(creatorInfo);
 
       const viewMoreBtn = document.createElement('button');
       viewMoreBtn.innerText = 'View More';
