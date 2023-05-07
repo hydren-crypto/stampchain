@@ -246,8 +246,16 @@ function assetPage() {
     stampDetail.innerText = `Stamp: ${data.stamp}`;
     assetDetails.appendChild(stampDetail);
   
+
+    // Display Artist Name if not null
+    if (data.artist_name) {
+      const artistNameDetail = document.createElement('pre');
+      artistNameDetail.innerText = `Artist Name: ${data.artist_name}`;
+      assetDetails.appendChild(artistNameDetail);
+  }
+
     const CreatorDetail = document.createElement('pre');
-    CreatorDetail.innerHTML = `Creator: <span class="normal-case">${data.creator}</span>`; // Updated this line
+    CreatorDetail.innerHTML = `Creator: <span class="normal-case">${data.creator}</span>`;
     assetDetails.appendChild(CreatorDetail);
 
     const assetDetail = document.createElement('pre');
@@ -271,7 +279,7 @@ function assetPage() {
     assetDetails.appendChild(lockedDetail);
 
     const txHashDetail = document.createElement('pre');
-    txHashDetail.innerHTML = `BTC TX: <span class="normal-case">${data.tx_hash}</span>`; // Updated this line
+    txHashDetail.innerHTML = `BTC TX: <span class="normal-case">${data.tx_hash}</span>`;
     assetDetails.appendChild(txHashDetail);
 
     const blockChainExplorerLink = document.createElement('pre');
