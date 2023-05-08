@@ -3,7 +3,7 @@
 
 This documentation is specifically for our minting service API which is used to create new Bitcoin Stamps. This allows you to process Stamp mints directly from your application. 
 
-### Parameter Definitions to Pass to the API
+### API Parameter Definitions
 
 | Variable                          | Comments                                                               |
 | :---                              | :---                                                                   |
@@ -43,7 +43,7 @@ The requests from the web application are sent to the server via a POST request.
     }
 ```
 
-## Service Nots
+## Service Details
 
 Minting is processed on the next block after payment receipt, and asset sends are processed on the next block after minting. Multiple file processing needs to be handled on the front end application. Currently the minting API can handle approximately 75 unconfirmed mints at one time, and will grow according to capacity. 
 

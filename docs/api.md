@@ -12,7 +12,7 @@
     - [Search For Single Bitcoin Stamp By Stamp Number](#search-for-single-bitcoin-stamp-by-stamp-number)
     - [Search For Ranges Of Bitcoin Stamps (stamp\_begin / stamp\_end)](#search-for-ranges-of-bitcoin-stamps-stamp_begin--stamp_end)
     - [Search For Multiple Bitcoin Stamps](#search-for-multiple-bitcoin-stamps)
-    - [Search For Bitcoin Stamps In A Block](#search-for-bitcoin-stamps-in-a-block)
+    - [Search For All Bitcoin Stamps In A BTC Block](#search-for-all-bitcoin-stamps-in-a-btc-block)
     - [Search For Bitcoin Stamps By CPID](#search-for-bitcoin-stamps-by-cpid)
     - [Search For Bitcoin Stamps By BTC Transaction Hash](#search-for-bitcoin-stamps-by-btc-transaction-hash)
     - [Search For Bitcoin Stamps By **Creator** (Artist)](#search-for-bitcoin-stamps-by-creator-artist)
@@ -27,13 +27,13 @@ The Bitcoin Stamps API is the complete resource for wallet and application integ
 
 Current API URL 
 
-https://stampchain.io/api/stamps
+`https://stampchain.io/api/stamps`
 
 This query will only return 1000 stamps at a time by default. Pagination is available by passing the page and page_size parameters.
 
-https://stampchain.io/api/stamps?page=1&page_size=1000
+`https://stampchain.io/api/stamps?page=1&page_size=1000`
 
-https://stampchain.io/api/stamps?page=2&page_size=1000
+`https://stampchain.io/api/stamps?page=2&page_size=1000`
 
 ### Sort Order
 
@@ -46,41 +46,46 @@ sort_order=asc or desc
 ## Output
 
 ```JSON
-{
-    "stamp": 111,
-    "block_index": 781927,
-    "cpid": "A3350277194614503217",
-    "creator": "1GPfBjHemZayEHkPFuMTQsPUPDSdv86oHf",
-    "message_index": 9167380,
-    "stamp_base64": "iVBORw0KGgoAAAA\...guAt0enhcvAAAAAElFTkSuQmCC",
-    "stamp_mimetype": "image/png",
-    "stamp_url": "https://stampchain.io/stamps/2ea4efe57832f4c593212d8aebb6ade1777886165df459e02ffe78ff84280585.png",
-    "timestamp": 1679468917,
-    "tx_hash": "2ea4efe57832f4c593212d8aebb6ade1777886165df459e02ffe78ff84280585",
-    "tx_index": 2271179,
-    "supply": 1,
-    "locked": true,
-    "divisible": false,
-  }
+[
+   {
+      "stamp": "18529",
+      "block_index": "788090",
+      "cpid": "A13083972509419815665",
+      "creator": "14Vr7RYAQeLkjU9okNQKfSre7s5V224Utt",
+      "message_index": "9435060",
+      "stamp_mimetype": "image/png",
+      "stamp_url": "https://stampchain.io/stamps/727e67566499d7bbc61b8f4760251bf394fa3521469c1e37a839862226087279.png",
+      "timestamp": "1683119421",
+      "tx_hash": "727e67566499d7bbc61b8f4760251bf394fa3521469c1e37a839862226087279",
+      "tx_index": "2335819",
+      "supply": "100",
+      "locked": true,
+      "divisible": false,
+      "keyburn": true,
+      "artist_name": "Yotet"
+   }
+]
   <br>
 
 ```
 | Variable          | Comments                                                                 |
 | :---              | :---                                                                   |
-| `stamp`           | The Bitcoin Stamp number                                                 |
-| `block_index`     | The index of the block the message was included in                       |
+| `stamp`           | The Bitcoin Stamp index number                                           |
+| `block_index`     | The BTC block index of the Bitcoin Stamp was minted                       |
 | `cpid`            | The Counterparty ID of the Bitcoin Stamp                                 |
-| `creator`         | The issuer / Artist of the Bitcoin Stamp        |
-| `message_index`   | The index of the message in the block                                    |
-| `stamp_base64`    | The base64 encoded stamp image                                           |
-| `stamp_mimetype`  | The mimetype of the stamp                                                |
-| `stamp_url`       | The URL of the stamp                                                     |
+| `creator`         | The creator of the Bitcoin Stamp (*aka artist*)       |
+| `artist_name`     | The name of the artist of the Bitcoin Stamp *based on the `creator` address*    |
+| `message_index`   | The message index of the Bitcoin Stamp                            |
+| `stamp_base64`    | The base64 encoded Bitcoin Stamp                                           |
+| `stamp_mimetype`  | The mimetype of the Bitcoin Stamp                                                |
+| `stamp_url`       | The URL of the binary image data for the Bitcoin Stamp                                                     |
 | `timestamp`       | The timestamp of the block the message was included in                   |
-| `tx_hash`         | The hash of the transaction that included the message                    |
-| `tx_index`        | The index of the transaction that included the message                   |
-| `supply`          | The supply of the corresponding Bitcoin Stamp asset (we encourage 1)     |
+| `tx_hash`         | The BTC transaction hash of the Bitcoin Stamp                    |
+| `tx_index`        | The BTC transaction index of the Bitcoin Stamp                   |
+| `supply`          | The supply of the corresponding Bitcoin Stamp Counterparty asset (we encourage 1)     |
 | `locked`          | Whether the corresponding Bitcoin Stamp asset is locked (we encourage True) |
-| `divisible`       | Whether the stamp is divisible (we encourage false)                      |
+| `divisible`       | Whether the Bitcoin Stamp is divisible (we encourage false)                      |
+| `keyburn`         | Whether the Bitcoin Stamp is a keyburn (immortal / undestroyable)                   |
 
 ---
 
@@ -130,7 +135,7 @@ https://stampchain.io/api/stamps?stamp=343,454,896
 ```
 <br>
 
-### Search For Bitcoin Stamps In A Block
+### Search For All Bitcoin Stamps In A BTC Block
 
 https://stampchain.io/api/stamps?block_index=783417
 ```
