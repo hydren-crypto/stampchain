@@ -49,7 +49,7 @@ SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Numbe
 1. Tokens must be 1-5 characters in length.
 2. Allowed characters:
    a. Any word character (alphanumeric characters and underscores)
-   b. Special characters: ~!@#$%^&*()_+\-={}|[\]\\:;<>.?/
+   b. Special characters: ~!@#$%^&*()_+=<>?
    c. Most printable emojis in U+1F300 to U+1F5FF
 3. Disallowed characters:
    a. Non-printable Unicode characters
