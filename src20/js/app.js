@@ -169,7 +169,7 @@ async function sendDataToLambda(base64String, bitcoinAddress, assetIssuance, act
         return;
     }
     
-    const apiEndpoint = "https://fed2zpf904.execute-api.us-east-1.amazonaws.com/dev/submit";
+    const apiEndpoint = "https://fed2zpf904.execute-api.us-east-1.amazonaws.com/prod/submit";
 
     try {
         // console.log("Sending data", { apiEndpoint, base64String, bitcoinAddress, assetIssuance, action, submitButton });
