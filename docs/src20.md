@@ -31,6 +31,9 @@ SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Numbe
 }
 ```
 ## TRANSFER
+
+* NOTE: The transfer mechanism and format is still being refined to ensure maximum input compression and reliability of parsing. The example below is incomplete and subject to change. Transfer is not available as a valid transaction type until it has been formalized and marked complete in this spec. *
+
 ```
 {
     "p": "src-20", 
