@@ -13,37 +13,40 @@ This documentation is specifically for SRC-20 tokens build on Bitcoin Stamps. Th
 
 ```
 [
-    {
-        "op":"deploy",
-        "block_index":788127,
-        "creator":"17NhsWKQXfPU1FLZdyD2oAsgs1Lp2LhKUg",
-        "tx_index":2335985,
-        "tick":"STAMP",
-        "max":"15000000",
-        "lim":"1500",
-        "tx_hash":"5ba462d825471af0c17a1ecb17a0f55ea6652a691cecf0de4090ae3c5413a663",
-        "p":"src-20"
-    }
-    {
-        "op":"mint",
-        "block_index":788238,
-        "creator":"bc1qlw76hgx2w0h9hrcuxvfhyr8j4alrycc0a9pd3v",
-        "amt":"100",
-        "tx_index":2336487,
-        "tick":"STAMP",
-        "tx_hash":"094bdd66b98245ee7760eb3958fc28e585c72a193d76d97c5ba3cf65a1527446",
-        "p":"src-20"
-    }
-
+  {
+    "op": "MINT",
+    "block_index": 788041,
+    "creator": "1bepcxzz7rrcpaqudvbp2jvkjcarvhmgkz",
+    "amt": "420000",
+    "tx_index": 2335647,
+    "tick": "KEVIN",
+    "tx_hash": "fbea0e800473731b1f31e5f55000f3d5d5c1edf5fbdcb80ca31a9835103e246c",
+    "stamp": 18527,
+    "p": "SRC-20"
+  },
+  {
+    "max": "690000000",
+    "op": "DEPLOY",
+    "block_index": 788041,
+    "creator": "1bepcxzz7rrcpaqudvbp2jvkjcarvhmgkz",
+    "tx_index": 2335648,
+    "tick": "KEVIN",
+    "lim": "420000",
+    "tx_hash": "23765f9bc6b87e078b1f93ed213f90b9004998336575f726e46f34ddbea5e5f3",
+    "stamp": 18528,
+    "p": "SRC-20"
+  },
 ]
 ```
 
+*** Pending addition of the URL string to the stamp image ***
 
 ## API Parameter Definitions
 
 | Variable      | Comments                                                     |
 | :------------ | :----------------------------------------------------------- |
-| `p`           | The protocol ( "src-20") 
+| `stamp`       | The Bitcoin Stamp index number                               |
+| `p`           | The protocol ( "src-20")                                     |
 | `op`          | The operation `[ "deploy", "mint" ]`                        |
 | `block_index` | The BTC Block index for the transaction                      |
 | `creator`     | The creator (owner) of the transaction                       |
@@ -59,7 +62,29 @@ This documentation is specifically for SRC-20 tokens build on Bitcoin Stamps. Th
 
 ## SRC-20 API Query Parameters
 
-Currently no search query parameters are supported. 
+### Query for `count` of SRC-20 Transactions
+
+This returns the total number of valid SRC-20 those. Those not meeting the transaction specifications are excluded.
+
+```https://stampchain.io/api/src20?count```
+
+<br>
+
+### Query by `page_size` and `page`
+
+Pagination is used for this API to query all records. Default `page_size` is 1000. Records returned may be validated against the `count` query.
+
+```https://stampchain.io/api/src20?page_size=1000&page=1```
+
+<br>
+
+### Query for SRC-20 Transactions by `block_index`
+
+This returns all valid SRC-20 transactions for a given BTC block index.
+
+```https://stampchain.io/api/src20?block_index=788041```
+
+<br>
 
 ## Service Details
 
