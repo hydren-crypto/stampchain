@@ -30,9 +30,11 @@ SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Numbe
     "amt": "100"
 }
 ```
-## TRANSFER
+### TRANSFER
 
-* NOTE: The transfer mechanism and format is still being refined to ensure maximum input compression and reliability of parsing. The example below is incomplete and subject to change. Transfer is not available as a valid transaction type until it has been formalized and marked complete in this spec. *
+The TRANSFER mechanism must be performed by the address that holds the balance of an SRC-20 mint as it acts as a means of authentication. A minting service cannot perform this task on a user's behalf unlike DEPLOY and MINT. As balance transfers are transitory in nature, they do not need to be maintained permanently within the UTXO set so KeyBurn and bare multisig encoding are not a requirement for the TRANSFER mechanism. This approach also helps to ease friction for end-users who may not be technically adept. The TRANSFER mechanism is done through a Counterparty broadcast, as follows. Dowload Freewallet.io (Desktop application is preferred). From the Actions menu, select Broadcast Message and paste the following string (only an example):
+ 
+st:t;kevin;100;1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
 
 ```
 {
