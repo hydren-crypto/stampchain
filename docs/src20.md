@@ -32,18 +32,18 @@ SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Numbe
 ```
 ### TRANSFER
 
-The TRANSFER mechanism must be performed by the address that holds the balance of an SRC-20 mint as it acts as a means of authentication. A minting service cannot perform this task on a user's behalf unlike DEPLOY and MINT. As balance transfers are transitory in nature, they do not need to be maintained permanently within the UTXO set so KeyBurn and bare multisig encoding are not a requirement for the TRANSFER mechanism. This approach also helps to ease friction for end-users who may not be technically adept. The TRANSFER mechanism is done through a Counterparty broadcast, as follows. Dowload Freewallet.io (Desktop application is preferred). From the Actions menu, select Broadcast Message and paste the following string (only an example):
+The TRANSFER mechanism must be performed by the address that holds the balance of an SRC-20 mint as it acts as a means of authentication. A minting service cannot perform this task on a user's behalf unlike DEPLOY and MINT. As balance transfers are transitory in nature, they do not need to be maintained permanently within the UTXO set so KeyBurn and bare multisig encoding are not a requirement for the TRANSFER mechanism. This approach also helps to ease friction for end-users who may not be technically adept. The TRANSFER mechanism is done through a Counterparty broadcast, as follows. Download Freewallet.io (Desktop application is preferred). From the Actions menu, select Broadcast Message and paste the following string (only an example):
+
+st: = Protocol
+t; = Transfer
+kevin; = Ticker
+100; = Amount to be sent
+1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2 = Recipient address
  
+```
+
 st:t;kevin;100;1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
 
-```
-{
-    "p": "src-20", 
-    "op": "transfer", 
-    "tick": "STAMP", 
-    "amt": "100",
-    "to": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"
-}
 ```
 
 ## SRC-20 Token Requirements
