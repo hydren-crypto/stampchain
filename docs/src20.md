@@ -18,6 +18,7 @@ SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Numbe
     "tick": "STAMP",
     "max": "100000", 
     "lim": "100",
+    "owner": "1731qqwQoRzXMp54c1wqAxArNTgAyZEWgr", [optional]
     "dec": "18" [optional]
 }
 ```
