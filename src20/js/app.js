@@ -237,7 +237,7 @@ function displayOutput(data) {
         itemDiv.appendChild(computedFee);
 
         const currentFeeRate = document.createElement("p");
-        currentFeeRate.textContent = `Fee Rate: ${item.current_fee_rate * 100000000 } SAT/kB`;
+        currentFeeRate.textContent = `Fee Rate: ${(item.current_fee_rate * 100000) >> 0} sat/vB`;
         itemDiv.appendChild(currentFeeRate);
 
         if (item.send_to_address) {
