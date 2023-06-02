@@ -15,8 +15,7 @@
     <div class="container">
         
         
-<div style="text-align:center;color:white;background-color:#333;padding:10px;font-size:12px;border:3px solid red;">
-<b>IMPORTANT DEGEN ALERT:</b><br><br> SRC-20 is a bleeding edge protocol on Bitcoin Stamps. We're working hard to build indexing tools and form partnerships with marketplaces. However, it is early. You're not going to see these tokens in your wallet just yet. You can lose money by being front-run when a token is close to being minted-out. The Minting Utility is not going to prevent you from making such a mistake. Exercise caution if losing $50 will destroy your life. A community member built this basic Indexer but there are no guarantees that the data is accurate at any given moment: <a href="https://crypt0biwan.github.io/src20/" target="_blank" style="color:white;">https://crypt0biwan.github.io/src20/</a><br><br>CAVEAT EMPTOR, ANON. WE USE A HIGH sat/vB FEE RATE TO ENSURE YOUR TRANSACTIONS AREN'T STUCK IN THE MEMPOOL FOR A WEEK.</div>
+
         
         
         
@@ -28,78 +27,8 @@
         
         <h1>SRC-20 Minting Utility</h1>
         <p id="src-intro" style="color:white;font-size:14px;text-align:center;text-transform:none;">Introducing SRC-20! For token specifications, <a href="https://github.com/hydren-crypto/stampchain/blob/main/docs/src20.md" target="_blank" style="color:white;">click here</a>.</p>
-        <form id="upload-form">
-            <div class="form-group">
-                <label for="op">Operation:</label>
-                <select id="op" name="op" required>
-                    <option value="deploy">Deploy</option>
-                    <option value="mint">Mint</option>
-                    <!-- <option value="transfer">Transfer</option> -->
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="ticker">Tick (1-5 characters):</label>
-                <input type="text" id="ticker" name="ticker" pattern="[\w~!@#$%^&*()_+`-={}>?.?/\\p{Punctuation}\\p{Symbol}(\\p{Emoji_Presentation}|\\p{Emoji_Modifier_Base}\\p{Emoji_Modifier}?)]{1,5}" required>
-            <div id="deploy-fields">
-                <div class="form-group">
-                    <label for="max">Total Supply:</label>
-                    <input type="number" id="max" min="1" max="18446744073709551615" step="1">
-                </div>
-                <div class="form-group">
-                    <label for="limit">Limit Per Mint:</label>
-                    <input type="number" id="limit" name="limit" min="1" max="18446744073709551615" step="1">
-                </div>
-            </div>
-            <div id="mint-transfer-fields" hidden>
-                <div class="form-group">
-                    <label for="amt">Amount:</label>
-                    <input type="number" id="amt" name="amt" min="1" max="18446744073709551615" step="1">
-                </div>
-            </div>
-            <div id="transfer-fields" hidden>
-                <div class="form-group">
-                    <label for="to">Transfer To BTC Address:<br>Must be a valid BTC address</label>
-                    <input type="text" id="to" name="to">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="bitcoin-address">Your Bitcoin Address<br>This will be the owner or deployer of tokens<br>Legacy (starts with 1) or Segwit (starts with bc1q)</label>
-                <input type="text" id="bitcoin-address" required>
-            </div>
-            <button type="submit">QUOTE</button>
-            <button id="confirm-button" type="button" hidden>STAMP</button>
-        </form>
-    </div>
-    
-        <p id="please-wait" hidden>Please wait...Building Your Transaction...</p>
-        <div id="output"></div>
-        <p id="confirmation-message" hidden>
-            You will receive no further confirmation on this page. 
-            Please monitor the creator wallet for the incoming SRC-20 stamp. 
-        </p>
-    
-        <p id="notes">
-            WARNING: Due to BTC fee rate volatility transactions may drop from the mempool due to fee rate fluctuations.<br>
-            In some cases, these fees may be refunded to sender though this is not guaranteed. If possible will be returned to the sending wallet minus the transaction fee accordingly.
-            <br>
-            Disclaimer: SRC-20 is an experimental system build on STAMPs protocol. Please do not use this service unless you are willing to take the risk of transactions failing and fees being lost. 
-            <br><br>
-            Stampchain.io or any of its affiliates and/or associates are not responsible for any losses incurred from using this experimental protocol and its functionality.
-            <br><br>
-        
-            Please contact us for bulk minting services via our Telegram group. A convenience charge is added when using this service.<br><br>
-            <a href="https://github.com/mikeinspace/stamps/blob/main/Key-Burn.md" target="_blank" style="color:white;">Key Burn</a> 
-            is now implemented through this minting service.<br><br>
 
-            If you do not understand this technology, please check out Counterparty and Freewallet.io to learn more about BTC based assets.<br><br> 
-        </p>
-    
+<p id="src-intro" style="color:red;font-size:18px;text-align:center;text-transform:none;">Please note: the minting utility will be down for upgrades.<br><br>We are continuing to build the ecosystem and introduce transfer functionality as soon as possible!</p>
 
-        </p>
-    </div>
-    <!DOCTYPE html>
-
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
-    <script src="js/app.js" defer></script>
 </body>
 </html>
