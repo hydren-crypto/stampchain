@@ -122,9 +122,11 @@ an ASCII character takes up only one byte, while an emoji can take up to four by
 
 ## SRC-20 BTC Transaction Specifications
 
-```JSON
-
+```BASH
  # bitcoin-cli getrawtransaction 50aeb77245a9483a5b077e4e7506c331dc2f628c22046e7d2b4c6ad6c6236ae1 true
+ ```
+
+```JSON
 
 {
   "txid": "50aeb77245a9483a5b077e4e7506c331dc2f628c22046e7d2b4c6ad6c6236ae1",
