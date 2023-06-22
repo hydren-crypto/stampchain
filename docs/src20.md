@@ -205,7 +205,7 @@ The owner of the first input is considered the owner / source of the transaction
 
 The first `vout` output `0` is the destination address for a transfer `"address": "bc1q4lwvx2380r4axmzgt8rnqxa5cvktt8unqlnka6"`
 
-The components of the multisig `ScriptPubKey` are:
+The components of the second multisig `ScriptPubKey` are: 
 
 - `1`: This is the number of required signatures for the transaction to be valid.  Always 1 for SRC-20
 - `03c46b73fe2ff939bea5d0a577950dc8876e863bed11c887d681417dfd70533e51`: This is the SRC-20 encoded data
@@ -214,19 +214,21 @@ The components of the multisig `ScriptPubKey` are:
 - `3`: This is the total number of public keys in the multisig script. Always 3 for SRC-20
 - `OP_CHECKMULTISIG`: opcode
 
+We will also use the thrid mulisig script in the decoding below. 
 
-This example has two `multisig` scripts which can hold a total of `33-2 = 31*4 = 124` bytes of data. 
+
 
 ## Decoding the transaction
 
-We take the first two pubkeys from all present multisig scripts. In this example there are a total of 4 32 byte hex strings.
+Take the first two pubkeys from all present multisig scripts. In this example there are a total of 4 hex strings in the two scripts.
 
 ```
 03c46b73fe2ff939bea5d0a577950dc8876e863bed11c887d681417dfd70533e51 039036c8182c70770f8f6bd702a25c7179bfff1ccb3a844297a717226b88b976cc
 02dc054e58b755f233295d2a8759a3e4cbf678619d8e75379e7989046dbce16be3 02932b35a45d21395ac8bb54b8f9dae3fd2dbc309c24e550cf2211fe6aa897e5ca
 ```
 
-First we strip the sign and nonce bytes (first and last bytes from each string)
+First we strip the sign and nonce bytes (first and last bytes from each string) which leaves.
+
 ```
 c46b73fe2ff939bea5d0a577950dc8876e863bed11c887d681417dfd70533e 9036c8182c70770f8f6bd702a25c7179bfff1ccb3a844297a717226b88b976
 dc054e58b755f233295d2a8759a3e4cbf678619d8e75379e7989046dbce16b 932b35a45d21395ac8bb54b8f9dae3fd2dbc309c24e550cf2211fe6aa897e5
@@ -258,7 +260,7 @@ In order to minimize the transaction size spaces are not used in the serialized 
 
 ## Compression
 
-Compression and data serialization is supported in SRC-20 transactions.  Previously SRC-20 was a JSON Strings encoded in BASE64 inside of a Counterparty issuance transaction. In some cases the json string was serialized and compression was utilized to minimize the size of the corresponding transaction. This is an important factor when indexing and validating prior SRC-20 transactions within Counterparty transactions, and will continue to be supported in current version SRC-20 transactions. However given the construction of the JSON string without spaces, and the fact that we are no longer encoding in BASE64 the transaction size benefits are minimal. 
+Compression and data serialization is supported in SRC-20 transactions.  Previously SRC-20 was a JSON Strings encoded in BASE64 inside of a Counterparty issuance transaction. In some cases the json string was serialized and compression was utilized to minimize the size of the corresponding transaction. This is an important factor when indexing and validating prior SRC-20 transactions within Counterparty transactions, and will continue to be supported in current version SRC-20 transactions. However given the construction of the JSON string without spaces, and the fact that we are no longer encoding in BASE64 the transactißon size benefits are minimal. 
 
 An example of the serialization and compression:
 
