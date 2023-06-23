@@ -63,6 +63,8 @@ If the amount specified to be broadcast exceeds the balance held (which would be
     - max decimals: 18 (default)
     - json strings are not order sensitive
     - json strings are not case sensitive
+    - MAX, LIM fields are integers only
+    - AMT field is a decimal up to uint64 max with 18 decimals
 
 
 
@@ -285,4 +287,14 @@ compressed_data = zlib.compress(serialized_data)
 ```
 
 
+
+# Notes
+
+For indexing, Python sees the text lenght differently than Node.JS. In the following example we determine the char length using the python method.
+
+Node:
+'BULL🐂'.length = 6
+
+Python:
+len('BULL🐂') = 5
 
