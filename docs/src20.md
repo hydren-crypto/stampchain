@@ -78,6 +78,7 @@ If the amount specified to be transferred exceeds the balance held (which would 
 {"p": "src-20", "op": "mint", "tick": "🙂APL", "amt": "18446744073709551616"} ## over uint64_max
 {"p": "src-20", "op": "mint", "tick": "🙂@PL", "amt": "18,446"}     ## commas not allowed in amt
 {"p": "src-20", "op": "mint", "tick": "🙂"PL", "amt": "100"}        ## double quotes not allowed in tick
+{'p': 'src-20', 'op': 'mint', 'tick': ' rare', 'amt': '1000'}       ## invalid space in tick
 ```
 ```
 👍👌 Valid Examples: 👌👍
@@ -88,6 +89,7 @@ If the amount specified to be transferred exceeds the balance held (which would 
 {"p": "src-20", "op": "mint", "tick": "🙂PL?", "amt": "100"}
 {"p": "src-20", "op": "mint", "tick": "🙂PL?", "amt": "100"}
 {"p": "src-20", "op": "mint", "tick": "🙂PL", "amt": "100"}
+{"p": "src-20", "op": "mint", "tick": "PIZZA", "amt": "11111", "random": "test"}  
 {
  "p": "src-20",
  "op": "deploy",
@@ -295,7 +297,7 @@ SRC-20 transactions may be indexed directly from BTC for validation. Prior to bl
 
 
 ## Tick Length
-Python sees the text lenght differently than Node.JS vs Python. In the following example we determine the char length using the python method.
+Python sees the text length differently than Node.JS. In the following example we determine the char length using the python method.
 
 Node:
 'BULL🐂'.length = 6
@@ -307,15 +309,15 @@ len('BULL🐂') = 5
 
 Python and Node.JS handle base64 decoding differently. Prior to block 796,000 for CP based transactions which were base64 encoded this can have an impact on valid/invalid transactions. After block 796,000 for direct to BTC transactions which are ARC4 encoded this does not have an impact.
 
-for example: 
+For example: 
 
-transaction:
+Transaction:
 `c129cc8f13760fce63a42257dbe5dcdd0aad798f858f6b08968c7834c7a1bcc7`
 
-with base64 string:
+With base64 string:
 `eyJwIjogInNyYy0yMCIsICJvcCI6ICJtaW50IiwgInRpY2siOiAiUElaWkEiLCAiYW10IjogIjExMTExIn0`
 
-this string is considered invalid in Python using `base64.b64decode(base64_string)` and `pybase64.b64decode(base64_string)` and in bash `printf "%s" "{base64_string}" | base64 -d` because it is missing the end of line `=` for padding / newline. The original indexer was written in pythonwith these 3 checks so it is deemed invalid even though Node.JS interprets this string properly.
+This string is considered invalid in Python using `base64.b64decode(base64_string)` and `pybase64.b64decode(base64_string)` and in bash `printf "%s" "{base64_string}" | base64 -d` because it is missing the end of line `=` for padding / newline. The original indexer was written in python with these 3 checks so it is deemed invalid even though Node.JS interprets this string properly. Padding was attempted in prior iterations to attempt to include improperly formatted base64 strings into BTC Stamps protocol however since it is not possible to properly determine the location for padding in all cases these were simply deemed invalid to remove malformed data.
 
 ## Example SRC-20 JSON Validation
 
