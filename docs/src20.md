@@ -30,7 +30,7 @@ SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Numbe
 }
 ```
 ### TRANSFER
-The transfer mechanism must be performed by the address that holds the SRC-20 token balance as it acts as a means to authenticate ownership. Both the source and destination addresses are embedded into the BTC transaction which is created by the users wallet.
+The SRC-20 transaction must be signed and broadcast onto BTC by the address that holds the SRC-20 token balance as it acts as a means to authenticate ownership. Both the source and destination addresses are embedded into the BTC transaction which is created by the users wallet. The SRC-20 reference wallet will ensure you are creating the proper transaction until support can be integrated into more broadly distributed wallets such as Hiro. Please use extreme caution if signing transactions created by a third party.
 
 ```JSON
 {
@@ -53,7 +53,7 @@ If the amount specified to be broadcast exceeds the balance held (which would be
    c. Most printable emojis in U+1F300 to U+1F5FF
 3. Disallowed characters:
    a. Non-printable Unicode characters
-   b. Quotation marks: " ` '
+   b. Quotation marks: " ` ' outside of regular json delimiters
    c. Special characters not present in 2c
 4. Only numeric values are allowed in the "max", "amt", "lim" fields
 5. Other Qualifications:
@@ -65,6 +65,7 @@ If the amount specified to be broadcast exceeds the balance held (which would be
     - json strings are not case sensitive
     - MAX, LIM fields are integers only
     - AMT field is a decimal up to uint64 max with 18 decimals
+    - Must be a valid CP transaction for transactions prior to block 796,000 
 
 
 
@@ -288,9 +289,13 @@ compressed_data = zlib.compress(serialized_data)
 
 
 
-# Notes
+# Indexing Details
 
-For indexing, Python sees the text lenght differently than Node.JS. In the following example we determine the char length using the python method.
+SRC-20 transactions may be indexed directly from BTC for validation. Prior to block 796,000 this can be accomplihed using Counterpart API's to pull transaction details. All transacitons on and after block 796,000 must be parsed directly from a BTC node. The specifications above must be followed including valid json strings, valid counterparty transaction (prior to block 796,000), and a valid stamp: transaction. 
+
+
+## Tick Length
+Python sees the text lenght differently than Node.JS vs Python. In the following example we determine the char length using the python method.
 
 Node:
 'BULL🐂'.length = 6
@@ -298,3 +303,82 @@ Node:
 Python:
 len('BULL🐂') = 5
 
+
+## Example SRC-20 JSON Validation
+
+If the JSON string is not valid including it will be rejected from the index. This is a sample of the validation script. Any SRC-20 transactions that do not pass this validation are considered invalid transactions and will not impact user balances.
+
+```PY
+
+tick_pattern_list = {
+    regex.compile(r'((\p{Emoji_Presentation})|(\p{Emoji_Modifier_Base}\p{Emoji_Modifier}?))|[\p{Punctuation}\p{Symbol}\w~!@#$%^&*()_=<>?]')
+}
+
+def matches_any_pattern(text, pattern_list):
+    matched = True
+    for char in text:
+        char_matched = any(pattern.fullmatch(char) for pattern in pattern_list)
+        if not char_matched:
+            matched = False
+            break
+    return matched
+
+def sort_keys(key):
+    priority_keys = ["p", "op", "tick"]
+    if key in priority_keys:
+        return priority_keys.index(key)
+    return len(priority_keys)
+
+def check_format(src_input_json, block_index):
+    try:
+        input_dict = json.loads(src_input_json)
+        print("checking format", input_dict)
+
+        if input_dict.get("p") == "src-20" and block_index < src20blockend:
+            tick_value = input_dict.get("tick")
+            if not tick_value or not matches_any_pattern(tick_value, tick_pattern_list) or len(tick_value) > 5:
+                print("EXCLUSION: did not match tick pattern", input_dict)
+                return False
+
+            deploy_keys = {"op", "tick", "max", "lim"}
+            transfer_keys = {"op", "tick", "amt"}
+            mint_keys = {"op", "tick", "amt"}
+
+            input_keys = set(input_dict.keys())
+
+            uint64_max = Decimal(2 ** 64 - 1)
+            key_sets = [deploy_keys, transfer_keys, mint_keys]
+            key_to_check = {"deploy_keys": ["max", "lim"], "transfer_keys": ["amt"], "mint_keys": ["amt"]}
+
+            for i, key_set in enumerate(key_sets):
+                if input_keys >= key_set:
+                    for key in key_to_check[list(key_to_check.keys())[i]]:
+                        value = input_dict.get(key)
+                        if value is None:
+                            print(src_input_json)
+                            print(f"EXCLUSION: Missing or invalid value for {key}", input_dict)
+                            return False
+
+                        if isinstance(value, str):
+                            try:
+                                value = Decimal(''.join(c for c in value if c.isdigit() or c == '.')) if value else Decimal(0)
+                            except ValueError:
+                                print(src_input_json)
+                                print(f"EXCLUSION: {key} not a valid decimal", input_dict)
+                                return False
+                        elif isinstance(value, int):
+                            value = Decimal(value)
+                        else:
+                            print(src_input_json)
+                            print(f"EXCLUSION: {key} not a string or integer", input_dict)
+                            return False
+
+                        if not (0 <= value <= uint64_max):
+                            print(src_input_json)
+                            print(f"EXCLUSION: {key} not in range", input_dict)
+                            return False
+            return True
+
+    except json.JSONDecodeError:
+        return False
+```
