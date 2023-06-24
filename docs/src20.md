@@ -42,7 +42,7 @@ The SRC-20 transaction must be signed and broadcast onto BTC by the address that
 ```
 
 
-If the amount specified to be broadcast exceeds the balance held (which would be determined by the latest state of an Indexer), then the Transfer mechanism will be deemed invalid.
+If the amount specified to be transferred exceeds the balance held (which would be determined by the latest state of an Indexer), then the transfer  will be deemed invalid.
 
 # SRC-20 Token Requirements
 
