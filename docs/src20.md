@@ -1,6 +1,6 @@
 # SRC-20 Token Specification
 
-SRC-20 is a bleeding edge specification modeled after BRC-20. Prior specifications of SRC-20 in its initial state were built on top of Counterparty transactions with specific requirements for an issuance transaction. The current specification as of block 796,000 encodes the SRC-20 transaction directly onto BTC and does *not* use Counterparty. Any SRC-20 transactions created on Counterparty after block 796,000 will be deemed invalid, and will not be indexed. 
+SRC-20 is a bleeding edge specification modeled after BRC-20. Prior specifications of SRC-20 in its initial state were built on top of Counterparty transactions with specific requirements for an issuance transaction. The current specification as of block 796,000 encodes the SRC-20 transaction directly onto BTC and does not use Counterparty. Any SRC-20 transactions created on Counterparty after block 796,000 will be deemed invalid, and will not be indexed. Counterparty was used as a proof of concept as we designed a direct to BTC method which optimizes the transaction size and reduces cost of SRC-20 transactions. 
 
 If you do not fully understand how SRC-20 works, it is recommended that you exercise caution.
 
