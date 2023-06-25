@@ -68,13 +68,13 @@ If the amount specified to be transferred exceeds the balance held (which would 
     - Must be a valid CP transaction for transactions prior to block 796,000 have 0 assets issued, locked, and not divisible 
     - Must be a valid BASE64 as decoded by Python 3.9 base64.b64decode(base64_string prior to block 796,000
 6. Balance Calculations
-    - Mints over the limit are capped - user will receive the limit amount if this is exceeded
+    - Mints over the limit are capped - user will receive the limit amount if the token has not exceeded the max value
     - Deploys to the same tick which are previously deployed are invalid
     - Negative mints and transfers are invalid
     - If a mint is within the limit, but not within the max it is capped at the max value
     - Any mint where max has already been exceeded is invalid (overmint)
     - Any transfer over the users balance at the time of transfer is considered invalid and will not impact either users balance
-        ie. if wallet x has 1 KEVIN token and attempts to transfer 10000 KEVIN tokens to user y the entire transaction is invalid
+        - if wallet *x* has 1 KEVIN token and attempts to transfer 10000 KEVIN tokens to address *y* the entire transaction is invalid
 
 
 # SRC-20 Token Example JSON Strings
