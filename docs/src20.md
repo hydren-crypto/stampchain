@@ -219,16 +219,18 @@ The owner of the first input is considered the owner / source of the transaction
 
 The first `vout` output `0` is the destination address for a transfer `"address": "bc1q4lwvx2380r4axmzgt8rnqxa5cvktt8unqlnka6"`
 
-The components of the second multisig `ScriptPubKey` are: 
+For mint and deploys `vout-0` is the minter/deployer address
 
-- `1`: This is the number of required signatures for the transaction to be valid.  Always 1 for SRC-20
+The components of the multisig `ScriptPubKeys` are: 
+
+- `1`: This is the number of required signatures for the transaction to be valid.  Always 1 (of 3) for SRC-20 (1 sigop)
 - `03c46b73fe2ff939bea5d0a577950dc8876e863bed11c887d681417dfd70533e51`: This is the SRC-20 encoded data
 - `039036c8182c70770f8f6bd702a25c7179bfff1ccb3a844297a717226b88b976cc`: This is the SRC-20 encoded data
-- `020202020202020202020202020202020202020202020202020202020202020202`: This is a 20-byte hash that must be to a valid keyburn address.
-- `3`: This is the total number of public keys in the multisig script. Always 3 for SRC-20
+- `020202020202020202020202020202020202020202020202020202020202020202`: This is the hash that must be to a valid keyburn address.
+- `3`: This is the total number of public keys in the multisig script. Always (1 of) 3 for SRC-20
 - `OP_CHECKMULTISIG`: opcode
 
-We will also use the thrid mulisig script in the decoding below. 
+We will also use an additional mulisig script in the decoding example below. Additional multisig scripts may be added depending on the length of the JSON string.
 
 
 
@@ -256,7 +258,7 @@ The output after ARC4 decoding is:
 00457374616d703a7b2270223a227372632d3230222c226f70223a227472616e73666572222c227469636b223a225354455645222c22616d74223a22313030303030303030227d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 ```
 
-The first two bytes - in this example `0045` is the expected length of the decoded data in hex (less any trailing zeros) for data validation. This is required in order for the transaction to successfully parse.
+The first two bytes - in this example `0045` is the expected length of the decoded data in hex (less any trailing zeros) for data validation. This is required in order for the transaction to successfully parse and be indexed. Transactions without this value or a value that does not match the string length are considered invalid.
 
 The next `7374616d703a` is the hexadecimal representation of `stamp:` in lowercase - this is required for a valid stamp SRC-20 transaction
 
@@ -274,7 +276,7 @@ In order to minimize the transaction size spaces are not used in the serialized 
 
 ## Compression
 
-Compression and data serialization is supported in SRC-20 transactions.  Previously SRC-20 was a JSON Strings encoded in BASE64 inside of a Counterparty issuance transaction. In some cases the json string was serialized and compression was utilized to minimize the size of the corresponding transaction. This is an important factor when indexing and validating prior SRC-20 transactions within Counterparty transactions, and will continue to be supported in current version SRC-20 transactions. However given the construction of the JSON string without spaces, and the fact that we are no longer encoding in BASE64 the transactißon size benefits are minimal. 
+Compression and data serialization is supported in SRC-20 transactions.  Previously SRC-20 was a JSON Strings encoded in BASE64 inside of a Counterparty issuance transaction. In some cases the json string was serialized and compression was utilized to minimize the size of the corresponding transaction. This is an important factor when indexing and validating prior SRC-20 transactions within Counterparty transactions, and will continue to be supported in current version SRC-20 transactions. However given the construction of the JSON string without spaces, and the fact that we are no longer encoding in BASE64 the transactißon size benefits are minimal. This must be taken into consideration when parsing for transactions on chain.
 
 An example of the serialization and compression:
 
