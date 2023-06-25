@@ -54,20 +54,27 @@ If the amount specified to be transferred exceeds the balance held (which would 
 3. Disallowed characters:
    a. Non-printable Unicode characters
    b. Quotation marks: " ` ' outside of regular json delimiters
-   c. Special characters not present in 2c
+   c. Special characters not present in (2b, 2c) including , in numeric fields
 4. Only numeric values are allowed in the "max", "amt", "lim" fields
 5. Other Qualifications:
-    - The third multisig on the transaction must be to a valid Keyburn address
+    - The third multisig pubkeys must be to a valid Keyburn address
     - not case sensitive DOGE=doge
-    - max mint/transfer/lim amount: uint64_max 18,446,744,073,709,551,615 (**commaas not allowed**, here for readability only)
-    - max decimals: 18 (default)
+    - max mint/transfer/lim amount: uint64_max 18,446,744,073,709,551,615 (**commas not allowed**, here for readability only)
+    - max decimals: 18 (default - no need to specify unless a lower precision is desired)
     - json strings are not order sensitive
     - json strings are not case sensitive
     - MAX, LIM fields are integers only
     - AMT field is a decimal up to uint64 max with 18 decimals
-    - Must be a valid CP transaction for transactions prior to block 796,000 
-
-
+    - Must be a valid CP transaction for transactions prior to block 796,000 have 0 assets issued, locked, and not divisible 
+    - Must be a valid BASE64 as decoded by Python 3.9 base64.b64decode(base64_string prior to block 796,000
+6. Balance Calculations
+    - Mints over the limit are capped - user will receive the limit amount if this is exceeded
+    - Deploys to the same tick which are previously deployed are invalid
+    - Negative mints and transfers are invalid
+    - If a mint is within the limit, but not within the max it is capped at the max value
+    - Any mint where max has already been exceeded is invalid (overmint)
+    - Any transfer over the users balance at the time of transfer is considered invalid and will not impact either users balance
+        ie. if wallet x has 1 KEVIN token and attempts to transfer 10000 KEVIN tokens to user y the entire transaction is invalid
 
 
 # SRC-20 Token Example JSON Strings
@@ -291,9 +298,9 @@ compressed_data = zlib.compress(serialized_data)
 
 
 
-# Indexing Details
+# Indexing for SRC-20 Transactions
 
-SRC-20 transactions may be indexed directly from BTC for validation. Prior to block 796,000 this can be accomplihed using Counterpart API's to pull transaction details. All transacitons on and after block 796,000 must be parsed directly from a BTC node. The specifications above must be followed including valid json strings, valid counterparty transaction (prior to block 796,000), and a valid stamp: transaction. 
+SRC-20 transactions may be indexed directly from BTC for validation. Prior to block 796,000 this can be accomplihed using Counterparty API's to pull transaction details from valid issuances with a numeric asset with a valid json string encoded in base64 with the multisig scripts to a valid keyburn address. All transacitons on and after block 796,000 must be parsed directly from a BTC node. The specifications above must be followed including valid json strings and a valid Bitcoin Stamp transaction prefixed by 'stamp:'
 
 
 ## Tick Length
@@ -318,6 +325,7 @@ With base64 string:
 `eyJwIjogInNyYy0yMCIsICJvcCI6ICJtaW50IiwgInRpY2siOiAiUElaWkEiLCAiYW10IjogIjExMTExIn0`
 
 This string is considered invalid in Python using `base64.b64decode(base64_string)` and `pybase64.b64decode(base64_string)` and in bash `printf "%s" "{base64_string}" | base64 -d` because it is missing the end of line `=` for padding / newline. The original indexer was written in python with these 3 checks so it is deemed invalid even though Node.JS interprets this string properly. Padding was attempted in prior iterations to attempt to include improperly formatted base64 strings into BTC Stamps protocol however since it is not possible to properly determine the location for padding in all cases these were simply deemed invalid to remove malformed data.
+## SRC-20 Balance Calculation
 
 ## Example SRC-20 JSON Validation
 
