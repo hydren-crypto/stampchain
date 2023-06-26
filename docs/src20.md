@@ -1,13 +1,27 @@
-# SRC-20 Token Specification
+# SRC-20 Tokens
 
-SRC-20 is a bleeding edge specification modeled after BRC-20. Prior specifications of SRC-20 in its initial state were built on top of Counterparty transactions with specific requirements for an issuance transaction. The current specification as of block 796,000 encodes the SRC-20 transaction directly onto BTC and does not use Counterparty. Any SRC-20 transactions created on Counterparty after block 796,000 will be deemed invalid, and will not be indexed. Counterparty was used as a proof of concept as we designed a direct to BTC method which optimizes the transaction size and reduces cost of SRC-20 transactions. 
+SRC-20 Specifications have changed as of block 796,000. SRC-20 transactions are now created directly on BTC and are no-longer supported as Counterparty transactions. SRC-20 mints, deploys, and transfers are all free from an service fees with the exception of the BTC miners fee when done from a supported wallet. 
 
-If you do not fully understand how SRC-20 works, it is recommended that you exercise caution.
+SRC-20 is a bleeding edge specification modeled after BRC-20. Prior specifications of SRC-20 in its initial state were built on top of Counterparty transactions with specific requirements for an issuance transaction. The current specification as of block 796,000 encodes the SRC-20 transaction directly onto BTC and does not use Counterparty. Any SRC-20 transactions created on Counterparty after block 796,000 will be invalid. Counterparty was used as a proof of concept as we designed a direct to BTC method which optimizes the transaction size and reduces cost of SRC-20 transactions.
+
+# Supported Wallets
+
+The SRC-20 reference wallet for Chrome is available here: [The Stamp Wallet](https://www.thestampwallet.com/) 
+
+ Freewallet and Hiro Wallet do not presently support SRC-20. However, the new reference client wallet supports importing BIP39 seeds and individual private keys from Freewallet and Hiro wallets. We anticipate that Hiro wallet will add SRC-20 support.
 
 
-## Introduction
 
+
+
+
+
+
+
+# Specifications
 SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Number will not be created, the transaction will not be considered a valid SRC-20 transaction, and they will not appear in the Bitcoin Stamps Protocol index / API. 
+
+ SRC-20 transaction must be signed and broadcast onto BTC by the address that holds the SRC-20 token balance as it acts as a means to authenticate ownership. Both the source and destination addresses are embedded into the BTC transaction which is created by the users wallet. The SRC-20 reference wallet will ensure you are creating the proper transaction until support can be integrated into more broadly distributed wallets such as Hiro. Please use extreme caution if signing transactions created by a third party.
 
 ### DEPLOY
 ```JSON
@@ -30,7 +44,7 @@ SRC-20 Tokens must conform to these **required** fields or a Bitcoin Stamp Numbe
 }
 ```
 ### TRANSFER
-The SRC-20 transaction must be signed and broadcast onto BTC by the address that holds the SRC-20 token balance as it acts as a means to authenticate ownership. Both the source and destination addresses are embedded into the BTC transaction which is created by the users wallet. The SRC-20 reference wallet will ensure you are creating the proper transaction until support can be integrated into more broadly distributed wallets such as Hiro. Please use extreme caution if signing transactions created by a third party.
+
 
 ```JSON
 {
@@ -327,11 +341,10 @@ With base64 string:
 `eyJwIjogInNyYy0yMCIsICJvcCI6ICJtaW50IiwgInRpY2siOiAiUElaWkEiLCAiYW10IjogIjExMTExIn0`
 
 This string is considered invalid in Python using `base64.b64decode(base64_string)` and `pybase64.b64decode(base64_string)` and in bash `printf "%s" "{base64_string}" | base64 -d` because it is missing the end of line `=` for padding / newline. The original indexer was written in python with these 3 checks so it is deemed invalid even though Node.JS interprets this string properly. Padding was attempted in prior iterations to attempt to include improperly formatted base64 strings into BTC Stamps protocol however since it is not possible to properly determine the location for padding in all cases these were simply deemed invalid to remove malformed data.
-## SRC-20 Balance Calculation
 
 ## Example SRC-20 JSON Validation
 
-If the JSON string is not valid including it will be rejected from the index. This is a sample of the validation script. Any SRC-20 transactions that do not pass this validation are considered invalid transactions and will not impact user balances.
+If the JSON string is not valid including it will be rejected from the index. This is a sample of the validation script. Any SRC-20 transactions that do not pass this validation are considered invalid transactions and will not impact user balances. This is the current method used for the indexer validation of JSON strings. Anything that does not pass this check will not get a valid BTC Stamp number and will not be indexed as part of SRC-20.
 
 ```PY
 
