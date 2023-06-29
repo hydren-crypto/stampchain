@@ -93,49 +93,102 @@ sort_order=asc or desc
 
 ## Query Parameters
 
-### Search for Bitcoin Stamps Owned By Address
+### Search for Bitcoin Stamps Owned By `wallet_address`
+
 This returns all Bitcoin Stamps which are owned by the address provided in the query parameter.
 
 https://stampchain.io/api/stamps?wallet_address=14wD9ShyhwEskG84q6CWMVpnPZw5B8NvLg
 
-```
-    {
-    "wallet_address": "14wD9ShyhwEskG84q6CWMVpnPZw5B8NvLg"
-    }
+Results:
+```JSON
+[
+  {
+    "stamp": 7408,
+    "block_index": 784032,
+    "cpid": "A11292334810881815000",
+    "creator": "14wD9ShyhwEskG84q6CWMVpnPZw5B8NvLg",
+    "divisible": 0,
+    "keyburn": 0,
+    "locked": 0,
+    "message_index": 9244388,
+    "stamp_base64": "R0lGODlhGAAYAHcAACH/C05FV...3ExL/P0Lnx/wGcO9H",
+    "stamp_mimetype": "image/gif",
+    "stamp_url": "https://stampchain.io/stamps/e9feb49b9b26d4e2010c060042cd5365bfa638a1b5795f17d36d10ed4e5452fa.gif",
+    "supply": 1,
+    "timestamp": "0000-00-00 00:00:00",
+    "tx_hash": "e9feb49b9b26d4e2010c060042cd5365bfa638a1b5795f17d36d10ed4e5452fa",
+    "tx_index": 2288326
+  },
+  {
+    "stamp": 7409,
+    "block_index": 784032,
+    "cpid": "A12549639752817414000",
+    "creator": "14wD9ShyhwEskG84q6CWMVpnPZw5B8NvLg",
+    "divisible": 0,
+    "keyburn": 0,
+    "locked": 0,
+    "message_index": 9244391,
+    "stamp_base64": "R0lGODlhGAAYAHcAACH/C...WgEQ4xEcJQEOpOtIQigVQ",
+    "stamp_mimetype": "image/gif",
+    "stamp_url": "https://stampchain.io/stamps/853115d1391b9430c1e60d7e89cfd7e394a76a15b8cd7e3260873d60c07d260a.gif",
+    "supply": 1,
+    "timestamp": "0000-00-00 00:00:00",
+    "tx_hash": "853115d1391b9430c1e60d7e89cfd7e394a76a15b8cd7e3260873d60c07d260a",
+    "tx_index": 2288327
+  }
+]
 ```
 
-### Search For Single Bitcoin Stamp By Stamp Number
+### `count`
 
-https://stampchain.io/api/stamps?stamp=1609
+https://stampchain.io/api/stamps?count
+
+Results
+
+```JSON
+{"count": 67911, "block_index": 795999}
 ```
-    {
-    "stamp": "1609"
-    }
+
+### `stamp`
+
+https://stampchain.io/api/stamps?stamp=7409
+
+Results
+
+```
+  {
+    "stamp": 7409,
+    "block_index": 784032,
+    "cpid": "A12549639752817414000",
+    "creator": "14wD9ShyhwEskG84q6CWMVpnPZw5B8NvLg",
+    "divisible": 0,
+    "keyburn": 0,
+    "locked": 0,
+    "message_index": 9244391,
+    "stamp_base64": "R0lGODlhGAAYAHcAACH/C...WgEQ4xEcJQEOpOtIQigVQ",
+    "stamp_mimetype": "image/gif",
+    "stamp_url": "https://stampchain.io/stamps/853115d1391b9430c1e60d7e89cfd7e394a76a15b8cd7e3260873d60c07d260a.gif",
+    "supply": 1,
+    "timestamp": "0000-00-00 00:00:00",
+    "tx_hash": "853115d1391b9430c1e60d7e89cfd7e394a76a15b8cd7e3260873d60c07d260a",
+    "tx_index": 2288327
+  }
 ```
 <br>
 
-### Search For Ranges Of Bitcoin Stamps (stamp_begin / stamp_end)
+### `stamp_begin` range `stamp_end`
 
 https://stampchain.io/api/stamps?stamp_begin=1600&stamp_end=1610
-```
-    {
-    "stamp_begin": "1600",
-    "stamp_end": "1610"
-    }
-```
+
 <br>
 
-### Search For Multiple Bitcoin Stamps
+### `stamp` multiple
 
 https://stampchain.io/api/stamps?stamp=343,454,896
-```    
-    {
-    "stamp": "343,454,896"
-    }
-```
+
 <br>
 
-### Search For All Bitcoin Stamps In A BTC Block
+### `block`
 
 https://stampchain.io/api/stamps?block_index=783417
 ```
@@ -145,39 +198,27 @@ https://stampchain.io/api/stamps?block_index=783417
 ```
 <br>
 
-### Search For Bitcoin Stamps By CPID
+### `cpid`
 This will return all Bitcoin Stamps based upon their corresponding Counterparty asset ID.
 
 https://stampchain.io/api/stamps?cpid=A2536547015909490700
-```
-    {
-    "cpid": "A2536547015909490700"
-    }
-```
+
 <br>
 
-### Search For Bitcoin Stamps By BTC Transaction Hash
+### `tx_hash`
 This will return Bitcoin Stamp by the Bitconi transaction hash.
 
 https://stampchain.io/api/stamps?tx_hash=46e283ebe0f6d7d73ef835c10a911c157f071b4a12d54ee54355646bc43d0c1c
-```
-    {
-    "tx_hash": "46e283ebe0f6d7d73ef835c10a911c157f071b4a12d54ee54355646bc43d0c1c"
-    }
-```
+
 <br>
 
 
-### Search For Bitcoin Stamps By **Creator** (Artist)
+### `creator` - artist
 The issuer of a Bitcoin Stamp cannot be changed, and is typically used to identify the Artist/Creator wallet. This will return all stamps issued by the wallet address. The `supply` field is a representation of how many holders there may be for this Bitcoin Stamp. We encourage a supply of 1 for each Bitcoin Stamp, but this is ultimately up to the creator. 
 
 https://stampchain.io/api/stamps?creator=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
 
-```
-    {
-    "creator": "1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5"
-    }
-```
+
 <br>
 
 ## Future Functionality To Be Implemented:
@@ -186,14 +227,14 @@ https://stampchain.io/api/stamps?creator=1QDyd1Cc877CbdNNNP2Tko37i8FZxDfBx5
 - ~~Search for Bitcoin Stamps by wallet owners BTC address~~
 - ~~Search for Bitcoin Stamps by Creator (Artist) BTC address~~
 - ~~Include base64 data in response~~
-- Search for Bitcoin Stamps that have participated in the key burn: 
+- ~~Search for Bitcoin Stamps that have participated in the key burn:~~
   - https://github.com/mikeinspace/stamps/blob/main/Key-Burn.md
   - filter upon unpsent outputs and spent outputs
   
 <br>
 
 ## Notes
-- There are no CORS restrictions on this API, feel free to integrate it into your own projects with care. Access may be limited as we see fit.
+- Feel free to integrate it into your own projects with care. Access may be limited as we see fit.
 
 ### Conributors
 - [REINAMORA](https://twitter.com/reinamora_137)
