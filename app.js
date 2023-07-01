@@ -77,7 +77,8 @@ function indexPage() {
 
       const viewMoreBtn = document.createElement('button');
       viewMoreBtn.innerText = 'View More';
-      viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
+      // viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
+      viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?tx_hash=${item.tx_hash}`);
       itemContainer.appendChild(viewMoreBtn);
       dataContainer.appendChild(itemContainer);
     });
