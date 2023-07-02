@@ -1,12 +1,12 @@
 # SRC-20 Tokens
 
-SRC-20 Specifications have changed as of block 796,000. SRC-20 transactions are now created directly on BTC and are no-longer supported as Counterparty transactions. SRC-20 mints, deploys, and transfers are all free from an service fees with the exception of the BTC miners fee when done from a supported wallet. 
+SRC-20 Specifications have changed protocol specifications as of block 796,000. SRC-20 transactions are now created directly on BTC and are no-longer supported as Counterparty transactions. SRC-20 mints, deploys, and transfers are all free from an service fees with the exception of the BTC miners fee when done from a supported wallet. 
 
 SRC-20 is a bleeding edge specification modeled after BRC-20. Prior specifications of SRC-20 in its initial state were built on top of Counterparty transactions with specific requirements for an issuance transaction. The current specification as of block 796,000 encodes the SRC-20 transaction directly onto BTC and does not use Counterparty. Any SRC-20 transactions created on Counterparty after block 796,000 will be invalid. Counterparty was used as a proof of concept as we designed a direct to BTC method which optimizes the transaction size and reduces cost of SRC-20 transactions.
 
 # Supported Wallets
 
-The SRC-20 reference wallet for Chrome is available here: [The Stamp Wallet](https://www.thestampwallet.com/) 
+The SRC-20 reference wallet for Chrome is available here and is currently the only supported method to interact with SRC-20 tokens: [The Stamp Wallet](https://www.thestampwallet.com/) 
 
  Freewallet and Hiro Wallet do not presently support SRC-20. However, the new reference client wallet supports importing BIP39 seeds and individual private keys from Freewallet and Hiro wallets. We anticipate that Hiro wallet will add SRC-20 support.
 
@@ -146,7 +146,7 @@ to apply an emoji modifier it would take up 2 chars, and be added directly after
 
 an ASCII character takes up only one byte, while an emoji can take up to four bytes.
 
-## SRC-20 BTC Transaction Specifications
+# SRC-20 BTC Transaction Specifications
 
 ```BASH
  # bitcoin-cli getrawtransaction 50aeb77245a9483a5b077e4e7506c331dc2f628c22046e7d2b4c6ad6c6236ae1 true
@@ -248,7 +248,7 @@ We will also use an additional mulisig script in the decoding example below. Add
 
 
 
-## Decoding the transaction
+# Decoding the SRC-20 Bitcoin Transaction
 
 Take the first two pubkeys from all present multisig scripts. In this example there are a total of 4 hex strings in the two scripts.
 
@@ -288,7 +288,7 @@ Which UTF-8 decodes to:
 
 In order to minimize the transaction size spaces are not used in the serialized JSON string which is constructed by the SRC-20 reference wallet.
 
-## Compression
+# Compression
 
 Compression and data serialization is supported in SRC-20 transactions.  Previously SRC-20 was a JSON Strings encoded in BASE64 inside of a Counterparty issuance transaction. In some cases the json string was serialized and compression was utilized to minimize the size of the corresponding transaction. This is an important factor when indexing and validating prior SRC-20 transactions within Counterparty transactions, and will continue to be supported in current version SRC-20 transactions. However given the construction of the JSON string without spaces, and the fact that we are no longer encoding in BASE64 the transactißon size benefits are minimal. This must be taken into consideration when parsing for transactions on chain.
 
@@ -328,7 +328,7 @@ Node:
 Python:
 len('BULL🐂') = 5
 
-## Base64 Decoding Anomolies
+# Base64 and other Decoding Anomolies
 
 Python and Node.JS handle base64 decoding differently. Prior to block 796,000 for CP based transactions which were base64 encoded this can have an impact on valid/invalid transactions. After block 796,000 for direct to BTC transactions which are ARC4 encoded this does not have an impact.
 
@@ -342,7 +342,15 @@ With base64 string:
 
 This string is considered invalid in Python using `base64.b64decode(base64_string)` and `pybase64.b64decode(base64_string)` and in bash `printf "%s" "{base64_string}" | base64 -d` because it is missing the end of line `=` for padding / newline. The original indexer was written in python with these 3 checks so it is deemed invalid even though Node.JS interprets this string properly. Padding was attempted in prior iterations to attempt to include improperly formatted base64 strings into BTC Stamps protocol however since it is not possible to properly determine the location for padding in all cases these were simply deemed invalid to remove malformed data.
 
-## Example SRC-20 JSON Validation
+Also, Transaction `f3a8df9f71bd195b43186c669666732fa86623e2d2f9633cf663b32e5e417b69` at the time of block 796000 was parsing as an SRC-20 transaction when pulled directly off Bitcoin. However on 3 Counterparty nodes the transaction parsed as shown below. Due to the requirements of SRC-20 Transactions being a valid counterparty transaction prior to the specified block this transaction was deemed invalid. This may be a bug in Counterparty which was unable to be addressed for final validation so this was excluded. This is documented for future indexing validation. The original transaction was a Bitcoin Stamp, however the same Counterparty asset name was used for the second transacion was intended to be a JSON string for a SRC-20 token. This is against protocol specifications where a previously existing stamp on the asset cannot be changed. 
+
+```
+9575037|791071|insert|issuances|{"asset": "A5428699716173256069", "asset_longname": null, "block_index": 791071, "call_date": 0, "call_price": 0.0, "callable": false, "description": "STAMP:iVBORw0KGgoAAAANSUhEUgAAACgAAAA4BAMAAAB9BqfFAAAAJ1BMVEVIZZcqRnYNERg8Qj4gJSEiLEojOFsAAAD7AQkeGx7///+SoYxUaWqIxi3EAAABTklEQVQ4y73PsU7DMBQF0FSiA6MHilg7lA8IEhmRcCR+wIq8MpQvQE8xYxrFaVkzpBuVoAM7/B7XcRrH1EJMvapk++jd1zaaB3I6XD6GEDFOO+Uj+JqIdr0tgF0o3+bb+cI+otkB63yN0yKz5xPqyiEDA/O2/XCIYAW9aK03Xw6RS9p/a20XsNmAij439MaW5tUjM1gB2QgvMqL3I2wyJSrFfBRCNCX7jTKAEqN1CN1kNDHHlUDfIQIHCg8RU5ejnTbTbnLiY3SOpSX2eDiVmOxuYxQS6AXYiADiv/8XQ3UZ3BlGeYyNDKBoQ3X5B55xh2nTfxHng/LU/CTeB+87VHjalKIe0B6YzJ5LvuIPHmZ7oD+5SjOlfESAVKJsMY7jG3OpFK144tBwfLumIsFlwASfRBWFjgt+Dwf2KbR+Lez1gKhqjYaHWABy6NhhID/iStgdKGHcpQAAAABJRU5ErkJggg==", "divisible": false, "fee_paid": 0, "issuer": "1WweVUK8kLmSNt6yKKqwVxch3Z7Lw5HAY", "locked": true, "quantity": 100, "reset": false, "source": "1WweVUK8kLmSNt6yKKqwVxch3Z7Lw5HAY", "status": "valid", "transfer": false, "tx_hash": "934dc31e690d0237d8d0d6a69355a7448920dbd12ff21abf694af48cfb30d715", "tx_index": 2387617}|1684859820
+
+9581330|791180|insert|issuances|{"asset": "A5428699716173256069", "asset_longname": null, "block_index": 791180, "call_date": 0, "call_price": 0.0, "callable": false, "description": "STAMP:iVBORw0KGgoAAAANSUhEUgAAACgAAAA4BAMAAAB9BqfFAAAAJ1BMVEVIZZcqRnYNERg8Qj4gJSEiLEojOFsAAAD7AQkeGx7///+SoYxUaWqIxi3EAAABTklEQVQ4y73PsU7DMBQF0FSiA6MHilg7lA8IEhmRcCR+wIq8MpQvQE8xYxrFaVkzpBuVoAM7/B7XcRrH1EJMvapk++jd1zaaB3I6XD6GEDFOO+Uj+JqIdr0tgF0o3+bb+cI+otkB63yN0yKz5xPqyiEDA/O2/XCIYAW9aK03Xw6RS9p/a20XsNmAij439MaW5tUjM1gB2QgvMqL3I2wyJSrFfBRCNCX7jTKAEqN1CN1kNDHHlUDfIQIHCg8RU5ejnTbTbnLiY3SOpSX2eDiVmOxuYxQS6AXYiADiv/8XQ3UZ3BlGeYyNDKBoQ3X5B55xh2nTfxHng/LU/CTeB+87VHjalKIe0B6YzJ5LvuIPHmZ7oD+5SjOlfESAVKJsMY7jG3OpFK144tBwfLumIsFlwASfRBWFjgt+Dwf2KbR+Lez1gKhqjYaHWABy6NhhID/iStgdKGHcpQAAAABJRU5ErkJggg==", "divisible": false, "fee_paid": 0, "issuer": "1NwCmg8gZW7KykrA7mX16zugNZZuckPg5o", "locked": true, "quantity": 0, "reset": false, "source": "1WweVUK8kLmSNt6yKKqwVxch3Z7Lw5HAY", "status": "valid", "transfer": true, "tx_hash": "f3a8df9f71bd195b43186c669666732fa86623e2d2f9633cf663b32e5e417b69", "tx_index": 2390355}|1684931053
+```
+
+# Example SRC-20 JSON Validation
 
 If the JSON string is not valid including it will be rejected from the index. This is a sample of the validation script. Any SRC-20 transactions that do not pass this validation are considered invalid transactions and will not impact user balances. This is the current method used for the indexer validation of JSON strings. Anything that does not pass this check will not get a valid BTC Stamp number and will not be indexed as part of SRC-20.
 
