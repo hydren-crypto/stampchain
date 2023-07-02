@@ -62,7 +62,8 @@ sort_order=asc or desc
       "locked": true,
       "divisible": false,
       "keyburn": true,
-      "artist_name": "Yotet"
+      "creator_name": "Yotet",
+      "ident": "STAMP"
    }
 ]
   <br>
@@ -74,7 +75,7 @@ sort_order=asc or desc
 | `block_index`     | The BTC block index of the Bitcoin Stamp was minted                       |
 | `cpid`            | The Counterparty ID of the Bitcoin Stamp                                 |
 | `creator`         | The creator of the Bitcoin Stamp (*aka artist*)       |
-| `artist_name`     | The name of the artist of the Bitcoin Stamp *based on the `creator` address*    |
+| `creator_name`     | The name of the artist of the Bitcoin Stamp *based on the `creator` address*    |
 | `message_index`   | The message index of the Bitcoin Stamp                            |
 | `stamp_base64`    | The base64 encoded Bitcoin Stamp                                           |
 | `stamp_mimetype`  | The mimetype of the Bitcoin Stamp                                                |
@@ -86,6 +87,7 @@ sort_order=asc or desc
 | `locked`          | Whether the corresponding Bitcoin Stamp asset is locked (we encourage True) |
 | `divisible`       | Whether the Bitcoin Stamp is divisible (we encourage false)                      |
 | `keyburn`         | Whether the Bitcoin Stamp is a keyburn (immortal / undestroyable)                   |
+| `ident`           | Identity of the transaction [ 'SRC-20', 'SRC-721', 'STAMP' ]                       |
 
 ---
 
