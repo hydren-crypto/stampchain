@@ -70,7 +70,7 @@ function indexPage() {
       itemContainer.appendChild(stampInfo);
 
       const creatorInfo = document.createElement('pre');
-      const displayedCreator = item.artist_name ? item.artist_name : `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
+      const displayedCreator = item.creator_name ? item.creator_name : `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
       creatorInfo.innerHTML = `Creator: <span class="normal-case">${displayedCreator}</span>`;
       itemContainer.appendChild(creatorInfo);
       
@@ -249,9 +249,9 @@ function assetPage() {
   
 
     // Display Artist Name if not null
-    if (data.artist_name) {
+    if (data.creator_name) {
       const artistNameDetail = document.createElement('pre');
-      artistNameDetail.innerText = `Artist Name: ${data.artist_name}`;
+      artistNameDetail.innerText = `Creator Name: ${data.creator_name}`;
       assetDetails.appendChild(artistNameDetail);
   }
 
