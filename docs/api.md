@@ -10,6 +10,7 @@
   - [`count`](#count)
   - [`creator`](#creator---artist)
   - [`cpid`](#cpid)
+  - [`holders`](#holders)
   - [`ident`](#ident-identity)
   - [`page`](#page)
   - [`page_size`](#page_size)
@@ -53,23 +54,33 @@ The Bitcoin Stamps API is the complete resource for wallet and application integ
 ---
 <br>
 
+# Output
+
 ```JSON
-[
-  {
-    "stamp": 0,
-    "block_index": 779652,
-    "cpid": "A7337447728884561000",
-    "creator": "1GotRejB6XsGgMsM79TvcypeanDJRJbMtg",
-    "creator_name": "Mike in Space",
-    "divisible": 0,
-    "ident": "STAMP",
-    "keyburn": 0,
-    "locked": 1,
-    "stamp_url": "https://stampchain.io/stamps/17686488353b65b128d19031240478ba50f1387d0ea7e5f188ea7fda78ea06f4.png",
-    "supply": 1,
-    "tx_hash": "17686488353b65b128d19031240478ba50f1387d0ea7e5f188ea7fda78ea06f4"
-  }
-]
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": [
+    {
+      "stamp": 0,
+      "block_index": 779652,
+      "cpid": "A7337447728884561000",
+      "creator": "1GotRejB6XsGgMsM79TvcypeanDJRJbMtg",
+      "creator_name": "Mike in Space",
+      "divisible": 0,
+      "ident": "STAMP",
+      "keyburn": 0,
+      "locked": 1,
+      "stamp_url": "https://stampchain.io/stamps/17686488353b65b128d19031240478ba50f1387d0ea7e5f188ea7fda78ea06f4.png",
+      "supply": 1,
+      "tx_hash": "17686488353b65b128d19031240478ba50f1387d0ea7e5f188ea7fda78ea06f4"
+    }
+  ],
+  "page_count": 1000, // total number of items returned on page (based on page_size)
+  "total_count": 73462  // total number of items which match this query (see pagination)
+}
   <br>
 
 ```
@@ -85,6 +96,7 @@ The Bitcoin Stamps API is the complete resource for wallet and application integ
 | [`count`](#count)          | Returns the total number of Bitcoin Stamps and last block indexed |
 | [`cpid`](#cpid)            | Search for Bitcoin Stamps by CPID (Counterparty ID)                           |
 | [`creator`](#creator)         | Search for Bitcoin Stamps by creator (artist) BTC address                         |
+| [`holders`](#holders)        | Search for Bitcoin Stamp holders (owners) by cpid                        |
 | [`ident`](#ident)          | Search for Bitcoin Stamps by type (STAMP, SRC-20, SRC-721) |
 | [`page`](#page)            | The page number of the results (default 1)                                   |
 | [`page_size`](#page_size)        | The number of results per page (default 1000)                                 |
@@ -109,6 +121,9 @@ https://stampchain.io/api/stamps?block_index=779652
 
 ## `count`
 
+This will return the total number of Bitcoin Stamps and the last block which contains a Bitcoin Stamp. For pagination please see the `page_count` and `total_count` fields in the [Query Results](#query_results) section.
+
+``
 https://stampchain.io/api/stamps?count
 
 Results
@@ -119,6 +134,7 @@ Results
 <br>
 
 ## `creator` - artist
+
 The issuer of a Bitcoin Stamp cannot be changed, and is typically used to identify the Artist/Creator wallet. This will return all stamps issued by the wallet address regardless of ownership of any Counterparty assets. The `supply` field is a representation of how many tokens/assets there may be for this Bitcoin Stamp. We encourage a supply of 1 for each Bitcoin Stamp, but this is ultimately up to the creator. 
 
 https://stampchain.io/api/stamps?creator=1GotRejB6XsGgMsM79TvcypeanDJRJbMtg
@@ -128,6 +144,7 @@ https://stampchain.io/api/stamps?creator=1GotRejB6XsGgMsM79TvcypeanDJRJbMtg
 <br>
 
 ## `cpid`
+
 This will return all Bitcoin Stamps based upon their corresponding Counterparty asset ID.
 
 https://stampchain.io/api/stamps?cpid=A7337447728884561000
@@ -136,6 +153,50 @@ https://stampchain.io/api/stamps?cpid=A7337447728884561000
 
 <br>
 
+## `cpid` multiple not in sequence
+
+This will query for multiple Bitcoin Stamps based upon their corresponding Counterparty asset ID.
+
+ https://stampchain.io/api/stamps?cpid=A7337447728884561000,A9668659363758889000
+
+ - *see [Output](#output) for result example*
+
+ <br>
+
+## `holders`
+
+The addresses which hold/own the Bitcoin Stamp as queried by the cpid
+
+https://stampchain.io/api/stamps?holders=A256247256247256247
+
+Results for holders query:
+
+```JSON
+
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": [
+    {
+      "address": "12xYPaWadCu7vWDm9p3s3nziVh75eDN1Bo",
+      "quantity": 1
+    },
+    {
+      "address": "135qDvhy3sMP7Kqi5yyomYBB37d1H2cr84",
+      "quantity": 1
+    },
+    {
+      "address": "bc1qelwyf27cxwexe27mp9tyqruw406zj5930068ff", 
+      "quantity": 4
+    }, 
+    ... // additional results omitted for brevity
+  ],
+  "page_count": 52, //  number of items returned on this page (based on page_size)
+  "total_count": 52  //  total number unique addresses which hold the stamp
+}
+```
 
 ## `ident` (Identity)
 
@@ -222,9 +283,15 @@ This returns all Bitcoin Stamps which are owned by the address provided in the q
 
 https://stampchain.io/api/stamps?wallet_address=1GotRejB6XsGgMsM79TvcypeanDJRJbMtg
 
-Results:
+Results for wallet_address query:
 ```JSON
-[
+
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": [
   {
     "stamp": 0,
     "block_index": 779652,
@@ -241,7 +308,10 @@ Results:
     "tx_hash": "17686488353b65b128d19031240478ba50f1387d0ea7e5f188ea7fda78ea06f4"
   },
   ... // additional results omitted for brevity
-]
+],
+  "page_count": 233, // total number of items returned on this page
+  "total_count": 233 // total number of items which match the query
+}
 ```
 <br> <br>
 
