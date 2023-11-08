@@ -66,7 +66,7 @@ function indexPage() {
         itemContainer.appendChild(img);
       }
       const stampInfo = document.createElement('pre');
-      stampInfo.innerText = (item.stamp === '999999999') ? 'Stamp:  \u221E' : `Stamp ${item.stamp}`;
+      stampInfo.innerText = (String(item.stamp) === '999999999') ? 'Stamp:  \u221E' : `Stamp ${item.stamp}`;
       itemContainer.appendChild(stampInfo);
 
       const creatorInfo = document.createElement('pre');
