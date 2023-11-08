@@ -59,7 +59,7 @@ body {
 
 #data-container img {
 	border-radius: 12px 12px 0px 0px;
-	max-width: 100%;
+	max-width: 210px;
 	height: 210px;
         overflow:hidden;
 	display: block;
