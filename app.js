@@ -66,7 +66,7 @@ function indexPage() {
         itemContainer.appendChild(img);
       }
       const stampInfo = document.createElement('pre');
-      stampInfo.innerText = `Stamp: ${item.stamp}`;
+      stampInfo.innerText = (item.stamp === '999999999') ? 'Stamp:  \u221E' : `Stamp ${item.stamp}`;
       itemContainer.appendChild(stampInfo);
 
       const creatorInfo = document.createElement('pre');
@@ -244,7 +244,7 @@ function assetPage() {
     assetDetails.style.textAlign = 'center';
   
     const stampDetail = document.createElement('pre');
-    stampDetail.innerText = `Stamp: ${data.stamp}`;
+    stampDetail.innerText = (String(data.stamp) === '999999999') ? 'Stamp:  \u221E' : `Stamp: ${data.stamp}`;
     assetDetails.appendChild(stampDetail);
   
 
