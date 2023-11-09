@@ -65,36 +65,49 @@ function indexPage() {
       .catch(error => console.error(error));
   }
 
-
   function renderData(data) {
     const dataContainer = document.getElementById('data-container');
     dataContainer.innerHTML = '';
   
-    data.forEach((item, index) => {
+    data.forEach((item) => {
       const itemContainer = document.createElement('div');
       itemContainer.classList.add('item');
   
       if (item.stamp_url) {
-        const imgContainer = document.createElement('a'); // Create a container that's clickable
-        imgContainer.href = `asset.html?tx_hash=${item.tx_hash}`; // Set the URL you want to navigate to
+        const contentContainer = document.createElement('a'); // Create a container that's clickable
+        contentContainer.href = `asset.html?tx_hash=${item.tx_hash}`; // Set the URL you want to navigate to
   
-        const img = document.createElement('img');
-        img.src = item.stamp_url;
-        img.width = 210;
-        img.height = 210;
-        img.onerror = function () {
-          this.onerror = null;
-          this.src = 'images/sad.png';
-        };
-        img.style.objectFit = 'contain';
-        img.style.imageRendering = 'pixelated';
-        img.style.imageRendering = '-moz-crisp-edges';
-        img.style.imageRendering = 'crisp-edges';
-        img.style.backgroundColor = '#000000';
-        imgContainer.appendChild(img); // Append the img to the clickable container
+        // Check if the URL is an HTML file
+        if (item.stamp_url.endsWith('.html')) {
+          // Embed HTML content using an iframe or a div
+          const iframe = document.createElement('iframe');
+          iframe.src = item.stamp_url;
+          iframe.width = '210'; // Set width as needed
+          iframe.height = '210'; // Set height as needed
+          iframe.style.border = 'none'; // Optional: remove border
+          iframe.setAttribute('sandbox', '');
+          contentContainer.appendChild(iframe);
+        } else {
+          // Use an img tag for images
+          const img = document.createElement('img');
+          img.src = item.stamp_url;
+          img.width = 210;
+          img.height = 210;
+          img.onerror = function () {
+            this.onerror = null;
+            this.src = 'images/sad.png';
+          };
+          img.style.objectFit = 'contain';
+          img.style.imageRendering = 'pixelated';
+          img.style.imageRendering = '-moz-crisp-edges';
+          img.style.imageRendering = 'crisp-edges';
+          img.style.backgroundColor = '#000000';
+          contentContainer.appendChild(img);
+        }
   
-        itemContainer.appendChild(imgContainer); // Append the clickable container to the itemContainer
+        itemContainer.appendChild(contentContainer); // Append the content container to the itemContainer
       }
+  
       const stampInfo = document.createElement('pre');
       stampInfo.innerText = (String(item.stamp) === '999999999') ? 'Stamp:  \u221E' : `Stamp ${item.stamp}`;
       itemContainer.appendChild(stampInfo);
@@ -104,10 +117,11 @@ function indexPage() {
       const displayedCreator = item.creator_name ? item.creator_name : `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
       creatorInfo.innerHTML = `Creator: <span class="normal-case">${displayedCreator}</span>`;
       itemContainer.appendChild(creatorInfo);
-      
+  
       dataContainer.appendChild(itemContainer);
     });
   }
+
 
   function renderPaginationButtons(page, numberOfItems, dropdownValue, creatorAddress) {
     const paginationContainerTop = document.getElementById('pagination-container-top');
@@ -224,29 +238,36 @@ function assetPage() {
   }
   
   
+function displayAssetDetails(data) {
+  const assetContainer = document.getElementById('asset-container');
 
-
-  function displayAssetDetails(data) {
-    const assetContainer = document.getElementById('asset-container');
-
-    // Display asset image
-    const img = document.createElement('img');
-    img.src = data.stamp_url;
-    img.width = 420;
-    img.height = 420;
-    img.onerror = function() {
-        this.onerror = null;
-        this.src = 'images/sad.png';
-    };
-    img.style.objectFit = 'contain';
-    img.style.imageRendering = 'pixelated';
-    img.style.imageRendering = '-moz-crisp-edges';
-    img.style.imageRendering = 'crisp-edges';
-    img.style.backgroundColor = '#000000';
-    assetContainer.appendChild(img);
-
-
-
+    // Check if the URL is an HTML file
+    if (data.stamp_url.endsWith('.html')) {
+      // Create an iframe to embed the HTML content
+      const iframe = document.createElement('iframe');
+      iframe.src = data.stamp_url;
+      iframe.width = '420'; // You can set width as needed
+      iframe.height = '420'; // You can set height as needed
+      iframe.style.border = 'none'; // Optional: remove border
+      iframe.setAttribute('sandbox', '');
+      assetContainer.appendChild(iframe);
+    } else {
+      // If it's not an HTML file, assume it's an image
+      const img = document.createElement('img');
+      img.src = data.stamp_url;
+      img.width = 420;
+      img.height = 420;
+      img.onerror = function() {
+          this.onerror = null;
+          this.src = 'images/sad.png';
+      };
+      img.style.objectFit = 'contain';
+      img.style.imageRendering = 'pixelated';
+      img.style.imageRendering = '-moz-crisp-edges';
+      img.style.imageRendering = 'crisp-edges';
+      img.style.backgroundColor = '#000000';
+      assetContainer.appendChild(img);
+    }
     // Display asset details
     const assetDetails = document.createElement('div');
     assetDetails.style.textAlign = 'center';
