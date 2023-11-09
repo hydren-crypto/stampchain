@@ -105,12 +105,6 @@ function indexPage() {
       creatorInfo.innerHTML = `Creator: <span class="normal-case">${displayedCreator}</span>`;
       itemContainer.appendChild(creatorInfo);
       
-
-      // const viewMoreBtn = document.createElement('button');
-      // viewMoreBtn.innerText = 'View More';
-      // // viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
-      // viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?tx_hash=${item.tx_hash}`);
-      // itemContainer.appendChild(viewMoreBtn);
       dataContainer.appendChild(itemContainer);
     });
   }
