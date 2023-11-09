@@ -1,58 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	
-<link rel="icon" type="image/x-icon" href="/images/icon.jpg">
-<link rel="apple-touch-icon" href="/images/icon.jpg">
-<link rel="icon" type="image/x-icon" href="/images/icon.jpg">
-<link rel="apple-touch-icon" href="/images/icon.jpg">
-	
-<meta property="og:title" content="BITCOIN STAMPS" />
-<meta property="og:description" content="Unprunable UTXO Art, Because Sats Don’t Exist." />
-<meta property="og:image" content="/images/stamp.jpg" />
-<meta name="title" content="BITCOIN STAMPS"/>
-<meta name="description" content="Unprunable UTXO Art, Because Sats Don’t Exist." />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-	
-<link  rel="stylesheet" type="text/css"  media="all" href="style.css" />
-	
-<meta charset="UTF-8">
-
-<title>BITCOIN STAMPS</title>
-	
-
-	<script src="app.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="title" content="BITCOIN STAMPS">
+    <meta name="description" content="Unprunable UTXO Art, Because Sats Don’t Exist.">
+    <meta property="og:title" content="BITCOIN STAMPS">
+    <meta property="og:description" content="Unprunable UTXO Art, Because Sats Don’t Exist.">
+    <meta property="og:image" content="/images/stamp.jpg">
+    
+    <title>BITCOIN STAMPS</title>
+    
+    <link rel="icon" type="image/x-icon" href="/images/icon.jpg">
+    <link rel="apple-touch-icon" href="/images/icon.jpg">
+    
+    <link rel="stylesheet" type="text/css" media="all" href="style.min.css">
+    
+    <script src="app.js" defer></script>
 </head>
 <body>
-	
-<div id="menu">
-<a href="https://github.com/mikeinspace/stamps/blob/main/BitcoinStamps.md" target="_blank">About</a> | <a href="/minting.html">Minting</a> | <a href="https://t.me/BitcoinStamps" target="_blank">Join us!</a>
-</div>
-
-	
-	  <a href="index.html" class="title-link"><h1>BITCOIN STAMPS</h1></a>
-	<h2><em>Unprunable UTXO Art, Because Sats Don’t Exist.<br>Introducing <a href="https://stampchain.io/src20/" target="_blank" style="color:white;">SRC-20 Token Spec</a>!</em></h2>
-	  
-	  <form id="search-form">
-		<input type="text" id="search-input" name="search" required placeholder="stamp / creator / tx / cpid">
-		<button type="submit">Search</button>
-	  </form>
-
-	  <div id="pagination-container-top">
-		<button id="first-page-top">First</button>
-		<button id="prev-page-top">Previous</button>
-		<button id="next-page-top">Next</button>
-		<button id="last-page-top">Last</button>
-	  </div>
-	<div id="data-container"></div>
-	<div id="pagination-container-bottom">
-		<button id="first-page-bottom">First</button>
-		<button id="prev-page-bottom">Previous</button>
-		<button id="next-page-bottom">Next</button>
-		<button id="last-page-bottom">Last</button>
-	  </div>
-	
-	<p id="copyright">&copy 2023 Bitcoin Stamps</p>
-  
+    <div id="menu">
+        <a href="https://github.com/mikeinspace/stamps/blob/main/BitcoinStamps.md" target="_blank">ABOUT</a> | <a href="/mint/">MINTING</a> | <a href="https://t.me/BitcoinStamps" target="_blank">TELEGRAM</a>
+    </div>
+    
+    <a href="index.html" class="title-link"><h1>BITCOIN STAMPS</h1></a>
+    <h2>UNPRUNABLE UTXO ART, BECAUSE SATS DON'T EXIST</h2>
+    
+    <div class="search-container">
+        <form id="search-form">
+            <input type="text" id="search-input" name="search" required placeholder="stamp / creator / tx / cpid">
+            <select id="query-select">
+                <option value="ALL">STAMPS: ALL</option>
+                <option value="STAMP">STAMPS: LEGACY</option>
+                <option value="SRC-20">STAMPS: SRC-20</option>
+                <option value="SRC-721">STAMPS: SRC-721</option>
+            </select>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    
+    <div id="pagination-container-top">
+        <button id="first-page-top">First</button>
+        <button id="prev-page-top">Previous</button>
+        <button id="next-page-top">Next</button>
+        <button id="last-page-top">Last</button>
+    </div>
+    <div id="data-container"></div>
+    <div id="pagination-container-bottom">
+        <button id="first-page-bottom">First</button>
+        <button id="prev-page-bottom">Previous</button>
+        <button id="next-page-bottom">Next</button>
+        <button id="last-page-bottom">Last</button>
+    </div>
+    
+    <p id="copyright">&copy; 2023 Bitcoin Stamps</p>
 </body>
 </html>

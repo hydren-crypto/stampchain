@@ -13,43 +13,71 @@ function isValidCpid(cpid) {
 }
 
 
+// Main index page function
+
 function indexPage() {
-  // Get the creator address from URL query parameter if exists
   const urlParams = new URLSearchParams(window.location.search);
   const creatorAddress = urlParams.get('creator');
+  const dropdownValue = urlParams.get('dropdown');
 
+  const dropdown = document.getElementById('query-select'); // Correct the ID here
+  const searchForm = document.getElementById('search-form');
 
-  fetchDataAndRender(currentPage, creatorAddress);
+  // Event listeners
+  dropdown.addEventListener('change', () => {
+    currentPage = 1; // Reset to the first page
+    fetchDataAndRender(currentPage, creatorAddress, dropdown.value);
+  });
+  
+  searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const searchInput = document.getElementById('search-input');
+    const searchValue = searchInput.value.trim();
+    fetchDataAndRender(currentPage, searchValue, dropdown.value);
+  });
+  
+  // Fetch and render data
+  fetchDataAndRender(currentPage, creatorAddress, dropdownValue);
 
-  function fetchDataAndRender(page, creator) {
-    // Update the API endpoint with the creator query parameter if it exists
-    const apiUrl = creator
-      ? `${apiBaseUrl}?creator=${creator}&page=${page}&page_size=${itemsPerPage}&sort_order=desc`
-      : `${apiBaseUrl}?page=${page}&page_size=${itemsPerPage}&sort_order=desc`;
+  function fetchDataAndRender(page, creator, dropdownValue) {
+    let apiUrl = `${apiBaseUrl}?page=${page}&page_size=${itemsPerPage}&sort_order=desc`;
+  
+    if (creator) {
+      apiUrl += `&creator=${creator}`;
+    }
+  
+    // Append the ident parameter only if dropdownValue is not "ALL"
+    if (dropdownValue && dropdownValue !== "ALL") {
+      apiUrl += `&ident=${dropdownValue}`;
+    }
 
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        // If this is the first page, set the total number of stamps (our only chance, really)
-        if (currentPage === 1 && data[0]) {
-          totalNumberOfStamps = Number(data[0].stamp);
-        }
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      // If this is the first page, set the total number of stamps (our only chance, really)
+      if (currentPage === 1 && data[0]) {
+        totalNumberOfStamps = Number(data[0].stamp);
+      }
 
         renderData(data);
-        renderPaginationButtons(page, data.length);
+        renderPaginationButtons(page, data.length, dropdownValue, creatorAddress);
       })
       .catch(error => console.error(error));
   }
 
+
   function renderData(data) {
     const dataContainer = document.getElementById('data-container');
-    // Clear the previous items from the container
     dataContainer.innerHTML = '';
-
+  
     data.forEach((item, index) => {
       const itemContainer = document.createElement('div');
       itemContainer.classList.add('item');
+  
       if (item.stamp_url) {
+        const imgContainer = document.createElement('a'); // Create a container that's clickable
+        imgContainer.href = `asset.html?tx_hash=${item.tx_hash}`; // Set the URL you want to navigate to
+  
         const img = document.createElement('img');
         img.src = item.stamp_url;
         img.width = 210;
@@ -63,28 +91,31 @@ function indexPage() {
         img.style.imageRendering = '-moz-crisp-edges';
         img.style.imageRendering = 'crisp-edges';
         img.style.backgroundColor = '#000000';
-        itemContainer.appendChild(img);
+        imgContainer.appendChild(img); // Append the img to the clickable container
+  
+        itemContainer.appendChild(imgContainer); // Append the clickable container to the itemContainer
       }
       const stampInfo = document.createElement('pre');
       stampInfo.innerText = (String(item.stamp) === '999999999') ? 'Stamp:  \u221E' : `Stamp ${item.stamp}`;
       itemContainer.appendChild(stampInfo);
 
       const creatorInfo = document.createElement('pre');
+      creatorInfo.classList.add('creator-info'); // Add a new class for specific styling
       const displayedCreator = item.creator_name ? item.creator_name : `${item.creator.slice(0, 5)}...${item.creator.slice(-5)}`;
       creatorInfo.innerHTML = `Creator: <span class="normal-case">${displayedCreator}</span>`;
       itemContainer.appendChild(creatorInfo);
       
 
-      const viewMoreBtn = document.createElement('button');
-      viewMoreBtn.innerText = 'View More';
-      // viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
-      viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?tx_hash=${item.tx_hash}`);
-      itemContainer.appendChild(viewMoreBtn);
+      // const viewMoreBtn = document.createElement('button');
+      // viewMoreBtn.innerText = 'View More';
+      // // viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?stampNumber=${item.stamp}`);
+      // viewMoreBtn.addEventListener('click', () => window.location.href = `asset.html?tx_hash=${item.tx_hash}`);
+      // itemContainer.appendChild(viewMoreBtn);
       dataContainer.appendChild(itemContainer);
     });
   }
 
-  function renderPaginationButtons(page) {
+  function renderPaginationButtons(page, numberOfItems, dropdownValue, creatorAddress) {
     const paginationContainerTop = document.getElementById('pagination-container-top');
     const paginationContainerBottom = document.getElementById('pagination-container-bottom');
   
@@ -98,7 +129,7 @@ function indexPage() {
     firstButtonTop.disabled = page === 1;
     firstButtonTop.addEventListener('click', () => {
       currentPage = 1;
-      fetchDataAndRender(currentPage);
+      fetchDataAndRender(currentPage, creatorAddress, dropdownValue);
     });
   
     const prevButtonTop = document.createElement('button');
@@ -106,7 +137,7 @@ function indexPage() {
     prevButtonTop.disabled = page === 1;
     prevButtonTop.addEventListener('click', () => {
       currentPage--;
-      fetchDataAndRender(currentPage);
+      fetchDataAndRender(currentPage, creatorAddress, dropdownValue);
     });
   
     const nextButtonTop = document.createElement('button');
@@ -114,7 +145,7 @@ function indexPage() {
     nextButtonTop.disabled = page === totalPages;
     nextButtonTop.addEventListener('click', () => {
       currentPage++;
-      fetchDataAndRender(currentPage);
+      fetchDataAndRender(currentPage, creatorAddress, dropdownValue);
     });
   
     const lastButtonTop = document.createElement('button');
@@ -122,48 +153,31 @@ function indexPage() {
     lastButtonTop.disabled = page === totalPages;
     lastButtonTop.addEventListener('click', () => {
       currentPage = totalPages;
-      fetchDataAndRender(currentPage);
+      fetchDataAndRender(currentPage, creatorAddress, dropdownValue);
     });
   
     const firstButtonBottom = firstButtonTop.cloneNode(true);
     const prevButtonBottom = prevButtonTop.cloneNode(true);
     const nextButtonBottom = nextButtonTop.cloneNode(true);
     const lastButtonBottom = lastButtonTop.cloneNode(true);
-  
-    // Remove the previous event listeners
-    firstButtonBottom.removeEventListener('click', () => {
-      currentPage = 1;
-      fetchDataAndRender(currentPage);
-    });
-    prevButtonBottom.removeEventListener('click', () => {
-      currentPage--;
-      fetchDataAndRender(currentPage);
-    });
-    nextButtonBottom.removeEventListener('click', () => {
-      currentPage++;
-      fetchDataAndRender(currentPage);
-    });
-    lastButtonBottom.removeEventListener('click', () => {
-      currentPage = totalPages;
-      fetchDataAndRender(currentPage);
-    });
-  
+
+
     // Add new event listeners
     firstButtonBottom.addEventListener('click', () => {
       currentPage = 1;
-      fetchDataAndRender(currentPage);
+      fetchDataAndRender(currentPage, creatorAddress, dropdownValue);
     });
     prevButtonBottom.addEventListener('click', () => {
       currentPage--;
-      fetchDataAndRender(currentPage);
+      fetchDataAndRender(currentPage, creatorAddress, dropdownValue);
     });
     nextButtonBottom.addEventListener('click', () => {
       currentPage++;
-      fetchDataAndRender(currentPage);
+      fetchDataAndRender(currentPage, creatorAddress, dropdownValue);
     });
     lastButtonBottom.addEventListener('click', () => {
       currentPage = totalPages;
-      fetchDataAndRender(currentPage);
+      fetchDataAndRender(currentPage, creatorAddress, dropdownValue);
     });
   
     // Replace the old buttons in the DOM with the new ones
@@ -176,8 +190,8 @@ function indexPage() {
     paginationContainerBottom.appendChild(prevButtonBottom);
     paginationContainerBottom.appendChild(nextButtonBottom);
     paginationContainerBottom.appendChild(lastButtonBottom);
-  }
-  
+  }  
+
 }
 
 
@@ -331,17 +345,28 @@ function assetPage() {
   fetchAssetDetails();
 }
 
+
+// Initialize the correct page
 function init() {
-  const currentPage = document.location.pathname.split('/').pop();
+  const currentPageName = document.location.pathname.split('/').pop();
 
-  if (currentPage === 'index.html' || currentPage === '') {
+  if (currentPageName === 'index.html' || currentPageName === '') {
     indexPage();
+  } else if (currentPageName === 'asset.html') {
+    assetPage();
+  }
+}
 
-    const searchForm = document.getElementById('search-form');
+// Set up event listeners and any other initialization logic
+function setUpEventListeners() {
+  const searchForm = document.getElementById('search-form');
+  if (searchForm) {
     searchForm.addEventListener('submit', (event) => {
       event.preventDefault();
       const searchInput = document.getElementById('search-input');
       const searchValue = searchInput.value.trim();
+      // Add your search validation and redirection logic here
+      // For example:
       if (/^\d+$/.test(searchValue)) {
         window.location.href = `asset.html?stampNumber=${searchValue}`;
       } else if (isValidCpid(searchValue)) {
@@ -354,14 +379,11 @@ function init() {
         console.error('Invalid search input');
       }
     });
-    
-
-  } else if (currentPage === 'asset.html') {
-    assetPage();
   }
 }
 
-
-
 // Call the init function when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  setUpEventListeners();
+});

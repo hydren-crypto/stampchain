@@ -1,6 +1,11 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - npm install -g clean-css-cli
   pre_build:
     commands:
       - echo "Current directory:"
@@ -9,12 +14,15 @@ phases:
       - ls -la
       - echo "Parent directory listing:"
       - ls -la ..
+      - echo Minifying CSS...
   build:
     commands:
       - echo "Building the website..."
+      - cleancss -o style.min.css style.css
   post_build:
     commands:
       - echo "Syncing files to S3..."
       - aws s3 sync . s3://stampchain.io --exclude "buildspec.yml" --exclude ".git/*" --exclude README.md --exclude LICENSE
       - echo "Invalidating CloudFront distribution..."
       - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
+      - echo Build completed on `date`
