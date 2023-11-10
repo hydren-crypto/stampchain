@@ -13,7 +13,7 @@ body {
 	background-color: #181818;
 	color: #111111;
 	font-family: 'Courier New', monospace;
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 	}
 	
 #container {position:absolute;left:50%;width:420px;margin-left:-210px;}
@@ -56,6 +56,52 @@ image-rendering: crisp-edges;}
 	margin: 1px 0;
 		}
 
+#asset-details-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+	overflow-wrap: break-word;
+	word-wrap: break-word; 
+
+	/* display: grid; */
+	grid-template-columns: 1fr; /* One column layout */
+	gap: 10px; /* Space between grid items */
+	padding: 10px;
+	max-width: 420px; /* Adjust as needed */
+	margin: auto;
+	align-items: center;
+}
+		
+#asset-details-grid grid-item {
+	background-color: #181818;
+	color: white;
+	padding: 5px;
+	border-radius: 0;
+	font-family: 'Courier New';
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.5;
+	margin: auto;
+	text-align: center;
+	display: block;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+		
+#asset-details-grid a {
+    color: white; /* or any color you prefer */
+    text-align: center;
+    display: block; /* This makes the anchor tag take the full width of the grid column */
+    margin: auto; /* Centers the block-level element horizontally */
+    padding: 5px;
+    text-decoration: none; /* Optional: removes underline from links */
+}
+
+#asset-details-grid a:hover {
+    color: #ff0; /* or any hover color you prefer */
+}
+
 .item .creator-info {
 	white-space: pre-wrap;
 	word-wrap: break-word;
@@ -68,23 +114,27 @@ image-rendering: crisp-edges;}
 	margin: 1px 0;
 	}
 
-#data-container {text-align:center;}	
-
+#data-container {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
 
 #data-container img {
-	border-radius: 12px 12px 0px 0px;
-	max-width: 210px;
-	height: 210px;
-	overflow:hidden;
-	display: block;
+	border-radius: 12px 12px 0 0;
+	max-width: 100%;
+	height: auto;
+	overflow: hidden;
 	margin: 2px auto;
 	image-rendering: pixelated;
 	image-rendering: -moz-crisp-edges;
 	image-rendering: crisp-edges;
 	background-image: url("/images/transparent-bg.png");
 	background-size: 3px;
-      }
-
+}
+	
 button {
 	color: white; 
 	background-color: black;
@@ -128,21 +178,32 @@ h2 {
 	text-transform: uppercase;font-size:18px;
 	}
 	
-h3 {color:white;text-align:center;}
+h3 {color:white;
+    text-align:center;
+	text-transform: uppercase;}
 
-#data-container {
-	text-align:center;
-	}
-	
-#asset-container {text-align:center;}
 
-#asset-container img {border-radius: 12px 12px 12px 12px;
+#asset-container {
+	width: 100%;
+	text-align: center;
+	padding: 10px;
+  }
+  
+  #asset-container img {
+	border-radius: 12px;
 	background-image: url("/images/transparent-bg.png");
-        background-size: 3px;}
-	
-#asset-container pre {color:white;text-align:center;}
-#asset-container pre a {color:white;text-align:center;}
-
+	background-size: 3px;
+	max-width: 100%;
+	height: auto;
+  }
+  
+  #asset-container .grid-item, #asset-container a {
+	color: white;
+	text-align: center;
+	display: block; /* Ensure full width usage */
+  }
+  #asset-container pre {color:white;text-align:center;}
+  #asset-container pre a {color:white;text-align:center;}
 
 #pagination-container-top,
 #pagination-container-bottom {
@@ -169,6 +230,46 @@ h3 {color:white;text-align:center;}
 
 /* Media query for screens that are 768px wide or less */
 @media (max-width: 768px) {
+    #asset-container {
+        width: 80%; /* Adjust width as needed */
+        padding: 10px; /* Adjust padding for smaller screens */
+		height: auto;
+		overflow-wrap: break-word;
+		word-wrap: break-word; 
+    }
+
+	#asset-container img {
+		max-width: 80%; /* Ensures the image is not wider than the container */
+		height: auto; /* Maintains the aspect ratio of the image */
+		/* Adjustments for images on smaller screens, if needed */
+	}
+	/* You can also adjust other elements within the container */
+	#asset-container .grid-item, #asset-container a {
+		overflow-wrap: break-word;
+		font-size: smaller; /* Example: smaller font size for smaller screens */
+	}
+	#asset-details-grid {
+		grid-template-columns: 1fr;
+		word-break: break-all;
+	}
+
+	#asset-details-grid .grid-item {
+		border-radius: 12px;
+		overflow-wrap: break-word;
+		word-wrap: break-word; 
+	}
+
+
+	#data-container {
+		width: 70%; /* Adjust width as needed */
+		padding: 100px; /* Adjust padding for smaller screens */
+
+	}
+	#data-container img {
+		width: 80%;
+		border-color: red;
+    }
+
 	#pagination-container-top {
 	  display: none; /* This will hide the top pagination buttons on small screens */
 	}
@@ -222,7 +323,10 @@ label {text-transform:none;margin:40px;display:block;}
 /* Media query for screens that are 768px wide or less */
  @media (max-width: 768px) {
     #search-input,
-    #query-select,
+    #query-select {
+		width: 100%;
+        text-align: center;
+    }
     #search-form button {
 		/* width: calc(min(100%, 230px)); */
 		width: 100%;
@@ -264,6 +368,8 @@ label {text-transform:none;margin:40px;display:block;}
 	border: 1px solid yellow;
 	border-radius: 12px;
 	text-transform: uppercase;
+	text-align: center;
+	align-items: center;
 	font-family: 'Courier New', monospace;
 	margin-right: 4px;
 	margin-left: 4px;
