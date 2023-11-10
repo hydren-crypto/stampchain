@@ -237,9 +237,11 @@ function assetPage() {
     }
   }
   
-  
-function displayAssetDetails(data) {
-  const assetContainer = document.getElementById('asset-container');
+
+  function displayAssetDetails(data) {
+    const assetContainer = document.getElementById('asset-container');
+    const grid = document.createElement('div');
+    grid.id = 'asset-details-grid';
 
     // Check if the URL is an HTML file
     if (data.stamp_url.endsWith('.html')) {
@@ -268,82 +270,55 @@ function displayAssetDetails(data) {
       img.style.backgroundColor = '#000000';
       assetContainer.appendChild(img);
     }
-    // Display asset details
-    const assetDetails = document.createElement('div');
-    assetDetails.style.textAlign = 'center';
-  
-    const stampDetail = document.createElement('pre');
-    stampDetail.innerText = (String(data.stamp) === '999999999') ? 'Stamp:  \u221E' : `Stamp: ${data.stamp}`;
-    assetDetails.appendChild(stampDetail);
-  
 
-    // Display Artist Name if not null
+    // Create a grid container for asset details
+    const gridContainer = document.createElement('div');
+    gridContainer.id = 'asset-details-grid'; // Use the ID for styling
+    gridContainer.style.display = 'grid';
+    gridContainer.style.gridTemplateColumns = '1fr'; // One-column layout
+    gridContainer.style.gap = '10px'; // Space between grid items
+    gridContainer.style.textAlign = 'left';
+    gridContainer.style.maxWidth = '420px';
+    gridContainer.style.margin = 'auto';
+  
+    // Function to create grid items
+    function createGridItem(label, value) {
+      const item = document.createElement('div');
+      item.className = 'grid-item';
+      item.innerText = `${label}: ${value}`;
+      return item;
+    }
+    // Adding grid items
+    gridContainer.appendChild(createGridItem('STAMP', data.stamp === '999999999' ? '\u221E' : data.stamp));
     if (data.creator_name) {
-      const artistNameDetail = document.createElement('pre');
-      artistNameDetail.innerText = `Creator Name: ${data.creator_name}`;
-      assetDetails.appendChild(artistNameDetail);
+      gridContainer.appendChild(createGridItem('CREATOR NAME', data.creator_name));
+    }
+    gridContainer.appendChild(createGridItem('CREATOR', data.creator));
+    gridContainer.appendChild(createGridItem('CPID', data.cpid));
+    gridContainer.appendChild(createGridItem('BLOCK INDEX', data.block_index));
+    gridContainer.appendChild(createGridItem('SUPPLY', data.supply));
+    gridContainer.appendChild(createGridItem('DIVISIBLE', data.divisible));
+    gridContainer.appendChild(createGridItem('LOCKED', data.locked));
+    gridContainer.appendChild(createGridItem('BTC TX', data.tx_hash));
+  
+    // Adding links
+    const addLink = (label, url) => {
+      const link = document.createElement('a');
+      link.href = url;
+      link.innerText = label;
+      link.style.display = 'block'; // Ensure each link is on a new line
+      gridContainer.appendChild(link);
+    };
+  
+    addLink('BLOCKCHAIN.COM TRANSACTION INFORMATION', `https://www.blockchain.com/explorer/transactions/btc/${data.tx_hash}`);
+    addLink('XCHAIN.IO ASSET INFORMATION', `https://xchain.io/asset/${data.cpid}`);
+    addLink('TXN DATA DECODER', `https://jpja.github.io/Electrum-Counterparty/decode_tx.html?tx=${data.tx_hash}`);
+    addLink('BINARY MEDIA', data.stamp_url);
+  
+    // Append the grid container to assetContainer
+    assetContainer.appendChild(gridContainer);
   }
-
-    const CreatorDetail = document.createElement('pre');
-    CreatorDetail.innerHTML = `Creator: <span class="normal-case">${data.creator}</span>`;
-    assetDetails.appendChild(CreatorDetail);
-
-    const assetDetail = document.createElement('pre');
-    assetDetail.innerText = `CPID: ${data.cpid}`;
-    assetDetails.appendChild(assetDetail);
-
-    const blockIndexDetail = document.createElement('pre');
-    blockIndexDetail.innerText = `Block Index: ${data.block_index}`;
-    assetDetails.appendChild(blockIndexDetail);
-
-    const supplyDetail = document.createElement('pre');
-    supplyDetail.innerText = `Supply: ${data.supply}`;
-    assetDetails.appendChild(supplyDetail);
-
-    const divisibleDetail = document.createElement('pre');
-    divisibleDetail.innerText = `Divisible: ${data.divisible}`;
-    assetDetails.appendChild(divisibleDetail);
-
-    const lockedDetail = document.createElement('pre');
-    lockedDetail.innerText = `Locked: ${data.locked}`;
-    assetDetails.appendChild(lockedDetail);
-
-    const txHashDetail = document.createElement('pre');
-    txHashDetail.innerHTML = `BTC TX: <span class="normal-case">${data.tx_hash}</span>`;
-    assetDetails.appendChild(txHashDetail);
-
-    const blockChainExplorerLink = document.createElement('pre');
-    const blockChainExplorerLinkAnchor = document.createElement('a');
-    blockChainExplorerLinkAnchor.href = `https://www.blockchain.com/explorer/transactions/btc/${data.tx_hash}`;
-    blockChainExplorerLinkAnchor.innerText = 'Blockchain.com Transaction Information';
-    blockChainExplorerLink.appendChild(blockChainExplorerLinkAnchor);
-    assetDetails.appendChild(blockChainExplorerLink);
-
-    const xchainExplorerLink = document.createElement('pre');
-    const xchainExplorerLinkAnchor = document.createElement('a');
-    xchainExplorerLinkAnchor.href = `https://xchain.io/asset/${data.cpid}`;
-    xchainExplorerLinkAnchor.innerText = 'Xchain.io Asset Information';
-    xchainExplorerLink.appendChild(xchainExplorerLinkAnchor);
-    assetDetails.appendChild(xchainExplorerLink);
-
-    const txnDataLink = document.createElement('pre');
-    const txnDataLinkAnchor = document.createElement('a');
-    txnDataLinkAnchor.href = `https://jpja.github.io/Electrum-Counterparty/decode_tx.html?tx=${data.tx_hash}`;
-    txnDataLinkAnchor.innerText = 'Txn Data Decoder';
-    txnDataLink.appendChild(txnDataLinkAnchor);
-    assetDetails.appendChild(txnDataLink);
-
-    const mediaLink = document.createElement('pre');
-    const mediaLinkAnchor = document.createElement('a');
-    mediaLinkAnchor.href = `${data.stamp_url}`;
-    mediaLinkAnchor.innerText = 'Binary Media';
-    mediaLink.appendChild(mediaLinkAnchor);
-    assetDetails.appendChild(mediaLink);
-
-    assetContainer.appendChild(assetDetails);
-  }
-
-
+  
 
   function displayDispenserDetails(dispenserData) {
     if (dispenserData.length > 0) {
