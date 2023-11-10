@@ -14,10 +14,10 @@ phases:
       - ls -la
       - echo "Parent directory listing:"
       - ls -la ..
-      - echo Minifying CSS...
   build:
     commands:
       - echo "Building the website..."
+      - echo Minifying CSS...
       - cleancss -o style.min.css style.css
   post_build:
     commands:

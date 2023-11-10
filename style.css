@@ -26,13 +26,13 @@ body {
 
 #BigLaunchButton {text-align:center;margin-top:50px;margin-bottom:50px;}
   
-  #BigLaunchButton a {text-transform:uppercase;color:white;text-decoration:none;font-weight:bold;font-size:20px;background-color:#666666; padding:10px 16px;border:4px solid white;border-radius:10px;}	
-	
-  #BigLaunchButton a:hover {color:yellow;}
-  
-  #marquee {width:420px;height:420px;border-radius: 12px 12px 12px 12px;image-rendering: pixelated;
-	image-rendering: -moz-crisp-edges;
-	image-rendering: crisp-edges;}
+#BigLaunchButton a {text-transform:uppercase;color:white;text-decoration:none;font-weight:bold;font-size:20px;background-color:#666666; padding:10px 16px;border:4px solid white;border-radius:10px;}	
+
+#BigLaunchButton a:hover {color:yellow;}
+
+#marquee {width:420px;height:420px;border-radius: 12px 12px 12px 12px;image-rendering: pixelated;
+image-rendering: -moz-crisp-edges;
+image-rendering: crisp-edges;}
 
 
 .item {
@@ -86,27 +86,26 @@ body {
       }
 
 button {
-		color: white; 
-		text-decoration: none;
-		/* font-weight: bold;  */
-		font-size: 14px; 
-		background-color: black; 
-		padding: 8px;
-		border: 1px solid white;
-		border-radius: 12px;
-		text-transform: uppercase;
-		font-family: 'Courier New', monospace;
-		cursor: pointer;    
-		display: inline-block; 
-		margin-right: 8px;     
-		margin-top: 10px;
-		margin-bottom: 10px;
-		vertical-align: middle;
+	color: white; 
+	background-color: black;
+	text-decoration: none;
+	/* font-weight: bold;  */
+	font-size: 12px; 
+	padding: 7px;
+	border: 1px solid white;
+	border-radius: 12px;
+	text-transform: uppercase;
+	font-family: 'Courier New', monospace;
+	cursor: pointer;    
+	margin-right: 2px;     
+	margin-left: 2px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	vertical-align: middle;
 		}
 button:hover {
 	background-color: #666666;
 	color: yellow;  }
-
   
 
 h1 {
@@ -153,14 +152,18 @@ h3 {color:white;text-align:center;}
   justify-content: center;
   flex-wrap: wrap; /* Allows buttons to wrap to the next line on smaller screens */
   align-items: center;
-  margin: 10px;
+  margin: 8px;
 }
 
 #pagination-container-top button,
 #pagination-container-bottom button {
-  margin: 5px 2px; /* Top and bottom margins are 10px, left and right are 5px */
+  /* margin: 80px 20px; */
+  margin-top: 8px;
+  margin-bottom: 20px;
+  margin-left: 4px;
+  margin-right: 4px;
   background-color: black;
-  margin: 10px
+  /* margin: 20px */
 }
 
 
@@ -184,8 +187,6 @@ h3 {color:white;text-align:center;}
 
 
 
-
-
 #upload-form {text-transform:none;color:white;text-align:center;}
 #output {text-transform:none;color:white;text-align:center;}
 #confirmation-message {text-transform:none;color:white;text-align:center;}
@@ -198,90 +199,101 @@ label {text-transform:none;margin:40px;display:block;}
 #asset-lock {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
 #asset-issuance {text-transform:none;height:30px;font-size:22px;border:2px solid yellow;background-color:#000000;color:yellow;font-family:monospace;}
 
-/* #search-form {text-align:center;}
-#search-form label {color:white;margin-bottom:0px;} */
-/* #search-input {border:1px solid yellow;background-color:black;font-size:16px;color:white;padding:8px;} */
-
 
 .search-container {
 	display: flex;
-	flex-wrap: wrap; /* This allows items to wrap onto multiple lines */
+	flex-wrap: wrap;
 	justify-content: center;
-	align-items: center;
-  }
-  
-  #search-form {
-	display: flex;
-	flex-wrap: wrap; /* This allows items to wrap onto multiple lines */
 	align-items: center;
 	text-align: center;
 	margin-top: 20px;
 	margin-bottom: 20px;
+
   }
   
-  /* Media query for screens that are 768px wide or less */
-  @media (max-width: 768px) {
-	#search-input,
-	#query-select,
-	#search-form button {
-	  margin-right: 0;
-	  margin-bottom: 10px; /* Add space between the stacked items */
-	  width: 100%; /* Make each form item take the full container width */
-	  text-align: center; /* Center the text for aesthetics */
-	}
+  #search-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+	flex-direction: row;
+ }
   
-	#search-form {
-	  flex-direction: column; /* Stack the flex items vertically */
-	}
-  }
+/* Media query for screens that are 768px wide or less */
+ @media (max-width: 768px) {
+    #search-input,
+    #query-select,
+    #search-form button {
+		/* width: calc(min(100%, 230px)); */
+		width: 100%;
+        text-align: center;
+    }
   
-  
+    #search-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+ }
+
+
   #search-input {
-	margin-right: 8px;
+	text-decoration: none;
+	font-size: 12px; /* Corrected from '12x' to '12px' */
+	padding: 7px;
 	background-color: black;
 	color: white;
 	border: 1px solid yellow;
-	padding: 8px;
-	font-size: 14px;
+	border-radius: 12px;
 	text-transform: uppercase;
 	font-family: 'Courier New', monospace;
-	width: 242px;
-	border-radius: 12px 12px 12px 12px;
+	width: 230px;
+	margin-right: 4px;
+	margin-left: 4px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	vertical-align: middle;
   }
-  
+
+
   #query-select {
-	margin-right: 8px; /* Space between the select and the button */
-	background-color: black;
 	color: white;
+	background-color: black;
+	text-decoration: none;
+	font-size: 12px;
+	padding: 7px;
 	border: 1px solid yellow;
-	padding: 8px;
-	font-size: 14px;
+	border-radius: 12px;
 	text-transform: uppercase;
 	font-family: 'Courier New', monospace;
-	border-radius: 12px 12px 12px 12px;
+	margin-right: 4px;
+	margin-left: 4px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	vertical-align: middle;
   }
   
   #search-form button {
-	color: white;                         /* Text color */
-	text-decoration: none;                /* No underline */
-	font-size: 14px;                      /* Font size to match 'view more' buttons */
-	/* background-color: #666666;            Background color */
-	padding: 8px 12px;                   /* Padding to match height and width */
-	border: 1px solid yellow;              /* Border style to match 'view more' buttons */
-	border-radius: 12px;                  /* Border radius to match 'view more' buttons */
-	text-transform: uppercase;            /* Uppercase text */
-	font-family: 'Courier New', monospace;/* Font family to match */
-	cursor: pointer;                      /* Pointer cursor on hover */
-	display: inline-block;                /* To ensure proper spacing */
-	margin-right: 8px;     
-	margin-top: 10px;
-	margin-bottom: 10px;               /* Right margin to match layout */
-	vertical-align: middle;               /* Aligns button vertically with other elements */
+	color: white;
+	text-decoration: none;
+	font-size: 12px;
+	padding: 7px;
+	border: 1px solid yellow;
+	border-radius: 12px;
+	text-transform: uppercase;
+	text-align: center;
+	align-items: center;
+	font-family: 'Courier New', monospace;
+	cursor: pointer;
+	margin-right: 4px;
+	margin-left: 4px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	vertical-align: middle;
   }
   
   #search-form button:hover {
-	color: yellow;                        /* Text color on hover */
-	background-color: #666666;            /* Background color on hover */
+	color: yellow;
+	background-color: #666666;
   }
 
 
