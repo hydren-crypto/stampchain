@@ -68,7 +68,7 @@ If the amount specified to be transferred exceeds the balance held (which would 
 3. Disallowed characters:
    a. Non-printable Unicode characters
    b. Quotation marks: " ` ' outside of regular json delimiters
-   c. Special characters not present in (2b, 2c) including , in numeric fields
+   c. Any character not present in `Allowed  Chars for Tick Field`
 4. Only numeric values are allowed in the "max", "amt", "lim" fields
 5. Other Qualifications:
     - The third multisig pubkeys must be to a valid Keyburn address
@@ -100,6 +100,7 @@ If the amount specified to be transferred exceeds the balance held (which would 
 {"p": "src-20", "op": "mint", "tick": "🙂@PL", "amt": "18,446"}     ## commas not allowed in amt
 {"p": "src-20", "op": "mint", "tick": "🙂"PL", "amt": "100"}        ## double quotes not allowed in tick
 {'p': 'src-20', 'op': 'mint', 'tick': ' rare', 'amt': '1000'}       ## invalid space in tick
+{'p': 'src-20', 'op': 'deploy', 'tick': 'rare', 'max': '100.000'}       ## invalid period in max, and missing lim
 ```
 ```
 👍👌 Valid Examples: 👌👍
@@ -110,6 +111,7 @@ If the amount specified to be transferred exceeds the balance held (which would 
 {"p": "src-20", "op": "mint", "tick": "🙂PL?", "amt": "100"}
 {"p": "src-20", "op": "mint", "tick": "🙂PL?", "amt": "100"}
 {"p": "src-20", "op": "mint", "tick": "🙂PL", "amt": "100"}
+{"p": "src-20", "op": "mint", "tick": "🙂PL", "amt": 100}
 {"p": "src-20", "op": "mint", "tick": "PIZZA", "amt": "11111", "random": "test"}  
 {
  "p": "src-20",
@@ -123,28 +125,17 @@ If the amount specified to be transferred exceeds the balance held (which would 
 **INVALID** tokens will not be created in the Bitcoin Stamps Protocol index or API, and the transaction will not be considered a valid SRC-20 transaction. Any further modifications to the standard must be designed around backwards compatibility.
 
 
-## Allowed Unicode Chars for Tick Field
+## Allowed  Chars for Tick Field
 
+1. **Standard Characters**:
+    - Punctuation: `.!#$%&*()`
+    - Numbers: `0123456789`
+    - Special: `<=>?@^_~`
+    - Uppercase: `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
+    - Lowercase: `abcdefghijklmnopqrstuvwxyz`
 
-Emoji_Presentation: This property includes all characters that are defined as emojis and have a distinct emoji-style appearance. These characters are intended to be displayed as colorful pictographs, rather than black-and-white text symbols. Examples include face emojis (😀, 😂, 😊), objects (🚗, 🌍, 🍕), and symbols (❤️, 🚫, ⏰).
-
-Emoji_Modifier_Base: This property consists of characters that can be modified by emoji modifiers, such as skin tone modifiers. These characters usually represent human-like figures (e.g., 👩, 👨, 🤳) and can be combined with emoji modifiers to represent variations in skin tone or other attributes.
-
-Emoji_Modifier: This property contains characters that can be used to modify the appearance of other emojis, particularly the ones classified as Emoji_Modifier_Base. The most common example is the skin tone modifiers (🏻, 🏼, 🏽, 🏾, 🏿) that can be applied to human-like emojis to represent different skin tones.
-
-
-## Excluded Unicode Chars for Tick Field
-
-These chars are excluded from the allowed chars list because they are not printable, and are not allowed in the tick field. Tokens with these chars will not be created in Bitcoin Stamps Protocol index or API, and the transaction will not be considered a valid SRC-20 transaction.
-
-
-Emoji_Component: Characters that are used to create more complex emojis, such as skin tone modifiers and hair components. These characters are not emojis on their own but can be used with other emojis.
-
-Extended_Pictographic: This includes additional pictographic characters not covered by Emoji_Presentation but can still be considered emojis.
-
-to apply an emoji modifier it would take up 2 chars, and be added directly after the emoji from emoji_presentation.  I suspect the web browser interprets that. kind of cool, didn't know how those worked.
-
-an ASCII character takes up only one byte, while an emoji can take up to four bytes.
+2. **Unicode Characters**:
+    {'🚔', '🪕', '🈯', '👶', '🧜', '🔺', '👚', '🥠', '🪛', '👮', '🎗', '🙂', '🅱', '🍝', '🎣', '🎸', '👈', '🔈', '🗯', '🗻', '🛡', '🦋', '🐛', '📇', '🧴', '📻', '👂', '💎', '😼', '🥐', '😙', '🏏', '💵', '😧', '🌞', '🦹', '🦣', '😤', '🕚', '🦨', '👱', '🛬', '🥍', '😠', '🚼', '🚉', '🍟', '📑', '🛺', '🌗', '🐏', '🔑', '🌪', '💠', '👛', '📺', '🥵', '🐇', '🩴', '🍊', '🥋', '🚫', '🦼', '🔋', '🚶', '🔭', '🍇', '🍳', '🏸', '🙍', '🚰', '🌻', '🖕', '🌖', '📓', '🍿', '🧤', '🦳', '🧽', '🔌', '🦶', '🗺', '🚌', '🤔', '🏆', '💜', '🐭', '🔙', '🍼', '😕', '😺', '💽', '📯', '🔯', '🗄', '🥳', '🧡', '🐔', '💛', '📹', '🎾', '🥒', '🔗', '🍡', '👧', '💬', '🈸', '🏰', '🔷', '🛁', '🧈', '🙁', '🕑', '💩', '🪶', '🌎', '🪑', '📬', '🌁', '🐦', '🎇', '🍻', '🛥', '👻', '🎩', '🗑', '🎯', '💔', '🦱', '🐖', '🚤', '🧞', '🐝', '🉑', '🥌', '🧭', '👕', '🛀', '🦿', '🧏', '🕝', '🎻', '💸', '📁', '🕔', '😖', '🍁', '😥', '🦀', '🍚', '🎑', '💉', '👗', '🖖', '🦞', '🔁', '🧥', '🩳', '🪵', '🔚', '🔴', '🚝', '🤰', '🌄', '📛', '🤴', '🍣', '🀄', '🎈', '📨', '🍢', '🕊', '🥡', '👍', '🐌', '🕥', '🚙', '🖨', '👫', '👀', '🥂', '🌘', '🤕', '🔻', '🥷', '🕐', '🛄', '💭', '🎚', '🎟', '👥', '🏷', '🚊', '🎒', '🥟', '🎶', '🕋', '🕞', '🆓', '🤝', '🏌', '🪨', '🍠', '🛐', '🥖', '👸', '🤦', '💨', '🪙', '🪢', '🤽', '👬', '😣', '🔓', '🏔', '🗨', '🧠', '🚋', '🪃', '🛂', '🗼', '🙉', '💋', '📉', '🛕', '🤣', '🕠', '🧵', '📔', '🈵', '🎫', '🎖', '🕒', '🤲', '🪳', '🕣', '🥭', '🦄', '🏺', '🧣', '🫑', '🔅', '🫖', '🌐', '📿', '😘', '🔖', '🤑', '🐺', '🖥', '🛢', '🚳', '🧱', '💡', '🚸', '🧝', '🍓', '🕍', '🧢', '🆎', '🎬', '🥉', '🏹', '🐑', '💾', '🛹', '👊', '😁', '👝', '🐀', '🐽', '🏝', '🆑', '🟣', '🧉', '😃', '🏪', '👿', '🕦', '📮', '🚪', '📶', '🟢', '🤼', '🩹', '🔟', '🥸', '🤠', '👃', '🦧', '📅', '🪟', '🥱', '🚭', '🌴', '🐻', '💣', '📱', '🔝', '🕛', '😬', '🛴', '🤺', '🌭', '😓', '😡', '🧘', '🍀', '🗃', '🈷', '🗞', '🚟', '👖', '🤷', '🐷', '🕖', '🚧', '🍫', '😛', '🏓', '🦗', '👭', '🧍', '😀', '🐥', '🐋', '👟', '🤫', '🌆', '💆', '📆', '🕎', '🙌', '🔩', '🚐', '🐫', '📂', '😏', '🦰', '🔐', '🧟', '🟡', '🍷', '🧄', '💙', '🦙', '🥻', '🌔', '🎤', '🍪', '🔤', '🔪', '🙎', '🌼', '🤘', '😉', '😫', '💧', '🐚', '🧼', '🍦', '🔉', '😱', '🏉', '🔔', '🐗', '🕜', '🤟', '🪘', '💘', '😎', '💿', '💈', '😷', '🚬', '🤜', '🍥', '🍗', '🐼', '🔳', '😨', '🏎', '💴', '🐊', '💐', '🔛', '🐲', '🍴', '🦁', '🃏', '🐹', '🔹', '🛷', '🧳', '😋', '🔫', '🧯', '🪠', '🏬', '🪗', '🐨', '🔜', '🦺', '🔧', '🔬', '🎪', '🛤', '🧀', '🖇', '💗', '💪', '🥑', '🦸', '🍕', '📗', '🕓', '💦', '📘', '📦', '👹', '🌂', '🐧', '👄', '🎓', '🔂', '🛵', '🍉', '🥁', '🥞', '🦍', '📥', '💓', '🦵', '🪥', '💊', '🛰', '🐪', '🐂', '🙋', '🪣', '😆', '🆕', '🏣', '🚯', '🥏', '💲', '🪖', '👪', '😈', '😴', '🏞', '🚩', '🌉', '🚄', '🧑', '🪜', '🏀', '🕙', '🏦', '🔵', '🏡', '🏖', '😇', '🪁', '🎧', '🖐', '🌹', '🛅', '🍺', '🔠', '🍄', '🟫', '🚡', '🧸', '🅰', '🥕', '🥧', '🏕', '🐰', '🪲', '📙', '🙇', '🚱', '🤹', '🚹', '🦡', '👡', '🌨', '🔕', '🦽', '😝', '🎋', '🚓', '🍅', '🐢', '🥙', '🥾', '🫒', '👁', '🔱', '🚿', '🥃', '🥩', '🥿', '🔆', '🍽', '💇', '🚁', '🥯', '🚛', '🙀', '🪞', '📷', '🛶', '🎃', '🛍', '🚀', '🗝', '🍂', '🚕', '🤓', '🥜', '💻', '🏈', '🎏', '🥀', '🦭', '🔊', '🫓', '👾', '🐁', '🆔', '🧖', '🚘', '📭', '🕢', '🌟', '🧨', '🌇', '🪦', '🎽', '🚆', '🌋', '🏛', '👲', '🎍', '🍃', '🧕', '🧓', '🌽', '🏟', '😳', '🦫', '🥼', '🐉', '🦛', '🌛', '🎀', '😌', '🦈', '🌩', '🌷', '🏩', '🪤', '🚦', '🚽', '🌡', '🕶', '🛎', '🎦', '🈹', '👅', '🍍', '🧷', '🧺', '🐕', '📧', '🔄', '🌤', '🌯', '😒', '🍾', '🙄', '🩸', '🛌', '🔡', '📡', '👋', '🍰', '🧲', '🍨', '🐞', '💢', '🍵', '😵', '🟪', '🤏', '🧋', '🧰', '🎥', '🍆', '🎉', '🚲', '🈁', '🌦', '🛫', '🦏', '🧙', '📐', '🎅', '🌓', '📰', '🦬', '🏒', '😭', '📍', '🥛', '📵', '🟥', '🚜', '🎴', '🕵', '🪅', '🈶', '😚', '🧧', '🏄', '🧫', '🦂', '🤯', '🛻', '🌊', '🎎', '🤒', '🦻', '📼', '🍛', '🪒', '🟦', '🤩', '🐆', '🥝', '🔦', '📌', '🪀', '🏳', '🔮', '🛸', '🎿', '📲', '🛗', '🫂', '🙆', '🧪', '🚖', '🦐', '💞', '😰', '🈚', '😾', '🤥', '🥅', '🧎', '🌚', '🌑', '👔', '👽', '👦', '🏁', '😹', '🕌', '🎵', '🥰', '📸', '📝', '😯', '🔨', '🏧', '📴', '🌀', '🐈', '🐠', '🦴', '🏇', '🍞', '📠', '🕷', '🌮', '🐳', '😸', '🫔', '😲', '🥫', '🌏', '🉐', '🌅', '🎳', '📫', '🟤', '👯', '🐤', '🏚', '🥨', '🚏', '👤', '🚚', '👏', '🦕', '🦠', '🍭', '😦', '🐅', '🐟', '👘', '🚇', '🔒', '🥤', '🥲', '🏮', '📕', '📪', '🚅', '🥥', '🪄', '🐜', '🧇', '🌱', '😑', '😍', '🏠', '🏗', '🪆', '🍎', '🎨', '🤪', '🌙', '🐓', '🐮', '🦇', '🩰', '🔣', '🐴', '💱', '🦩', '💫', '🗾', '🎰', '🌈', '🪓', '🚈', '🍐', '🕰', '🛒', '🤳', '🍔', '🏂', '😅', '😐', '🛳', '💰', '😪', '🤞', '🦊', '🍜', '💒', '🤖', '🥈', '🔰', '🍯', '🏥', '🐐', '👇', '🌲', '👌', '😊', '🪧', '🌃', '🛏', '🅾', '🦢', '🌰', '🤸', '🐡', '🖌', '🍧', '🆚', '🛠', '🤚', '🧂', '🥇', '🎄', '🌿', '👷', '🎱', '😟', '🏨', '🚺', '🟨', '🍩', '🛼', '🎢', '👐', '🍱', '🐱', '🪂', '🗒', '🎲', '🌝', '🫕', '💶', '🥮', '🙏', '👼', '🎁', '😽', '🤨', '🧛', '🔞', '🙅', '🎙', '🈴', '🍋', '🍙', '🏊', '🏤', '🤐', '🪝', '🎮', '🥽', '📳', '🦓', '💁', '🚷', '🗿', '🦔', '🙃', '🌸', '🍌', '🙈', '🧿', '🎂', '💥', '🌵', '🐸', '📚', '🏴', '🕯', '🦘', '👆', '🎠', '🐬', '🦚', '🕧', '🌺', '🪡', '👵', '🕳', '🍒', '🎞', '💯', '🕡', '💳', '🌫', '🎡', '🚍', '🔎', '💍', '🛑', '🥪', '🥎', '🎛', '📃', '🔸', '🖋', '🚨', '🤵', '😂', '🎌', '🦎', '🤤', '🕘', '🚵', '🈲', '🆘', '🎆', '👞', '🚒', '💌', '💚', '🤶', '😄', '🦾', '🫁', '🐄', '💄', '💷', '🍘', '🧆', '🍤', '🧹', '🦉', '👓', '😮', '😻', '🩺', '🚃', '🍮', '😞', '🏫', '🐒', '💕', '🕉', '🧒', '🧬', '🤮', '🐃', '🐵', '🧐', '👎', '💅', '🦑', '🪰', '🎷', '🎐', '🦝', '🔏', '🏙', '👳', '🛩', '🈳', '🤗', '🧻', '🌜', '🥬', '🍈', '🌌', '🧶', '🌶', '💂', '🛖', '🌳', '🌬', '🖼', '👰', '👺', '🕗', '👠', '🦦', '🐿', '🍏', '🐍', '🈂', '🎼', '🕸', '🕟', '💝', '🆖', '🤍', '🧗', '🥄', '🔍', '🤡', '🏯', '🥓', '🦤', '🐙', '🍶', '🫀', '📢', '🏜', '🌠', '🦆', '🕕', '🔘', '🧩', '🐘', '🆙', '👴', '🆒', '🏃', '📟', '🐩', '🗳', '🐾', '👒', '💏', '🔲', '🗽', '🗣', '🎹', '🙊', '🏘', '🚞', '🏅', '🚾', '🦪', '🎊', '🏐', '🪔', '🚥', '🤿', '🌥', '🪴', '🦜', '🦲', '👩', '🖍', '💟', '😶', '👢', '🦮', '💹', '🕤', '🗜', '😜', '🧦', '🦷', '🥣', '🌧', '🤢', '🍸', '🌍', '🐯', '🗂', '🛣', '🗓', '🍑', '🖲', '🧾', '📎', '💀', '🔀', '🚻', '🤛', '🥔', '🚴', '💃', '🚣', '🦥', '💺', '🍹', '🎭', '😢', '🤱', '🦌', '🕴', '👣', '🔽', '🤧', '🥦', '🧊', '🟧', '🥺', '🌕', '🛃', '📄', '🖊', '🍖', '🐎', '🟩', '🏍', '🥴', '🧅', '💖', '🪚', '💑', '🍲', '🔼', '🤭', '🩱', '🏑', '🤎', '📩', '🤬', '🚑', '🏋', '🕹', '📣', '🟠', '🧃', '🪱', '🥚', '📞', '💼', '💤', '🐶', '🅿', '📏', '🤾', '🆗', '🔃', '🧚', '👑', '🦯', '📈', '🦒', '🔇', '🏢', '🚠', '🥊', '😿', '😔', '🍬', '🐣', '📜', '🤙', '🥗', '🔶', '🔢', '🌾', '🏵', '📽', '📀', '📒', '🥘', '📤', '🦅', '🫐', '🪐', '🦃', '😩', '📊', '🕺', '🌒', '🚎', '🚗', '🈺', '🛋', '🧁', '🧮', '🚮', '🧔', '👉', '📋', '📖', '💮', '🖤', '👨', '🥢', '🖱', '🦖', '😗', '🤌', '🦟', '🎺', '👜', '🔥', '🗡', '🥶', '🩲', '👙', '🏭', '🚢', '🚂'}
 
 # SRC-20 BTC Transaction Specifications
 
@@ -350,81 +341,3 @@ Also, Transaction `f3a8df9f71bd195b43186c669666732fa86623e2d2f9633cf663b32e5e417
 9581330|791180|insert|issuances|{"asset": "A5428699716173256069", "asset_longname": null, "block_index": 791180, "call_date": 0, "call_price": 0.0, "callable": false, "description": "STAMP:iVBORw0KGgoAAAANSUhEUgAAACgAAAA4BAMAAAB9BqfFAAAAJ1BMVEVIZZcqRnYNERg8Qj4gJSEiLEojOFsAAAD7AQkeGx7///+SoYxUaWqIxi3EAAABTklEQVQ4y73PsU7DMBQF0FSiA6MHilg7lA8IEhmRcCR+wIq8MpQvQE8xYxrFaVkzpBuVoAM7/B7XcRrH1EJMvapk++jd1zaaB3I6XD6GEDFOO+Uj+JqIdr0tgF0o3+bb+cI+otkB63yN0yKz5xPqyiEDA/O2/XCIYAW9aK03Xw6RS9p/a20XsNmAij439MaW5tUjM1gB2QgvMqL3I2wyJSrFfBRCNCX7jTKAEqN1CN1kNDHHlUDfIQIHCg8RU5ejnTbTbnLiY3SOpSX2eDiVmOxuYxQS6AXYiADiv/8XQ3UZ3BlGeYyNDKBoQ3X5B55xh2nTfxHng/LU/CTeB+87VHjalKIe0B6YzJ5LvuIPHmZ7oD+5SjOlfESAVKJsMY7jG3OpFK144tBwfLumIsFlwASfRBWFjgt+Dwf2KbR+Lez1gKhqjYaHWABy6NhhID/iStgdKGHcpQAAAABJRU5ErkJggg==", "divisible": false, "fee_paid": 0, "issuer": "1NwCmg8gZW7KykrA7mX16zugNZZuckPg5o", "locked": true, "quantity": 0, "reset": false, "source": "1WweVUK8kLmSNt6yKKqwVxch3Z7Lw5HAY", "status": "valid", "transfer": true, "tx_hash": "f3a8df9f71bd195b43186c669666732fa86623e2d2f9633cf663b32e5e417b69", "tx_index": 2390355}|1684931053
 ```
 
-# Example SRC-20 JSON Validation
-
-If the JSON string is not valid including it will be rejected from the index. This is a sample of the validation script. Any SRC-20 transactions that do not pass this validation are considered invalid transactions and will not impact user balances. This is the current method used for the indexer validation of JSON strings. Anything that does not pass this check will not get a valid BTC Stamp number and will not be indexed as part of SRC-20.
-
-```PY
-
-tick_pattern_list = {
-    regex.compile(r'((\p{Emoji_Presentation})|(\p{Emoji_Modifier_Base}\p{Emoji_Modifier}?))|[\p{Punctuation}\p{Symbol}\w~!@#$%^&*()_=<>?]')
-}
-
-def matches_any_pattern(text, pattern_list):
-    matched = True
-    for char in text:
-        char_matched = any(pattern.fullmatch(char) for pattern in pattern_list)
-        if not char_matched:
-            matched = False
-            break
-    return matched
-
-def sort_keys(key):
-    priority_keys = ["p", "op", "tick"]
-    if key in priority_keys:
-        return priority_keys.index(key)
-    return len(priority_keys)
-
-def check_format(src_input_json, block_index):
-    try:
-        input_dict = json.loads(src_input_json)
-        print("checking format", input_dict)
-
-        if input_dict.get("p") == "src-20" and block_index < src20blockend:
-            tick_value = input_dict.get("tick")
-            if not tick_value or not matches_any_pattern(tick_value, tick_pattern_list) or len(tick_value) > 5:
-                print("EXCLUSION: did not match tick pattern", input_dict)
-                return False
-
-            deploy_keys = {"op", "tick", "max", "lim"}
-            transfer_keys = {"op", "tick", "amt"}
-            mint_keys = {"op", "tick", "amt"}
-
-            input_keys = set(input_dict.keys())
-
-            uint64_max = Decimal(2 ** 64 - 1)
-            key_sets = [deploy_keys, transfer_keys, mint_keys]
-            key_to_check = {"deploy_keys": ["max", "lim"], "transfer_keys": ["amt"], "mint_keys": ["amt"]}
-
-            for i, key_set in enumerate(key_sets):
-                if input_keys >= key_set:
-                    for key in key_to_check[list(key_to_check.keys())[i]]:
-                        value = input_dict.get(key)
-                        if value is None:
-                            print(src_input_json)
-                            print(f"EXCLUSION: Missing or invalid value for {key}", input_dict)
-                            return False
-
-                        if isinstance(value, str):
-                            try:
-                                value = Decimal(''.join(c for c in value if c.isdigit() or c == '.')) if value else Decimal(0)
-                            except ValueError:
-                                print(src_input_json)
-                                print(f"EXCLUSION: {key} not a valid decimal", input_dict)
-                                return False
-                        elif isinstance(value, int):
-                            value = Decimal(value)
-                        else:
-                            print(src_input_json)
-                            print(f"EXCLUSION: {key} not a string or integer", input_dict)
-                            return False
-
-                        if not (0 <= value <= uint64_max):
-                            print(src_input_json)
-                            print(f"EXCLUSION: {key} not in range", input_dict)
-                            return False
-            return True
-
-    except json.JSONDecodeError:
-        return False
-```
