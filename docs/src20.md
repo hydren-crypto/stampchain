@@ -65,10 +65,10 @@ If the amount specified to be transferred exceeds the balance held (which would 
    a. Any word character (alphanumeric characters and underscores)
    b. Special characters: ~!@#$%^&*()_+=<>?
    c. Most printable emojis in U+1F300 to U+1F5FF
-3. Disallowed characters:
-   a. Non-printable Unicode characters
-   b. Quotation marks: " ` ' outside of regular json delimiters
-   c. Any character not present in `Allowed  Chars for Tick Field`
+3. Disallowed characters:  
+  a. Non-printable Unicode characters  
+  b. Quotation marks: " ` ' outside of regular json delimiters  
+  c. Any character not present in **Allowed  Chars for Tick Field**
 4. Only numeric values are allowed in the "max", "amt", "lim" fields
 5. Other Qualifications:
     - The third multisig pubkeys must be to a valid Keyburn address
