@@ -85,7 +85,7 @@ function indexPage() {
           iframe.width = '210'; // Set width as needed
           iframe.height = '210'; // Set height as needed
           iframe.style.border = 'none'; // Optional: remove border
-          iframe.setAttribute('sandbox', '');
+          iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
           contentContainer.appendChild(iframe);
         } else {
           // Use an img tag for images
@@ -251,7 +251,7 @@ function assetPage() {
       iframe.width = '420'; // You can set width as needed
       iframe.height = '420'; // You can set height as needed
       iframe.style.border = 'none'; // Optional: remove border
-      iframe.setAttribute('sandbox', '');
+      iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
       assetContainer.appendChild(iframe);
     } else {
       // If it's not an HTML file, assume it's an image
