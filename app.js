@@ -311,7 +311,7 @@ function assetPage() {
     };
   
     addLink('BLOCKCHAIN.COM TRANSACTION INFORMATION', `https://www.blockchain.com/explorer/transactions/btc/${data.tx_hash}`);
-    addLink('bitSTART ASSET INFORMATION', `https://bitst.art/asset/${data.tx_hash}`);
+    addLink('bitSTART ASSET INFORMATION', `https://bitst.art/${data.tx_hash}`);
     addLink('TXN DATA DECODER', `https://jpja.github.io/Electrum-Counterparty/decode_tx.html?tx=${data.tx_hash}`);
     addLink('BINARY MEDIA', data.stamp_url);
   
