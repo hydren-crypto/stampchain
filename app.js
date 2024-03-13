@@ -1,7 +1,7 @@
 // Set the current page and items per page
 let currentPage = 1;
 const itemsPerPage = 500;
-const apiBaseUrl = 'https://stampchain.io/api/stamps';
+const apiBaseUrl = 'https://stampchain.io/api/v2/stamps';
 let totalNumberOfStamps = 0;
 
 function simpleValidateAddress(address) {
@@ -55,12 +55,12 @@ function indexPage() {
     .then(response => response.json())
     .then(data => {
       // If this is the first page, set the total number of stamps (our only chance, really)
-      if (currentPage === 1 && data[0]) {
-        totalNumberOfStamps = Number(data[0].stamp);
+      if (currentPage === 1 && data.total) {
+        totalNumberOfStamps = Number(data.total);
       }
 
-        renderData(data);
-        renderPaginationButtons(page, data.length, dropdownValue, creatorAddress);
+        renderData(data.data);
+        renderPaginationButtons(page, data.data.length, dropdownValue, creatorAddress);
       })
       .catch(error => console.error(error));
   }
