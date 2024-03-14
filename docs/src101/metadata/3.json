@@ -1,0 +1,27 @@
+{
+  "description": "stamp hero assembly", 
+  "image": "https://stamp.hero/3.png", 
+  "name": "simba",
+  "attributes": [
+    {
+      "trait_type": "base", 
+      "value": "animal"
+    }, 
+    {
+      "trait_type": "eyes", 
+      "value": "lion"
+    }, 
+    {
+      "trait_type": "mouth", 
+      "value": "surprised"
+    }, 
+    {
+      "trait_type": "level", 
+      "value": 6
+    }, 
+    {
+      "trait_type": "rarity", 
+      "value": "rare"
+    }
+  ]
+}
