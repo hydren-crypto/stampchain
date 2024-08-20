@@ -1,7 +1,7 @@
 // Set the current page and items per page
 let currentPage = 1;
 const itemsPerPage = 500;
-const apiBaseUrl = 'https://stampchain.io/api/stamps';
+const apiBaseUrl = 'https://stampchain.io/api/v2/stamps';
 let totalNumberOfStamps = 0;
 
 function simpleValidateAddress(address) {
@@ -40,27 +40,24 @@ function indexPage() {
   fetchDataAndRender(currentPage, creatorAddress, dropdownValue);
 
   function fetchDataAndRender(page, creator, dropdownValue) {
-    let apiUrl = `${apiBaseUrl}?page=${page}&page_size=${itemsPerPage}&sort_order=desc`;
+    let apiUrl = `${apiBaseUrl}?page=${page}&limit=${itemsPerPage}`;
   
     if (creator) {
       apiUrl += `&creator=${creator}`;
     }
   
-    // Append the ident parameter only if dropdownValue is not "ALL"
     if (dropdownValue && dropdownValue !== "ALL") {
       apiUrl += `&ident=${dropdownValue}`;
     }
 
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      // If this is the first page, set the total number of stamps (our only chance, really)
-      if (currentPage === 1 && data[0]) {
-        totalNumberOfStamps = Number(data[0].stamp);
-      }
-
-        renderData(data);
-        renderPaginationButtons(page, data.length, dropdownValue, creatorAddress);
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        if (currentPage === 1) {
+          totalNumberOfStamps = data.total;
+        }
+        renderData(data.data);
+        renderPaginationButtons(page, data.data.length, dropdownValue, creatorAddress);
       })
       .catch(error => console.error(error));
   }
@@ -223,8 +220,8 @@ function assetPage() {
       }
       const resp = await fetch(fetchUrl);
       const json = await resp.json();
-      if (json[0]) {
-        assetData = json[0];
+      if (json.data) {
+        assetData = json.data;
       }
   
       if (assetData) {
