@@ -46,6 +46,7 @@ function indexPage() {
       apiUrl += `&creator=${creator}`;
     }
   
+    // Use the ident parameter for filtering
     if (dropdownValue && dropdownValue !== "ALL") {
       apiUrl += `&ident=${dropdownValue}`;
     }
@@ -53,13 +54,12 @@ function indexPage() {
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        // If this is the first page, set the total number of stamps (our only chance, really)
-        if (currentPage === 1 && data.data[0]) {
-          totalNumberOfStamps = Number(data.data[0].stamp);
+        if (currentPage === 1) {
+          totalNumberOfStamps = data.total;
         }
 
         renderData(data.data);
-        renderPaginationButtons(page, data.data.length, dropdownValue, creatorAddress);
+        renderPaginationButtons(page, data.totalPages, dropdownValue, creatorAddress);
       })
       .catch(error => console.error(error));
   }
