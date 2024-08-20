@@ -40,7 +40,7 @@ function indexPage() {
   fetchDataAndRender(currentPage, creatorAddress, dropdownValue);
 
   function fetchDataAndRender(page, creator, dropdownValue) {
-    let apiUrl = `${apiBaseUrl}?page=${page}&limit=${itemsPerPage}`;
+    let apiUrl = `${apiBaseUrl}?page=${page}&limit=${itemsPerPage}&sort_order=desc`;
   
     if (creator) {
       apiUrl += `&creator=${creator}`;
@@ -53,9 +53,11 @@ function indexPage() {
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        if (currentPage === 1) {
-          totalNumberOfStamps = data.total;
+        // If this is the first page, set the total number of stamps (our only chance, really)
+        if (currentPage === 1 && data.data[0]) {
+          totalNumberOfStamps = Number(data.data[0].stamp);
         }
+
         renderData(data.data);
         renderPaginationButtons(page, data.data.length, dropdownValue, creatorAddress);
       })
